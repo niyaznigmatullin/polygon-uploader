@@ -1,5 +1,5 @@
 import requests
-from polygon_client import Polygon, PointsPolicy, FeedbackPolicy, FileType, SolutionTag
+from polygon_client import Polygon, PointsPolicy, FeedbackPolicy, FileType, SolutionTag, ProblemInfo, Statement
 import html
 import sys
 import tempfile
@@ -87,16 +87,47 @@ def main():
             self.test_index += 1
             return self.test_index
 
+    def get_main_page():
+        nonlocal main_page
+        if main_page is None:
+            main_page = http_get(problem_href).text
+        return main_page
+
     def download_sample_tests(counter):
-        r = http_get(problem_href)
         reg_exp = re.compile(r"<pre[^<]*<code>([^<]*)[^<]</code>[^<]*</pre", re.DOTALL)
-        z = reg_exp.findall(r.text)[0::2]
+        z = reg_exp.findall(get_main_page())[0::2]
         for i in range(len(z)):
             prob.save_test('tests', counter.next(), z[i],
                            test_group='0',
                            test_description='lojac import: sample test from %s' % problem_href,
                            test_use_in_statements=True,
                            check_existing=True)
+
+    def set_tl_and_ml():
+        s = get_main_page()
+        ml_rexp = re.compile(r"<span class[^>]*>[^0-9<]*(\d+)[^0-9<M]*MiB[^<]*</span>", re.DOTALL)
+        ml = ml_rexp.findall(s)
+        if len(ml) > 0:
+            ml = int(ml[0])
+        else:
+            ml = None
+        tl_rexp = re.compile(r"<span class[^>]*>[^0-9<]*(\d+)[^0-9<m]*ms[^<]*</span>", re.DOTALL)
+        tl = tl_rexp.findall(s)
+        if len(tl) > 0:
+            tl = int(tl[0])
+        else:
+            tl = None
+        print('Set ML = %s MiB and TL = %s ms' % (str(ml), str(tl)))
+        prob.update_info(ProblemInfo(time_limit=tl, memory_limit=ml))
+
+    def set_statement_scoring():
+        for lang, subtask, points in [("russian", "Подзадача", "баллов"), ("english", "Subtask", "points")]:
+            s = '\\begin{tabular}{ll}\n'
+            for group, score in enumerate(group_scores, start=1):
+                s += "\\textbf{%s %d (%d %s):} & \\\\\n" % (subtask, group, score, points)
+            s += '\\end{tabular}\n'
+            print("problem.saveStatement lang=%s" % lang)
+            prob.save_statement(lang, Statement(output=s))
 
     def download_tests(dir, tests_dir, counter):
         tests_archive = os.path.join(dir, "tests.zip")
@@ -107,18 +138,22 @@ def main():
         if 'data.yml' in file_list:
             zip_archive.extractall(path=tests_dir, members=["data.yml"])
             with open(os.path.join(tests_dir, 'data.yml'), "r", encoding="utf-8") as dy:
-                f = yaml.load(dy.read())
+                f = yaml.load(dy.read(), Loader=yaml.BaseLoader)
             input_mask = f['inputFile'].replace('#', '%s')
             to_extract = []
             groups = {}
-            need_sample = f['subtasks'][0]['score'] != 0
+            need_sample = int(f['subtasks'][0]['score']) != 0
             if need_sample:
                 print("No group with score = 0, downloading sample tests from the web page")
                 download_sample_tests(counter)
+            nonlocal group_scores
+            group_scores = []
             for group, sub in enumerate(f['subtasks'], start=1 if need_sample else 0):
                 score = sub['score']
                 if sub['type'] != 'min':
                     raise Exception("Only min is supported")
+                if group != 0:
+                    group_scores.append(int(score))
                 groups[group] = {'score': score}
                 tests = []
                 for testId, t in enumerate(sub['cases'], start=1):
@@ -201,6 +236,8 @@ def main():
         print("Problem %s not found" % polygon_pid)
         exit(1)
     prob = prob[0]
+    group_scores = None
+    main_page = None
     print("problem.enablePoints")
     prob.enable_points(True)
     print("problem.enableGroups")
@@ -211,6 +248,14 @@ def main():
     download_tests(dir, tests_dir, TestCounter())
 
     download_solutions()
+
+    set_tl_and_ml()
+    if group_scores is not None:
+        set_statement_scoring()
+
+    description = "Imported by lojacimport from %s" % problem_href
+    print("problem.saveGeneralDescription: " + description)
+    prob.save_general_description(description)
 
 
 if __name__ == "__main__":
