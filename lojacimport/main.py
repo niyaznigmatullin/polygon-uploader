@@ -1,5 +1,5 @@
 import requests
-from polygon_client import Polygon, PointsPolicy, FeedbackPolicy, FileType, SolutionTag, ProblemInfo, Statement
+from polygon_client import Polygon, PointsPolicy, FeedbackPolicy, FileType, SolutionTag, ProblemInfo, Statement, PolygonRequestFailedException
 import html
 import sys
 import tempfile
@@ -9,6 +9,7 @@ import shutil
 import zipfile
 import re
 import yaml
+import progressbar
 
 __version__ = '1.0'
 __author__ = 'Niyaz Nigmatullin'
@@ -74,11 +75,24 @@ def main():
         return r
 
     def download_file_to(link, path):
-        r = http_get(link)
-        print("Downloading file %s (%s bytes)" % (path, r.headers['Content-length']))
+        r = requests.get(link, stream=True)
+        file_size = int(r.headers['Content-length'])
+        print("Downloading file %s (%d bytes)" % (path, file_size))
+        widgets = [
+            '%s: ' % path, progressbar.Percentage(),
+            ' ', progressbar.Bar(marker=progressbar.AnimatedMarker(fill='#')),
+            ' ', progressbar.Counter('%(value)d'), '/' + str(file_size) + ' bytes downloaded',
+            ' ', progressbar.ETA(),
+            ' ', progressbar.FileTransferSpeed(),
+        ]
+        bar = progressbar.ProgressBar(widgets=widgets, max_value=file_size,
+                                      redirect_stdout=True).start()
         with open(path, "wb") as f:
-            for chunk in r.iter_content(1024):
+            part = 8192
+            for chunk in r.iter_content(part):
+                bar += len(chunk)
                 f.write(chunk)
+        bar.finish()
 
     class TestCounter:
         test_index = 0
@@ -170,12 +184,27 @@ def main():
                         testIndex = counter.next()
                         print("problem.saveTest %d with group %d and score %s"
                               % (testIndex, gid, str(cur_score) if cur_score is not None else "None"))
-                        prob.save_test('tests', testIndex, tf.read(),
-                                       test_group=gid,
-                                       test_points=cur_score,
-                                       test_description='lojac import: filename="%s"' % t,
-                                       check_existing=True,
-                                       test_use_in_statements=True if gid == 0 else None)
+                        while True:
+                            try:
+                                prob.save_test('tests', testIndex, tf.read(),
+                                               test_group=gid,
+                                               test_points=cur_score,
+                                               test_description='lojac import: filename="%s"' % t,
+                                               check_existing=True,
+                                               test_use_in_statements=True if gid == 0 else None)
+                                break
+                            except PolygonRequestFailedException as exc:
+                                skip = False
+                                while True:
+                                    repl = input("%s Retry, Skip or Terminate (r/s/t): " % exc.comment).lower()
+                                    if repl in ['r', 's', 't']:
+                                        if repl == 't':
+                                            raise exc
+                                        elif repl == 's':
+                                            skip = True
+                                            break
+                                if skip:
+                                    break
                     cur_score = None
                 if gid == 0:
                     print("problem.saveTestGroup group %d, pointsPolicy=EACH_TEST, feedbackPolicy=COMPLETE" % gid)
@@ -192,9 +221,13 @@ def main():
                 checker_name = checker['fileName']
                 checker_language = checker['language']
                 zip_archive.extract(checker_name, dir)
+                print("Adding and setting checker file with name %s" % checker_name)
                 with open(os.path.join(dir, checker_name), "r", encoding="utf-8") as cf:
                     prob.save_file(FileType.SOURCE, checker_name, cf.read())
-
+                prob.set_checker(checker_name)
+            else:
+                print("No special judge, setting std::ncmp.cpp as checker")
+                prob.set_checker("std::ncmp.cpp")
         else:
             download_sample_tests(counter)
             testlist = [x for x in file_list if x.endswith('.in')]  # TODO parse table on the page
@@ -253,7 +286,10 @@ def main():
     if group_scores is not None:
         set_statement_scoring()
 
-    description = "Imported by lojacimport from %s" % problem_href
+    description = """Imported by lojacimport from %s
+Statements, group dependencies should be imported manually
+The solution is taken among random correct solutions on loj.ac
+""" % problem_href
     print("problem.saveGeneralDescription: " + description)
     prob.save_general_description(description)
 

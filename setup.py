@@ -10,6 +10,7 @@ setuptools.setup(
         'polygon_client>=1.0a6',
         'requests',
         'pyyaml',
+        'progressbar2',
     ],
     packages=['lojacimport'],
     entry_points={
