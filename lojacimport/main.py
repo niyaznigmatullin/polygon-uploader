@@ -1,5 +1,17 @@
 import requests
-from polygon_client import Polygon, PointsPolicy, FeedbackPolicy, FileType, SolutionTag, ProblemInfo, Statement, PolygonRequestFailedException
+from polygon_client import (
+    Polygon,
+    PointsPolicy,
+    FeedbackPolicy,
+    FileType,
+    SolutionTag,
+    ProblemInfo,
+    Statement,
+    PolygonRequestFailedException,
+    ResourceAdvancedProperties,
+    Stage,
+    Asset
+)
 import html
 import sys
 import tempfile
@@ -228,6 +240,26 @@ def main():
             else:
                 print("No special judge, setting std::ncmp.cpp as checker")
                 prob.set_checker("std::ncmp.cpp")
+            if 'extraSourceFiles' in f:
+                extra = [x for x in f['extraSourceFiles'] if x['language'] == 'cpp']
+                if len(extra) == 0:
+                    print("WARNING: No extra source files for C++")
+                else:
+                    extra = extra[0]
+                    extra = extra['files']
+                    print(extra)
+                    for e_file in extra:
+                        print(e_file)
+                        e_name = e_file['name']
+                        e_dest = e_file['dest']
+                        zip_archive.extract(e_name, dir)
+                        print("Adding extra source file %s" % e_dest)
+                        with open(os.path.join(dir, e_name), "r", encoding="utf-8") as ef:
+                            props = ResourceAdvancedProperties(for_types="cpp.*",
+                                                               stages=[Stage.COMPILE],
+                                                               assets=[Asset.SOLUTION])
+                            prob.save_file(FileType.RESOURCE, e_dest, ef.read(), resource_advanced_properties=props)
+
         else:
             download_sample_tests(counter)
             testlist = [x for x in file_list if x.endswith('.in')]  # TODO parse table on the page
@@ -248,18 +280,25 @@ def main():
 
     def download_solutions():
         r = http_get(solutions_href)
-        submissions = list(set(int(x) for x in re.findall(r'href="/submission/(\d+)"', r.text)))[:3]
+        submissions = list(set(int(x) for x in re.findall(r'href="/submission/(\d+)"', r.text)))
         tag = SolutionTag.MA
+        uploaded = 0
         for sub_id in submissions:
-            r = http_get(submission_href % sub_id)
-            code = [x for x in r.text.splitlines() if x.startswith("const format")][0]
-            start = code.find('"')
-            end = code.rfind('"')
-            code = code[start + 1:end]
-            code = re.sub(r'</?span[^>]*>', '', html.unescape(code.encode('ascii').decode('unicode-escape')))
-            print("problem.saveSolution %s.cpp language cpp.g++17" % sub_id)
-            prob.save_solution("%s.cpp" % sub_id, code, "cpp.g++17", tag)
-            tag = SolutionTag.OK
+            if uploaded >= 3:
+                break
+            try:
+                r = http_get(submission_href % sub_id)
+                code = [x for x in r.text.splitlines() if x.startswith("const format")][0]
+                start = code.find('"')
+                end = code.rfind('"')
+                code = code[start + 1:end]
+                code = re.sub(r'</?span[^>]*>', '', html.unescape(code.encode('ascii').decode('unicode-escape')))
+                print("problem.saveSolution %s.cpp language cpp.g++17" % sub_id)
+                prob.save_solution("%s.cpp" % sub_id, code, "cpp.g++17", tag)
+                tag = SolutionTag.OK
+                uploaded += 1
+            except Exception as exc:
+                print("Solution upload error: " + str(exc))
 
     authenticate()
     api = Polygon(polygon_url, api_key, api_secret)
