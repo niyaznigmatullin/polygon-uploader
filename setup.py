@@ -6,12 +6,14 @@ setuptools.setup(
     description="loj.ac importer to polygon.codeforces.com",
     author="Niyaz Nigmatullin",
     install_requires=[
-        'polygon_client',
+        'polygon_client>=1.0a6',
         'requests',
+        'pyyaml',
     ],
+    packages=['lojacimport'],
     entry_points={
         'console_scripts': [
-            'lojacimport=main:main'
+            'lojacimport=lojacimport:main'
         ]
-    }
+    },
 )
