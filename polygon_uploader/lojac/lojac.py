@@ -1,6 +1,4 @@
-import requests
 from polygon_api import (
-    Polygon,
     PointsPolicy,
     FeedbackPolicy,
     FileType,
@@ -14,51 +12,20 @@ from polygon_api import (
 )
 import html
 import sys
-import tempfile
-import atexit
 import os
-import shutil
 import zipfile
 import re
 import yaml
-import progressbar
+from polygon_uploader.common import *
 
 __version__ = '1.0'
 __author__ = 'Niyaz Nigmatullin'
 
 if len(sys.argv) < 3 or len(sys.argv) > 4:
-    print("Usage: python3 main.py <loj problem id> <polygon problem id> [<number of tests in groups separated by comma>]")
-    print("Example: python3 main.py 3208 aplusb-light 1,1,3,2,3,3,4")
+    print("Usage: lojacimport <loj problem id> <polygon problem id> [<number of tests in groups separated by comma>]")
+    print("Example: lojacimport 3208 aplusb-light 1,1,3,2,3,3,4")
     exit(239)
 
-
-def authenticate():
-    global polygon_url, api_key, api_secret
-    default_polygon_url = "https://polygon.codeforces.com"
-
-    authentication_file = os.path.join(os.path.expanduser('~'), '.config', 'lojacimport', 'auth.yaml')
-    if os.path.exists(authentication_file):
-        with open(authentication_file, 'r') as fo:
-            auth_data = yaml.load(fo, Loader=yaml.BaseLoader)
-        polygon_url = auth_data.get('polygon_url')
-        api_key = auth_data.get('api_key')
-        api_secret = auth_data.get('api_secret')
-
-    if not os.path.exists(authentication_file) or not api_key or not api_secret:
-        print('WARNING: Authentication data will be stored in plain text in {}'.format(authentication_file))
-        api_key = input('API Key: ')
-        api_secret = input('API Secret: ')
-        polygon_url = default_polygon_url
-        os.makedirs(os.path.dirname(authentication_file), exist_ok=True)
-        with open(authentication_file, 'w') as fo:
-            auth_data = {
-                'polygon_url': polygon_url,
-                'api_key': api_key,
-                'api_secret': api_secret
-            }
-            yaml.dump(auth_data, fo, default_flow_style=False)
-        print('Authentication data is stored in {}'.format(authentication_file))
-    polygon_url += '/api'
 
 def main():
     loj_pid = sys.argv[1]
@@ -70,41 +37,7 @@ def main():
     testdata_href = 'https://loj.ac/problem/%s/testdata/download' % loj_pid
     submission_href = 'https://loj.ac/submission/%s'
 
-    dir = tempfile.mkdtemp(prefix='_loj_%s' % loj_pid)
-
-    def cleaner(dir):
-        def docleaner():
-            shutil.rmtree(dir)
-        return docleaner
-
-    atexit.register(cleaner(dir))
-
-    def http_get(link):
-        r = requests.get(link)
-        if r.status_code != 200:
-            print(r.status_code, "error")
-            exit(1)
-        return r
-
-    def download_file_to(link, path):
-        r = requests.get(link, stream=True)
-        file_size = int(r.headers['Content-length'])
-        print("Downloading file %s (%d bytes)" % (path, file_size))
-        widgets = [
-            '%s: ' % path, progressbar.Percentage(),
-            ' ', progressbar.Bar(marker=progressbar.AnimatedMarker(fill='#')),
-            ' ', progressbar.Counter('%(value)d'), '/' + str(file_size) + ' bytes downloaded',
-            ' ', progressbar.ETA(),
-            ' ', progressbar.FileTransferSpeed(),
-        ]
-        bar = progressbar.ProgressBar(widgets=widgets, max_value=file_size,
-                                      redirect_stdout=True).start()
-        with open(path, "wb") as f:
-            part = 8192
-            for chunk in r.iter_content(part):
-                bar += len(chunk)
-                f.write(chunk)
-        bar.finish()
+    dir = create_temporary_directory(prefix='_loj_%s' % loj_pid)
 
     class TestCounter:
         test_index = 0
@@ -116,7 +49,7 @@ def main():
     def get_main_page():
         nonlocal main_page
         if main_page is None:
-            main_page = http_get(problem_href).text
+            main_page = download_web_page(problem_href).text
         return main_page
 
     def download_sample_tests(counter):
@@ -279,16 +212,16 @@ def main():
                 os.rename(os.path.join(tests_dir, x), os.path.join(tests_dir, '%02d-%02d.txt' % (int(group), int(tnum))))
 
     def download_solutions():
-        r = http_get(solutions_href)
-        submissions = list(set(int(x) for x in re.findall(r'href="/submission/(\d+)"', r.text)))
+        page = download_web_page(solutions_href)
+        submissions = list(set(int(x) for x in re.findall(r'href="/submission/(\d+)"', page)))
         tag = SolutionTag.MA
         uploaded = 0
         for sub_id in submissions:
             if uploaded >= 3:
                 break
             try:
-                r = http_get(submission_href % sub_id)
-                code = [x for x in r.text.splitlines() if x.startswith("const format")][0]
+                submission_page = download_web_page(submission_href % sub_id)
+                code = [x for x in submission_page.splitlines() if x.startswith("const format")][0]
                 start = code.find('"')
                 end = code.rfind('"')
                 code = code[start + 1:end]
@@ -300,8 +233,7 @@ def main():
             except Exception as exc:
                 print("Solution upload error: " + str(exc))
 
-    authenticate()
-    api = Polygon(polygon_url, api_key, api_secret)
+    api = authenticate()
     print("problems.list")
     prob = list(api.problems_list(id=polygon_pid))
     if len(prob) == 0:

@@ -1,21 +1,24 @@
 import setuptools
 
 setuptools.setup(
-    name="lojacimport",
+    name="polygon-uploader",
     version="0.1",
-    description="loj.ac importer to polygon.codeforces.com",
-    url="https://github.com/niyaznigmatullin/lojacimport",
+    description="uploader to polygon.codeforces.com",
+    url="https://github.com/niyaznigmatullin/polygon-uploader",
     author="Niyaz Nigmatullin",
     install_requires=[
-        'polygon_client>=1.0a6',
+        'polygon-api>=1.0a6',
         'requests',
         'pyyaml',
         'progressbar2',
     ],
-    packages=['lojacimport'],
+    packages=['polygon_uploader.lojac',
+              'polygon_uploader.usaco',
+    ],
     entry_points={
         'console_scripts': [
-            'lojacimport=lojacimport:main'
+            'lojacimport=polygon_uploader.lojac:main',
+            'usacoimport=polygon_uploader.usaco:main',
         ]
     },
 )

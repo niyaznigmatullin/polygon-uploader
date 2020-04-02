@@ -1,0 +1,1 @@
+from .lojac import main
