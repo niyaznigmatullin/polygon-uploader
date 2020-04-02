@@ -11,8 +11,11 @@ setuptools.setup(
         'requests',
         'pyyaml',
         'progressbar2',
+        'beautifulsoup4',
     ],
-    packages=['polygon_uploader.lojac',
+    packages=['polygon_uploader',
+              'polygon_uploader.common',
+              'polygon_uploader.lojac',
               'polygon_uploader.usaco',
     ],
     entry_points={
