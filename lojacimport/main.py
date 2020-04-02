@@ -1,5 +1,5 @@
 import requests
-from polygon_client import (
+from polygon_api import (
     Polygon,
     PointsPolicy,
     FeedbackPolicy,
