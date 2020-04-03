@@ -38,16 +38,16 @@ def main():
 
     def latexify(statement):
         for e in statement.find_all_next('ul'):
-            e.insert_before('\n\\begin{itemize}\n')
-            e.insert_after('\n\\end{itemize}\n')
+            e.insert_before('\n\\begin{itemize}')
+            e.insert_after('\n\\end{itemize}')
             e.unwrap()
         for e in statement.find_all_next('ol'):
-            e.insert_before('\n\\begin{enumerate}\n')
-            e.insert_after('\n\\end{enumerate}\n')
+            e.insert_before('\n\\begin{enumerate}')
+            e.insert_after('\n\\end{enumerate}')
             e.unwrap()
         for e in statement.find_all_next('li'):
             e.insert_before('\n\\item{')
-            e.insert_after('}\n')
+            e.insert_after('}')
             e.unwrap()
         for e in statement.find_all_next('strong'):
             e.insert_before('\\textbf{')
@@ -57,9 +57,9 @@ def main():
     def latexify_post(s, lang):
         s = re.sub(r"'(.)'", "`\\\\t{\\1}'", s, re.DOTALL)
         if lang == 'en':
-            s = re.sub(r'"([^"])"', "``\\\\t{\\1}''", s, re.DOTALL)
+            s = re.sub(r'\"([^\"]*)\"', "``\\1''", s, re.DOTALL)
         else:
-            s = re.sub(r'"([^"])"', "<<\\\\t{\\1}>>", s, re.DOTALL)
+            s = re.sub(r'\"([^\"]*)\"', "<<\\1>>", s, re.DOTALL)
         return s
 
     def download_statement():
