@@ -1,8 +1,9 @@
 import setuptools
+import polygon_uploader
 
 setuptools.setup(
     name="polygon-uploader",
-    version="0.1",
+    version=polygon_uploader.__version__,
     description="uploader to polygon.codeforces.com",
     url="https://github.com/niyaznigmatullin/polygon-uploader",
     author="Niyaz Nigmatullin",

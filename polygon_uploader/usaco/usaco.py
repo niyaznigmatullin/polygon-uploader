@@ -11,8 +11,9 @@ import os
 import zipfile
 import re
 from polygon_uploader.common import *
+import polygon_uploader
 
-__version__ = '1.0'
+__version__ = polygon_uploader.__version__
 __author__ = 'Niyaz Nigmatullin'
 
 if len(sys.argv) != 4:
@@ -20,6 +21,7 @@ if len(sys.argv) != 4:
     print("Example: usacoimport 1020 deleg_platinum_feb20 123123")
     print("usaco_cp_id is taken from the problem description link: http://usaco.org/index.php?page=viewproblem2&cpid=1020, usaco_cp_id=1020")
     print("usaco_id is taken from testdata link: http://usaco.org/current/data/deleg_platinum_feb20.zip, usaco_id=deleg_platinum_feb20")
+    print("Version: " + __version__)
     exit(239)
 
 
@@ -38,6 +40,10 @@ def main():
         for e in statement.find_all_next('ul'):
             e.insert_before('\n\\begin{itemize}\n')
             e.insert_after('\n\\end{itemize}\n')
+            e.unwrap()
+        for e in statement.find_all_next('ol'):
+            e.insert_before('\n\\begin{enumerate}\n')
+            e.insert_after('\n\\end{enumerate}\n')
             e.unwrap()
         for e in statement.find_all_next('li'):
             e.insert_before('\n\\item{')
@@ -118,23 +124,30 @@ def main():
         zip_archive.extractall(path=tests_dir, members=to_extract)
         print(to_extract, 'extracted to', tests_dir)
         cnt = len(to_extract)
-        scored_tests = cnt - 1
-        for tid in range(1, cnt + 1):
-            points = None
-            if tid >= 2:
-                points = 100 // scored_tests
-                if tid - 2 >= 100 % scored_tests:
+
+        class Group:
+
+            def __init__(self, group, score, tests):
+                self.group = group
+                self.score = score
+                self.tests = tests
+
+        groups = [Group(0, 0, ['1.in']), Group(1, 100, ['%d.in' % x for x in range(2, cnt + 1)])]
+        tid = 0
+        for g in groups:
+            cnt = len(g.tests)
+            for i, name in enumerate(g.tests):
+                points = g.score // cnt
+                if i >= cnt - g.score % cnt:
                     points += 1
-            fname = '%d.in' % tid
-            with open(os.path.join(tests_dir, fname), "r") as tf:
-                group = '0' if tid == 1 else '1'
-                print("problem.saveTest %d with group = %s, points = %s" % (tid, group, str(points)))
-                prob.save_test('tests', tid, tf.read(),
-                               test_group=group,
-                               test_points=points,
-                               test_description="Imported with usaco_import %s" % fname,
-                               test_use_in_statements=True if tid == 1 else None
-                )
+                with open(os.path.join(tests_dir, name), "r") as tf:
+                    tid += 1
+                    print("problem.saveTest %d with group = %s, points = %s" % (tid, g.group, str(points)))
+                    prob.save_test('tests', tid, tf.read(),
+                                   test_group=g.group,
+                                   test_points=points,
+                                   test_description="Imported with usaco_import %s" % name,
+                                   test_use_in_statements=True if g.group == 0 else None)
         prob.save_test_group('tests', '0', points_policy=PointsPolicy.EACH_TEST,
                              feedback_policy=FeedbackPolicy.COMPLETE)
         prob.save_test_group('tests', '1', points_policy=PointsPolicy.EACH_TEST,
@@ -156,6 +169,7 @@ def main():
             is_cpp = '#include' in code
             fname = 'sol%d.%s' % (id, 'cpp' if is_cpp else 'java')
             try:
+                print('problem.saveSolution name = %s' % fname)
                 prob.save_solution(name=fname,
                                    file=code,
                                    source_type="cpp.g++17" if is_cpp else 'java8',
@@ -168,10 +182,11 @@ def main():
             x.unwrap()
         for x in parser.find_all('span'):
             x.unwrap()
+        print("problem.saveStatement tutorial lang = english")
         prob.save_statement(lang="english", problem_statement=Statement(tutorial=latexify_post(analysis.text, 'en')))
 
     api = authenticate()
-    print("problems.list")
+    print("problems.list id = %s" % polygon_pid)
     prob = list(api.problems_list(id=polygon_pid))
     if len(prob) == 0:
         print("Problem %s not found" % polygon_pid)
@@ -195,8 +210,11 @@ The solution probably uses files, instead of stdin/stdout
     tutorial = solution_href
     print("problem.saveGeneralDescription: " + description)
     prob.save_general_description(description)
+    print("problem.saveGeneralTutorial: " + tutorial)
     prob.save_general_tutorial(tutorial=tutorial)
-    prob.save_tags(['usaco'])
+    tags = ['usaco']
+    print("problem.saveTags: " + str(tags))
+    prob.save_tags(tags)
 
 
 if __name__ == "__main__":
