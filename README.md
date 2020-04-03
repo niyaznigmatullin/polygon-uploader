@@ -9,7 +9,7 @@ uploader of tasks to polygon.codeforces.com
 
 `usacoimport <usaco_cp_id> <usaco_name> <polygon id>`
 
-`usacoimport 3205 77263 1,2,3,4`
+`usacoimport 1020 deleg_platinum_feb20 123123`
 
 `usaco_cp_id` is taken from the problem description link, for example: http://usaco.org/index.php?page=viewproblem2&cpid=1020, in this example `usaco_cp_id` is `1020`
 
