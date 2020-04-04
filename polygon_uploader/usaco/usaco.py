@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
 from polygon_api import (
-    PointsPolicy,
-    FeedbackPolicy,
     SolutionTag,
     Statement,
     PolygonRequestFailedException,
@@ -125,34 +123,15 @@ def main():
         print(to_extract, 'extracted to', tests_dir)
         cnt = len(to_extract)
 
-        class Group:
+        def file_to_test(name):
+            return FileTest(os.path.join(tests_dir, name), 'usacoimport: filename = %s' % name)
 
-            def __init__(self, group, score, tests):
-                self.group = group
-                self.score = score
-                self.tests = tests
+        groups = [
+            Group(0, [file_to_test('1.in')], GroupScoring.SUM),
+            Group(100, [file_to_test('%d.in' % x) for x in range(2, cnt + 1)], GroupScoring.SUM),
+        ]
 
-        groups = [Group(0, 0, ['1.in']), Group(1, 100, ['%d.in' % x for x in range(2, cnt + 1)])]
-        tid = 0
-        for g in groups:
-            cnt = len(g.tests)
-            for i, name in enumerate(g.tests):
-                points = g.score // cnt
-                if i >= cnt - g.score % cnt:
-                    points += 1
-                with open(os.path.join(tests_dir, name), "r") as tf:
-                    tid += 1
-                    print("problem.saveTest %d with group = %s, points = %s" % (tid, g.group, str(points)))
-                    prob.save_test('tests', tid, tf.read(),
-                                   test_group=g.group,
-                                   test_points=points,
-                                   test_description="Imported with usaco_import %s" % name,
-                                   test_use_in_statements=True if g.group == 0 else None)
-        prob.save_test_group('tests', '0', points_policy=PointsPolicy.EACH_TEST,
-                             feedback_policy=FeedbackPolicy.COMPLETE)
-        prob.save_test_group('tests', '1', points_policy=PointsPolicy.EACH_TEST,
-                             feedback_policy=FeedbackPolicy.COMPLETE, dependencies=['0'])
-        prob.set_checker('std::wcmp.cpp')
+        upload_groups(prob, groups)
 
     def download_solutions():
         solution_page = download_web_page(solution_href)
@@ -203,6 +182,9 @@ def main():
 
     download_statement()
     download_solutions()
+
+    print("problem.setChecker std::wcmp.cpp")
+    prob.set_checker('std::wcmp.cpp')
 
     description = """Imported by usaco-import from %s
 The solution probably uses files, instead of stdin/stdout

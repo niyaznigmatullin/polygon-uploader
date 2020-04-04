@@ -1,6 +1,4 @@
 from polygon_api import (
-    PointsPolicy,
-    FeedbackPolicy,
     FileType,
     SolutionTag,
     ProblemInfo,
@@ -17,6 +15,7 @@ import zipfile
 import re
 import yaml
 from polygon_uploader.common import *
+import hashlib
 
 __version__ = '1.0'
 __author__ = 'Niyaz Nigmatullin'
@@ -39,28 +38,15 @@ def main():
 
     dir = create_temporary_directory(prefix='_loj_%s' % loj_pid)
 
-    class TestCounter:
-        test_index = 0
-
-        def next(self):
-            self.test_index += 1
-            return self.test_index
-
     def get_main_page():
         nonlocal main_page
         if main_page is None:
             main_page = download_web_page(problem_href)
         return main_page
 
-    def download_sample_tests(counter):
+    def download_sample_tests():
         reg_exp = re.compile(r"<pre[^<]*<code>([^<]*)[^<]</code>[^<]*</pre", re.DOTALL)
-        z = reg_exp.findall(get_main_page())[0::2]
-        for i in range(len(z)):
-            prob.save_test('tests', counter.next(), z[i],
-                           test_group='0',
-                           test_description='lojac import: sample test from %s' % problem_href,
-                           test_use_in_statements=True,
-                           check_existing=True)
+        return reg_exp.findall(get_main_page())[0::2]
 
     def set_tl_and_ml():
         s = get_main_page()
@@ -88,79 +74,54 @@ def main():
             print("problem.saveStatement lang=%s" % lang)
             prob.save_statement(lang, Statement(output=s))
 
-    def download_tests(dir, tests_dir, counter):
+    def download_tests(dir, tests_dir):
         tests_archive = os.path.join(dir, "tests.zip")
         download_file_to(testdata_href, tests_archive)
         print(tests_archive, "downloaded")
         zip_archive = zipfile.ZipFile(tests_archive, 'r')
         file_list = zip_archive.namelist()
+
+        def file_to_test(name):
+            return FileTest(os.path.join(tests_dir, name), 'lojacimport: filename = %s' % name)
+
         if 'data.yml' in file_list:
             zip_archive.extractall(path=tests_dir, members=["data.yml"])
             with open(os.path.join(tests_dir, 'data.yml'), "r", encoding="utf-8") as dy:
                 f = yaml.load(dy.read(), Loader=yaml.BaseLoader)
             input_mask = f['inputFile'].replace('#', '%s')
-            to_extract = []
-            groups = {}
-            need_sample = int(f['subtasks'][0]['score']) != 0
-            if need_sample:
+
+            for i, subtask in enumerate(f['subtasks']):
+                if subtask['score'] == 0:
+                    f['subtasks'] = [subtask] + f['subtasks'][:i] + f['subtasks'][i+1:]
+                    break
+
+            groups = []
+
+            if int(f['subtasks'][0]['score']) != 0:
                 print("No group with score = 0, downloading sample tests from the web page")
-                download_sample_tests(counter)
-            nonlocal group_scores
-            group_scores = []
-            for group, sub in enumerate(f['subtasks'], start=1 if need_sample else 0):
+                description = 'lojacimport: parsed page %s' % problem_href
+                sample_tests = [MemoryTest(x, description) for x in download_sample_tests()]
+                groups.append(Group(0, sample_tests, GroupScoring.SUM))
+
+            to_extract = []
+            for group, sub in enumerate(f['subtasks'], start=len(groups)):
                 score = sub['score']
                 if sub['type'] != 'min':
                     raise Exception("Only min is supported")
-                if group != 0:
-                    group_scores.append(int(score))
-                groups[group] = {'score': score}
                 tests = []
-                for testId, t in enumerate(sub['cases'], start=1):
+                for t in sub['cases']:
                     name = input_mask % t
                     to_extract.append(name)
-                    tests.append(name)
-                groups[group]['tests'] = tests
+                    tests.append(file_to_test(name))
+                groups.append(Group(int(score), tests, GroupScoring.GROUP))
+
+            nonlocal group_scores
+            group_scores = [g.score for gid, g in enumerate(groups) if gid != 0]
+
             print("Extracting %d tests to " % len(to_extract) + tests_dir)
             zip_archive.extractall(path=tests_dir, members=to_extract)
-            for gid, g in groups.items():
-                cur_score = g['score']
-                for t in g['tests']:
-                    with open(os.path.join(tests_dir, t), 'r') as tf:
-                        testIndex = counter.next()
-                        print("problem.saveTest %d with group %d and score %s"
-                              % (testIndex, gid, str(cur_score) if cur_score is not None else "None"))
-                        while True:
-                            try:
-                                prob.save_test('tests', testIndex, tf.read(),
-                                               test_group=gid,
-                                               test_points=cur_score,
-                                               test_description='lojac import: filename="%s"' % t,
-                                               check_existing=True,
-                                               test_use_in_statements=True if gid == 0 else None)
-                                break
-                            except PolygonRequestFailedException as exc:
-                                skip = False
-                                while True:
-                                    repl = input("%s Retry, Skip or Terminate (r/s/t): " % exc.comment).lower()
-                                    if repl in ['r', 's', 't']:
-                                        if repl == 't':
-                                            raise exc
-                                        elif repl == 's':
-                                            skip = True
-                                            break
-                                if skip:
-                                    break
-                    cur_score = None
-                if gid == 0:
-                    print("problem.saveTestGroup group %d, pointsPolicy=EACH_TEST, feedbackPolicy=COMPLETE" % gid)
-                    prob.save_test_group('tests', gid,
-                                         points_policy=PointsPolicy.EACH_TEST,
-                                         feedback_policy=FeedbackPolicy.COMPLETE)
-                else:
-                    print("problem.saveTestGroup group %d, pointsPolicy=COMPLETE_GROUP, feedbackPolicy=ICPC" % gid)
-                    prob.save_test_group('tests', gid,
-                                         points_policy=PointsPolicy.COMPLETE_GROUP,
-                                         feedback_policy=FeedbackPolicy.ICPC)
+            upload_groups(prob, groups)
+
             if 'specialJudge' in f:
                 checker = f['specialJudge']
                 checker_name = checker['fileName']
@@ -194,22 +155,32 @@ def main():
                             prob.save_file(FileType.RESOURCE, e_dest, ef.read(), resource_advanced_properties=props)
 
         else:
-            download_sample_tests(counter)
-            testlist = [x for x in file_list if x.endswith('.in')]  # TODO parse table on the page
+            sample_tests = download_sample_tests()
+            hashes = set(hashlib.md5(x) for x in sample_tests)
+            groups = [Group(0, [lambda: x for x in sample_tests], GroupScoring.SUM)]
+            testlist = [x for x in file_list if x.endswith('.in')]
+            testlist.sort(key=lambda x: int(re.match(r'.*\D(\d+).in', x).group(1)))
             print('tests = ', testlist)
             zip_archive.extractall(path=tests_dir, members=testlist)
             print(tests_archive, 'extracted to', tests_dir)
-            for i in range(1, len(groupsizes)):
-                groupsizes[i] += groupsizes[i - 1]
-            for x in testlist:
-                y = re.match(r'.*\D(\d+).in', x)
-                tnum = int(y.group(1))
-                group = 0
-                while groupsizes[group] < tnum:
-                    group += 1
-                tnum -= 0 if group == 0 else groupsizes[group - 1]
-                group += 1
-                os.rename(os.path.join(tests_dir, x), os.path.join(tests_dir, '%02d-%02d.txt' % (int(group), int(tnum))))
+
+            def is_sample(name):
+                with os.path.join(tests_dir, name) as tf:
+                    return hashlib.md5(tf.read()) in hashes
+
+            testlist = list(filter(lambda x: not is_sample(x), testlist))
+
+            if len(groupsizes) > 0:
+                cnt = len(testlist)
+                points = [100 // cnt] * (cnt - 100 % cnt) + [100 // cnt + 1] * (100 % cnt)
+                for c in groupsizes:
+                    score = sum(points[:c])
+                    tests = [file_to_test(x) for x in testlist[:c]]
+                    groups.append(Group(score, tests, GroupScoring.GROUP))
+                    testlist = testlist[c:]
+                    points = points[c:]
+            else:
+                groups.append(Group(100, [file_to_test(x) for x in testlist], GroupScoring.SUM))
 
     def download_solutions():
         page = download_web_page(solutions_href)
@@ -249,7 +220,7 @@ def main():
 
     tests_dir = os.path.join(dir, "tests")
     os.mkdir(tests_dir)
-    download_tests(dir, tests_dir, TestCounter())
+    download_tests(dir, tests_dir)
 
     download_solutions()
 
