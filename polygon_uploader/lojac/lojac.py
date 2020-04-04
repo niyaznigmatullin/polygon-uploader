@@ -49,7 +49,7 @@ def main():
     def get_main_page():
         nonlocal main_page
         if main_page is None:
-            main_page = download_web_page(problem_href).text
+            main_page = download_web_page(problem_href)
         return main_page
 
     def download_sample_tests(counter):
