@@ -9,6 +9,7 @@ setuptools.setup(
     version=polygon_uploader.__version__,
     description="uploader to polygon.codeforces.com",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/niyaznigmatullin/polygon-uploader",
     author="Niyaz Nigmatullin",
     install_requires=[
