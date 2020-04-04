@@ -1,5 +1,6 @@
 import requests
 import progressbar
+import os
 
 
 def download_file_to(link, path):
@@ -10,7 +11,7 @@ def download_file_to(link, path):
     file_size = int(r.headers['Content-length'])
     print("Downloading file %s (%d bytes)" % (path, file_size))
     widgets = [
-        '%s: ' % path, progressbar.Percentage(),
+        '%s: ' % os.path.basename(path), progressbar.Percentage(),
         ' ', progressbar.Bar(marker=progressbar.AnimatedMarker(fill='#')),
         ' ', progressbar.Counter('%(value)d'), '/' + str(file_size) + ' bytes downloaded',
         ' ', progressbar.ETA(),
