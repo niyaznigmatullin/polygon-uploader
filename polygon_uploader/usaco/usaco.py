@@ -81,8 +81,14 @@ def main():
                 return part
 
             scoring = extract_part('prob-section')
+            if scoring is not None:
+                scoring = latexify_post(scoring.text, lang)
             input = extract_part('prob-in-spec')
+            if input is not None:
+                input = latexify_post(input.text, lang)
             output = extract_part('prob-out-spec')
+            if output is not None:
+                output = latexify_post(output.text, lang)
             for x in statement.find_all_next('h4'):
                 x.extract()
 
@@ -93,9 +99,10 @@ def main():
                     e.extract()
                     note = e
                     break
-
-            for x in note.find_all_next('pre'):
-                x.extract()
+            if note is not None:
+                for x in note.find_all_next('pre'):
+                    x.extract()
+                note = latexify_post(note.text, lang)
 
             # print("Legend: " + statement.text)
             # print("Input: " + input.text)
@@ -106,10 +113,10 @@ def main():
             polygon_statement = Statement(encoding="UTF-8",
                                           name=name,
                                           legend=latexify_post(statement.text, lang),
-                                          input=latexify_post(input.text, lang),
-                                          output=latexify_post(output.text, lang) +
-                                                 "\n\\Scoring\n" + latexify_post(scoring.text, lang),
-                                          notes=latexify_post(note.text, lang))
+                                          input=input,
+                                          output=("" if output is None else output) +
+                                                 ("" if scoring is None else ("\n\\Scoring\n" + scoring)),
+                                          notes=note)
             prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
 
     def download_tests(dir, tests_dir):
