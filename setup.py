@@ -13,7 +13,7 @@ setuptools.setup(
     url="https://github.com/niyaznigmatullin/polygon-uploader",
     author="Niyaz Nigmatullin",
     install_requires=[
-        'polygon-api>=1.0a6',
+        'polygon-api>=1.0a7',
         'requests',
         'pyyaml',
         'progressbar2',

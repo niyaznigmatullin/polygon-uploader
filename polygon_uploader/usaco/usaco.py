@@ -114,8 +114,8 @@ def main():
                                           name=name,
                                           legend=latexify_post(statement.text, lang),
                                           input=input,
-                                          output=("" if output is None else output) +
-                                                 ("" if scoring is None else ("\n\\Scoring\n" + scoring)),
+                                          output=output,
+                                          scoring=scoring,
                                           notes=note)
             prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
 
