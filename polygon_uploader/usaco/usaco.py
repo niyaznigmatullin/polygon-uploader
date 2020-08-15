@@ -92,10 +92,11 @@ def main():
             for x in statement.find_all_next('h4'):
                 x.extract()
 
+            sample_count = len(statement.find_all_next('pre', attrs={'class', 'in'}))
             ps = statement.find_all_next('p')
             note = None
             for e in ps[::-1]:
-                if len(e.find_all_next('pre', attrs={'class', 'in'})) > 0:
+                if len(e.find_all_next('pre', attrs={'class', 'in'})) == sample_count:
                     e.extract()
                     note = e
                     break
@@ -118,8 +119,9 @@ def main():
                                           scoring=scoring,
                                           notes=note)
             prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
+        return sample_count
 
-    def download_tests(dir, tests_dir):
+    def download_tests(dir, tests_dir, sample_count):
         tests_archive = os.path.join(dir, "tests.zip")
         download_file_to(testdata_href, tests_archive)
         print(tests_archive, "downloaded")
@@ -134,8 +136,8 @@ def main():
             return FileTest(os.path.join(tests_dir, name), 'usacoimport: filename = %s' % name)
 
         groups = [
-            Group(0, [file_to_test('1.in')], GroupScoring.SUM),
-            Group(100, [file_to_test('%d.in' % x) for x in range(2, cnt + 1)], GroupScoring.SUM),
+            Group(0, [file_to_test('%d.in' % x) for x in range(1, sample_count + 1)], GroupScoring.SUM),
+            Group(100, [file_to_test('%d.in' % x) for x in range(sample_count + 1, cnt + 1)], GroupScoring.SUM),
         ]
 
         upload_groups(prob, groups)
@@ -183,11 +185,12 @@ def main():
     print("problem.enableGroups")
     prob.enable_groups('tests', True)
 
+    sample_count = download_statement()
+
     tests_dir = os.path.join(dir, "tests")
     os.mkdir(tests_dir)
-    download_tests(dir, tests_dir)
+    download_tests(dir, tests_dir, sample_count)
 
-    download_statement()
     download_solutions()
 
     print("problem.setChecker std::wcmp.cpp")
