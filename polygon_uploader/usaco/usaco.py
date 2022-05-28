@@ -119,7 +119,7 @@ def main():
                                           scoring=scoring,
                                           notes=note)
             prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
-        return sample_count
+        return max(1, sample_count)
 
     def download_tests(dir, tests_dir, sample_count):
         tests_archive = os.path.join(dir, "tests.zip")
@@ -146,8 +146,9 @@ def main():
         solution_page = download_web_page(solution_href)
         parser = BeautifulSoup(solution_page, "html.parser")
         solutions = parser.find_all('pre', attrs={'class', 'prettyprint'})
-        analysis = parser.find('body')
-        latexify(analysis)
+        analysis = parser.find('html')
+        if analysis is not None:
+            latexify(analysis)
         id = 0
         tag = SolutionTag.MA
         for x in solutions:
@@ -171,7 +172,8 @@ def main():
         for x in parser.find_all('span'):
             x.unwrap()
         print("problem.saveStatement tutorial lang = english")
-        prob.save_statement(lang="english", problem_statement=Statement(tutorial=latexify_post(analysis.text, 'en')))
+        if analysis is not None:
+            prob.save_statement(lang="english", problem_statement=Statement(tutorial=latexify_post(analysis.text, 'en')))
 
     api = authenticate()
     print("problems.list id = %s" % polygon_pid)
