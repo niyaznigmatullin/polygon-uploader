@@ -20,6 +20,9 @@ class FileTest:
         with open(self.path, 'r') as tf:
             return tf.read()
 
+    def __repr__(self):
+        return "FileTest { path: %s, description: %s }" % (self.path, self.description)
+
 
 class MemoryTest:
     def __init__(self, content, description):
@@ -34,17 +37,24 @@ class Group:
     def __init__(self, score, tests, scoring):
         cnt = len(tests)
         self.score = score
-        if scoring == GroupScoring.SUM:
+        if len(tests) == 0:
+            self.points = []
+        elif scoring == GroupScoring.SUM:
             self.points = [score // cnt] * (cnt - score % cnt) + [score // cnt + 1] * (score % cnt)
         else:
             self.points = [score] + [0] * (cnt - 1)
         self.tests = tests
         self.scoring = scoring
 
+    def __repr__(self):
+        return "Group { score: %d, tests: %s, scoring: %s }" % (self.score, str(self.tests), str(self.scoring))
+
 
 def upload_groups(prob, groups):
     test_index = 0
     for gid, g in enumerate(groups):
+        if len(g.tests) == 0:
+            continue
         for t, cur_score in zip(g.tests, g.points):
             test_contents = t()
             test_index += 1
