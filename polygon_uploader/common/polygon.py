@@ -37,7 +37,7 @@ class Group:
     def __init__(self, score, tests, scoring):
         cnt = len(tests)
         self.score = score
-        if len(tests) == 0:
+        if cnt == 0:
             self.points = []
         elif scoring == GroupScoring.SUM:
             self.points = [score // cnt] * (cnt - score % cnt) + [score // cnt + 1] * (score % cnt)
