@@ -60,27 +60,15 @@ def upload_groups(prob, groups):
             test_index += 1
             print("problem.saveTest %d with group %d and score %s"
                   % (test_index, gid, str(cur_score)))
-            while True:
-                try:
-                    prob.save_test('tests', test_index, test_contents,
-                                   test_group=gid,
-                                   test_points=cur_score,
-                                   test_description=t.description,
-                                   check_existing=True,
-                                   test_use_in_statements=True if gid == 0 else None)
-                    break
-                except PolygonRequestFailedException as exc:
-                    skip = False
-                    while True:
-                        repl = input("%s Retry, Skip or Terminate (r/s/t): " % exc.comment).lower()
-                        if repl in ['r', 's', 't']:
-                            if repl == 't':
-                                raise exc
-                            elif repl == 's':
-                                skip = True
-                                break
-                    if skip:
-                        break
+            try:
+                prob.save_test('tests', test_index, test_contents,
+                               test_group=gid,
+                               test_points=cur_score,
+                               test_description=t.description,
+                               check_existing=True,
+                               test_use_in_statements=True if gid == 0 else None)
+            except PolygonRequestFailedException as exc:
+                print(exc.comment, "skipped")
         if g.scoring == GroupScoring.SUM:
             print("problem.saveTestGroup group %d, pointsPolicy=EACH_TEST, feedbackPolicy=COMPLETE" % gid)
             prob.save_test_group('tests', gid,
