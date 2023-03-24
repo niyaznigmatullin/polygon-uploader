@@ -11,26 +11,38 @@ class GroupScoring(Enum):
     GROUP = 2
 
 
-class FileTest:
-    def __init__(self, path, description):
+class FileContents:
+    def __init__(self, path):
         self.path = path
-        self.description = description
 
     def __call__(self, *args, **kwargs):
         with open(self.path, 'r') as tf:
             return tf.read()
 
     def __repr__(self):
-        return "FileTest { path: %s, description: %s }" % (self.path, self.description)
+        return "FileTest { path: %s, description: %s }" % self.path
 
 
-class MemoryTest:
-    def __init__(self, content, description):
+class MemoryContents:
+    def __init__(self, content):
         self.content = content
-        self.description = description
 
     def __call__(self, *args, **kwargs):
         return self.content
+
+
+class Test:
+    def __init__(self, content, description, use_in_statements=False, input_for_statements=None,
+                 output_for_statements=None, verify=None):
+        self.content = content
+        self.description = description
+        self.use_in_statements = use_in_statements
+        self.input_for_statements = input_for_statements
+        self.output_for_statements = output_for_statements
+        self.verify = verify
+
+    def __call__(self, *args, **kwargs):
+        return self.content()
 
 
 class Group:
@@ -66,7 +78,10 @@ def upload_groups(prob, groups):
                                test_points=cur_score,
                                test_description=t.description,
                                check_existing=True,
-                               test_use_in_statements=True if gid == 0 else None)
+                               test_use_in_statements=t.use_in_statements,
+                               test_input_for_statements=t.input_for_statements,
+                               test_output_for_statements=t.output_for_statements,
+                               verify_input_output_for_statements=t.verify)
             except PolygonRequestFailedException as exc:
                 print(exc.comment, "skipped")
         if g.scoring == GroupScoring.SUM:

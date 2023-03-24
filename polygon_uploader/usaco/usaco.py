@@ -15,10 +15,16 @@ __version__ = polygon_uploader.__version__
 __author__ = 'Niyaz Nigmatullin'
 
 if len(sys.argv) != 4:
-    print("Usage: usacoimport <usaco_cp_id> <usaco_id> <polygon problem id>")  # [<number of tests in groups separated by comma>]
+    print(
+        "Usage: usacoimport <usaco_cp_id> <usaco_id> <polygon problem id>")  # [<number of tests in groups separated
+    # by comma>]
     print("Example: usacoimport 1020 deleg_platinum_feb20 123123")
-    print("usaco_cp_id is taken from the problem description link: http://usaco.org/index.php?page=viewproblem2&cpid=1020, usaco_cp_id=1020")
-    print("usaco_id is taken from testdata link: http://usaco.org/current/data/deleg_platinum_feb20.zip, usaco_id=deleg_platinum_feb20")
+    print(
+        "usaco_cp_id is taken from the problem description link: "
+        "http://usaco.org/index.php?page=viewproblem2&cpid=1020, usaco_cp_id=1020")
+    print(
+        "usaco_id is taken from testdata link: http://usaco.org/current/data/deleg_platinum_feb20.zip, "
+        "usaco_id=deleg_platinum_feb20")
     print("Version: " + __version__)
     exit(239)
 
@@ -37,15 +43,15 @@ def main():
     def latexify(statement):
         for e in statement.find_all_next('ul'):
             e.insert_before('\n\\begin{itemize}')
-            e.insert_after('\n\\end{itemize}')
+            e.insert_after('\n\\end{itemize}\n')
             e.unwrap()
         for e in statement.find_all_next('ol'):
             e.insert_before('\n\\begin{enumerate}')
-            e.insert_after('\n\\end{enumerate}')
+            e.insert_after('\n\\end{enumerate}\n')
             e.unwrap()
         for e in statement.find_all_next('li'):
-            e.insert_before('\n\\item{')
-            e.insert_after('}')
+            e.insert_before('\n\\item ')
+            e.insert_after('\n')
             e.unwrap()
         for e in statement.find_all_next('strong'):
             e.insert_before('\\textbf{')
@@ -61,6 +67,7 @@ def main():
         return s
 
     def download_statement():
+        sample_count = 1
         for lang, lang_polygon in [('en', 'english'), ('ru', 'russian')]:
             page = download_web_page(problem_href + "&lang=%s" % lang)
             reg = re.compile(r".*<h2>\s*Problem\s*\d+\.\s*(\S.*[^<])\s+</h2>.*", re.DOTALL)
@@ -92,7 +99,7 @@ def main():
             for x in statement.find_all_next('h4'):
                 x.extract()
 
-            sample_count = len(statement.find_all_next('pre', attrs={'class', 'in'}))
+            sample_count = max(sample_count, len(statement.find_all_next('pre', attrs={'class', 'in'})))
             ps = statement.find_all_next('p')
             note = None
             for e in ps[::-1]:
@@ -101,7 +108,8 @@ def main():
                     note = e
                     break
             if note is not None:
-                for x in note.find_all_next('pre'):
+                for x in note.find_all_next('pre', attrs={'class', 'in'}) + note.find_all_next('pre',
+                                                                                               attrs={'class', 'out'}):
                     x.extract()
                 note = latexify_post(note.text, lang)
 
@@ -119,7 +127,7 @@ def main():
                                           scoring=scoring,
                                           notes=note)
             prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
-        return max(1, sample_count)
+        return sample_count
 
     def download_tests(dir, tests_dir, sample_count):
         tests_archive = os.path.join(dir, "tests.zip")
@@ -132,11 +140,13 @@ def main():
         print(to_extract, 'extracted to', tests_dir)
         cnt = len(to_extract)
 
-        def file_to_test(name):
-            return FileTest(os.path.join(tests_dir, name), 'usacoimport: filename = %s' % name)
+        def file_to_test(name, use_in_statements=False):
+            return Test(FileContents(os.path.join(tests_dir, name)), 'usacoimport: filename = %s' % name,
+                        use_in_statements=use_in_statements)
 
         groups = [
-            Group(0, [file_to_test('%d.in' % x) for x in range(1, sample_count + 1)], GroupScoring.SUM),
+            Group(0, [file_to_test('%d.in' % x, use_in_statements=True) for x in range(1, sample_count + 1)],
+                  GroupScoring.SUM),
             Group(100, [file_to_test('%d.in' % x) for x in range(sample_count + 1, cnt + 1)], GroupScoring.SUM),
         ]
 
@@ -173,7 +183,8 @@ def main():
             x.unwrap()
         print("problem.saveStatement tutorial lang = english")
         if analysis is not None:
-            prob.save_statement(lang="english", problem_statement=Statement(tutorial=latexify_post(analysis.text, 'en')))
+            prob.save_statement(lang="english",
+                                problem_statement=Statement(tutorial=latexify_post(analysis.text, 'en')))
 
     api = authenticate()
     print("problems.list id = %s" % polygon_pid)

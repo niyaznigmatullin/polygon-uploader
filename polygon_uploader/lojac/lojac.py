@@ -82,7 +82,7 @@ def main():
         file_list = zip_archive.namelist()
 
         def file_to_test(name):
-            return FileTest(os.path.join(tests_dir, name), 'lojacimport: filename = %s' % name)
+            return Test(FileContents(os.path.join(tests_dir, name)), 'lojacimport: filename = %s' % name)
 
         if 'data.yml' in file_list:
             zip_archive.extractall(path=tests_dir, members=["data.yml"])
@@ -100,7 +100,7 @@ def main():
             if int(f['subtasks'][0]['score']) != 0:
                 print("No group with score = 0, downloading sample tests from the web page")
                 description = 'lojacimport: parsed page %s' % problem_href
-                sample_tests = [MemoryTest(x, description) for x in download_sample_tests()]
+                sample_tests = [Test(MemoryContents(x), description, use_in_statements=True) for x in download_sample_tests()]
                 groups.append(Group(0, sample_tests, GroupScoring.SUM))
 
             to_extract = []
