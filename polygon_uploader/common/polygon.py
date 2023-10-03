@@ -70,8 +70,8 @@ def upload_groups(prob, groups):
         for t, cur_score in zip(g.tests, g.points):
             test_contents = t()
             test_index += 1
-            print("problem.saveTest %d with group %d and score %s"
-                  % (test_index, gid, str(cur_score)))
+            print("problem.saveTest %d [%s] with group %d and score %s"
+                  % (test_index, t.description, gid, str(cur_score)))
             try:
                 prob.save_test('tests', test_index, test_contents,
                                test_group=gid,
