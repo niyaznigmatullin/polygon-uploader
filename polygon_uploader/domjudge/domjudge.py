@@ -49,13 +49,14 @@ def main():
             return return_value, new_legend
 
         def extract_latex_tag_block(tag_name):
-            return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+            # return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+            return extract_pattern(re.compile(r"\\section[*]?\{%s}(.*)" % tag_name, flags=re.S))
 
         def extract_latex_tag(tag_name):
             return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
 
-        result.input, legend = extract_latex_tag_block("Input")
         result.output, legend = extract_latex_tag_block("Output")
+        result.input, legend = extract_latex_tag_block("Input")
         result.name, legend = extract_latex_tag("problemname")
         result.legend = legend
         return result
@@ -203,12 +204,21 @@ def main():
         info.interactive = is_interactive
 
         time_limit_file = glob.glob(os.path.join(directory, ".timelimit"))
+        domjudge_ini = glob.glob(os.path.join(directory, "domjudge-problem.ini"))
+        info.memory_limit = 512
         if len(time_limit_file) > 0:
             time_limit_file = time_limit_file[0]
             with open(time_limit_file) as fs:
                 tl = int(float(fs.read().strip()) * 1000)
             info.time_limit = tl
-            info.memory_limit = 512
+        elif len(domjudge_ini) > 0:
+            domjudge_ini = domjudge_ini[0]
+            with open(domjudge_ini) as fs:
+                text = fs.read()
+                r = re.compile(r"^\s*timelimit='?(\d+)'?\s*$")
+                s = r.match(text)
+                tl = s.group(1)
+            info.time_limit = tl
         prob.update_info(info)
 
         print("problem.saveGeneralDescription")
