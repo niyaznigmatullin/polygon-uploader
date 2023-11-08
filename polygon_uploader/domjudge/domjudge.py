@@ -15,8 +15,8 @@ from .. import __version__
 
 
 def main():
-    if len(sys.argv) != 3:
-        print("Usage: domjudgeimport <problem_directory> <polygon problem id>")
+    if len(sys.argv) < 3:
+        print("Usage: domjudgeimport <problem_directory> <polygon problem id> [--create]")
         print("Example: domjudgeimport bapc2022/adjustedaverage 123123")
         print("Version: " + __version__)
         exit(239)
@@ -235,9 +235,13 @@ def main():
     api = authenticate()
     print("problems.list id = %s" % polygon_pid)
     prob = list(api.problems_list(name=polygon_pid))
+    to_create = any(map(lambda x: x == '--create', sys.argv))
     if len(prob) == 0:
-        print("Problem %s not found" % polygon_pid)
-        exit(1)
+        if to_create and not polygon_pid.isdigit():
+            prob = [api.problem_create(name=polygon_pid)]
+        else:
+            print("Problem %s not found" % polygon_pid)
+            exit(1)
     prob = prob[0]
     print("problem.enablePoints")
     prob.enable_points(True)
