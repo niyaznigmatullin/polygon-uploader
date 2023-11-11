@@ -183,9 +183,9 @@ def main():
                     id += 1
                 source_types = [None]
                 if extension == ".py":
-                    source_types = ["python.pypy3", "python3", "python.pypy2", "python2"]
+                    source_types = ["python.pypy3", "python.3", "python.pypy2", "python.2"]
                 elif extension in [".cpp", ".cc", ".cxx", ".c++"]:
-                    source_types = ["cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017"]
+                    source_types = ["cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
                 for source_type in source_types:
                     print('problem.saveSolution name = %s, sourceType = %s' % (fname, source_type))
                     try:
