@@ -48,22 +48,41 @@ def main():
             new_legend = pattern.sub('', legend)
             return return_value, new_legend
 
+        def replace_new_command():
+            pattern = re.compile(r"\\newcommand\s*\{\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}\s*\{\s*(\S+)\s*}", flags=re.S)
+            vars = {}
+            for match in pattern.finditer(legend):
+                vars[match.group(1)] = match.group(2)
+            new_legend = pattern.sub('', legend)
+            for var, value in vars.items():
+                new_legend = new_legend.replace(var, value)
+            return new_legend
+
         def extract_latex_tag_block(tag_name):
-            # return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+            return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+
+        def extract_section(tag_name):
             return extract_pattern(re.compile(r"\\section[*]?\{%s}(.*)" % tag_name, flags=re.S))
 
         def extract_latex_tag(tag_name):
             return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
 
-        result.output, legend = extract_latex_tag_block("Output")
-        result.input, legend = extract_latex_tag_block("Input")
+        def extract_input_output(tag_name):
+            if legend.find("section{%s" % tag_name) >= 0:
+                return extract_section(tag_name)
+            else:
+                return extract_latex_tag_block(tag_name)
+
+        legend = replace_new_command()
+        result.output, legend = extract_input_output("Output")
+        result.input, legend = extract_input_output("Input")
         result.name, legend = extract_latex_tag("problemname")
         result.legend = legend
         return result
 
     def upload_statement():
         for lang, lang_polygon in [('en', 'english')]:
-            file = glob.glob(os.path.join(directory, "problem_statement/*%s*.tex" % lang))
+            file = glob.glob(os.path.join(directory, "problem_statement/prob*%s*.tex" % lang))
             print(file)
             if len(file) == 0:
                 continue
@@ -77,7 +96,7 @@ def main():
             except PolygonRequestFailedException as e:
                 print("API Error: " + e.comment)
 
-        solution_file = glob.glob(os.path.join(directory, "problem_statement/solution.tex"))
+        solution_file = glob.glob(os.path.join(directory, "problem_statement/sol*.tex"))
         if len(solution_file) > 0:
             solution_file = solution_file[0]
             with open(solution_file) as fs:
