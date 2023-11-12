@@ -73,7 +73,11 @@ def main():
             else:
                 return extract_latex_tag_block(tag_name)
 
+        def replace_formula_brackets():
+            return legend.replace('\\(', '$').replace('\\)', '$')
+
         legend = replace_new_command()
+        legend = replace_formula_brackets()
         result.output, legend = extract_input_output("Output")
         result.input, legend = extract_input_output("Input")
         result.name, legend = extract_latex_tag("problemname")
