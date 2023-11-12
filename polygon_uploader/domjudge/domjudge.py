@@ -68,7 +68,7 @@ def main():
             return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
 
         def extract_input_output(tag_name):
-            if legend.find("section{%s" % tag_name) >= 0:
+            if re.search(r"\\section[*]?\{%s}(.*)" % tag_name, legend) is not None:
                 return extract_section(tag_name)
             else:
                 return extract_latex_tag_block(tag_name)
