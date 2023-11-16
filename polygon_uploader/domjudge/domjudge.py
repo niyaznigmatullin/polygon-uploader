@@ -180,7 +180,8 @@ def main():
         id = 1
         for t in solution_types:
             tag = tags.get(t, SolutionTag.RJ)
-            solutions = list(glob.glob(os.path.join(directory, "submissions/%s/*" % t)))
+            solutions = glob.glob(os.path.join(directory, "submissions/%s/**" % t), recursive=True)
+            solutions = list(filter(lambda x: os.path.isfile(x), solutions))
             solutions.sort(key=lambda x: 0 if x.endswith(".cpp") else 1)
             print(solutions)
             need_main = tag == SolutionTag.OK
