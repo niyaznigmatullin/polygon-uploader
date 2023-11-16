@@ -81,6 +81,7 @@ def main():
 
         legend = replace_new_command()
         legend = replace_formula_brackets()
+        result.notes, legend = extract_input_output("(?:Examples?|Notes?)")
         if is_interactive:
             result.interaction, legend = extract_input_output("Interaction")
         result.output, legend = extract_input_output("Output")
