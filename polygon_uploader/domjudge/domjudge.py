@@ -1,3 +1,6 @@
+import io
+import zipfile
+
 from polygon_api import (
     SolutionTag,
     Statement,
@@ -224,6 +227,34 @@ def main():
             except PolygonRequestFailedException as e:
                 print("API Error: " + e.comment)
 
+    def upload_archive():
+        def create_archive_bytes(directory):
+            buffer = io.BytesIO()
+            zip_file = zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED)
+            for dirname, _, files in os.walk(directory):
+                dirname = os.path.relpath(dirname, directory)
+                if dirname.startswith(os.path.join("data", "secret")):
+                    continue
+                zip_file.write(os.path.join(directory, dirname), arcname=dirname)
+                for filename in files:
+                    zip_file.write(
+                        os.path.join(directory, dirname, filename),
+                        arcname=os.path.join(dirname, filename)
+                    )
+            zip_file.close()
+            buffer.seek(0)
+            return buffer.read()
+
+        content = create_archive_bytes(directory)
+        file = "archive.zip"
+        print('problem.saveFile: ' + file)
+        try:
+            prob.save_file(type=FileType.AUX,
+                           name=file,
+                           file=content)
+        except PolygonRequestFailedException as e:
+            print("API Error: " + e.comment)
+
     def upload_description_and_info(description, is_interactive):
         info = ProblemInfo()
         info.interactive = is_interactive
@@ -303,8 +334,7 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
     upload_resources("input_validators")
     upload_description_and_info(description, is_interactive)
 
-    archive_file = "archive.zip"
-    upload_archive_file(os.path.join(directory, archive_file))
+    upload_archive()
 
 
 #     tags = ['usaco']
