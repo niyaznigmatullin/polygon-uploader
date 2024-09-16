@@ -52,12 +52,13 @@ def main():
             return return_value, new_legend
 
         def replace_new_command():
-            pattern = re.compile(r"\\newcommand\s*\{\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}\s*\{\s*(\S+)\s*}", flags=re.S)
+            pattern = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}?\s*\{([^}]+)}", flags=re.S)
             vars = {}
             for match in pattern.finditer(legend):
                 vars[match.group(1)] = match.group(2)
             new_legend = pattern.sub('', legend)
             for var, value in vars.items():
+                new_legend = new_legend.replace(var + "{}", value)
                 new_legend = new_legend.replace(var, value)
             return new_legend
 
@@ -116,7 +117,7 @@ def main():
             except PolygonRequestFailedException as e:
                 print("API Error: " + e.comment)
 
-        for file in glob.glob(os.path.join(directory, "problem_statement/*")):
+        for file in glob.glob(os.path.join(directory, "problem_statement/**"), recursive=True):
             if os.path.isfile(file):
                 with open(file, "rb") as fs:
                     content = fs.read()
@@ -194,9 +195,9 @@ def main():
                     id += 1
                 source_types = [None]
                 if extension == ".py":
-                    source_types = ["python.pypy3", "python.3", "python.pypy2", "python.2"]
+                    source_types = ["python.pypy3-64", "python.pypy3", "python.3", "python.pypy2", "python.2"]
                 elif extension in [".cpp", ".cc", ".cxx", ".c++"]:
-                    source_types = ["cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
+                    source_types = ["cpp.gcc14-64-msys2-g++23", "cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
                 for source_type in source_types:
                     print('problem.saveSolution name = %s, sourceType = %s' % (fname, source_type))
                     try:
@@ -263,7 +264,7 @@ def main():
 
         time_limit_file = glob.glob(os.path.join(directory, ".timelimit"))
         domjudge_ini = glob.glob(os.path.join(directory, "domjudge-problem.ini"))
-        info.memory_limit = 512
+        info.memory_limit = 1024
         if len(time_limit_file) > 0:
             time_limit_file = time_limit_file[0]
             with open(time_limit_file) as fs:
