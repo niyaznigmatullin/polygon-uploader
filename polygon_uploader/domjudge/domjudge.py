@@ -27,13 +27,18 @@ def main():
     directory = sys.argv[1]
     polygon_pid = sys.argv[2]
 
-    def upload_from_file(file, file_type):
+    def upload_from_file(file, file_type, name=None, preprocess=None):
+        if os.path.basename(file) == "testlib.h" and name is None:
+            print("Skipping uploading 'testlib.h'")
+            return False
         with open(file) as fs:
             content = fs.read()
-        print('problem.saveFile: ' + file)
+        if preprocess is not None:
+            content = preprocess(content)
+        print('problem.saveFile: ' + file + ("   with name='" + name + "'" if name else ""))
         try:
             return prob.save_file(type=file_type,
-                                  name=os.path.basename(file),
+                                  name=name if name else os.path.basename(file),
                                   file=content) is None
         except PolygonRequestFailedException as e:
             print("API Error: " + e.comment)
@@ -169,7 +174,7 @@ def main():
                 test.description += ", verified custom output from sample/%s" % os.path.basename(test_file)
 
         upload_groups(prob, groups)
-        for file in glob.glob(os.path.join(directory, "data/*")):
+        for file in (glob.glob(os.path.join(directory, "data/*"))) + glob.glob(os.path.join(directory, "generators/*")):
             if os.path.isfile(file):
                 if not upload_from_file(file, FileType.SOURCE):
                     upload_from_file(file, FileType.RESOURCE)
@@ -213,10 +218,12 @@ def main():
                         print("Error: " + e.comment)
 
     def upload_resources(validator_dir):
-        output_validators = glob.glob(os.path.join(directory, "%s/*/*" % validator_dir))
+        output_validators = (glob.glob(os.path.join(directory, "%s/*/*" % validator_dir)) +
+                             glob.glob(os.path.join(directory, "%s/*" % validator_dir)))
         if len(output_validators) > 0:
             for file in output_validators:
-                upload_from_file(file, FileType.RESOURCE)
+                if os.path.isfile(file):
+                    upload_from_file(file, FileType.RESOURCE)
 
     def upload_archive_file(file):
         if os.path.isfile(file):
@@ -332,6 +339,18 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
     if len(glob.glob(os.path.join(directory, "output_validators"))) == 0:
         print("problem.setChecker std::wcmp.cpp")
         prob.set_checker('std::wcmp.cpp')
+    else:
+        name = "testlib_checker.cpp"
+        for checker in glob.glob(os.path.join(directory, "output_validators/main/*.cpp")):
+            if upload_from_file(checker, FileType.SOURCE, name=name):
+                prob.set_checker(name)
+
+    if len(glob.glob(os.path.join(directory, "input_validators/main"))) > 0:
+        name = "testlib_validator.cpp"
+        for validator in glob.glob(os.path.join(directory, "input_validators/main/*.cpp")):
+            preprocess = lambda x: re.sub(r'return\s+42\s*;', 'return 0;', x)
+            if upload_from_file(validator, FileType.SOURCE, name=name, preprocess=preprocess):
+                prob.set_validator(name)
 
     upload_resources("output_validators")
     upload_resources("input_validators")
