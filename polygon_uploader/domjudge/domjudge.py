@@ -289,6 +289,9 @@ def main():
         prob.update_info(info)
 
         print("problem.saveGeneralDescription")
+        limit = 14000
+        if len(description) > limit:
+            description = description[:limit] + "..."
         prob.save_general_description(description)
 
     def read_problem_yaml():
