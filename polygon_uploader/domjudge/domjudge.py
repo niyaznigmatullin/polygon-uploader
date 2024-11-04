@@ -134,8 +134,9 @@ def main():
 
     def upload_tests():
         def get_tests_from_directory(test_type, use_in_statements=False):
-            files = sorted(glob.glob(os.path.join(directory, "data/%s/*.in" % test_type)),
-                           key=lambda x: os.path.basename(x))
+            files = (glob.glob(os.path.join(directory, "data/%s/*.in" % test_type)) +
+                         glob.glob(os.path.join(directory, "data/%s/*/*.in" % test_type)))
+            files.sort(key=lambda x: os.path.basename(x))
             return [Test(FileContents(file), "domjudgeimport: %s/%s" % (test_type, os.path.basename(file)),
                          use_in_statements=use_in_statements) for file in files]
 
