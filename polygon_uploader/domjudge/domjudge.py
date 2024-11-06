@@ -286,6 +286,13 @@ def main():
                 s = r.match(text)
                 tl = s.group(1)
             info.time_limit = tl
+        if info.time_limit is not None:
+            try:
+                if int(info.time_limit) > 15000:
+                    print("Warning: Time limit '%s' exceeds 15000. Setting time limit to 15000." % tl)
+                    info.time_limit = "15000"
+            except ValueError:
+                print("Error: Time limit is not a valid number.")
         prob.update_info(info)
 
         print("problem.saveGeneralDescription")
