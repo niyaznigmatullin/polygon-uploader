@@ -28,6 +28,7 @@ setuptools.setup(
         'console_scripts': [
             'lojacimport=polygon_uploader.lojac:main',
             'usacoimport=polygon_uploader.usaco:main',
+            'domjudgeimport=polygon_uploader.domjudge:main',
         ]
     },
     classifiers=[
