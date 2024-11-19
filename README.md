@@ -15,6 +15,14 @@ uploader of tasks to polygon.codeforces.com
 
 `usaco_id` is taken from testdata link, for example: http://usaco.org/current/data/deleg_platinum_feb20.zip, in this example `usaco_id` is `deleg_platinum_feb20`
 
+## Usage, domjudge module
+
+`domjudgeimport <problem_directory> <polygon problem id> [--create]`
+
+`domjudgeimport bapc2022/adjustedaverage 123123`
+
+`--create` -- creates new problem in polygon if no problem with the provided ID was found
+
 ## Config file
 
 Config file is located in `<user dir>/.config/polygon-uploader`
