@@ -23,11 +23,15 @@ setuptools.setup(
               'polygon_uploader.common',
               'polygon_uploader.lojac',
               'polygon_uploader.usaco',
+              'polygon_uploader.package',
+              'polygon_uploader.usual',
     ],
     entry_points={
         'console_scripts': [
             'lojacimport=polygon_uploader.lojac:main',
             'usacoimport=polygon_uploader.usaco:main',
+            'packageimport=polygon_uploader.package:main',
+            'usualimport=polygon_uploader.usual:main',
         ]
     },
     classifiers=[
