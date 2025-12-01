@@ -263,7 +263,7 @@ def main():
             return buffer.read()
 
         content = create_archive_bytes(directory)
-        file = "archive.zip"
+        file = "archive.zip.jar"
         print('problem.saveFile: ' + file)
         try:
             prob.save_file(type=FileType.AUX,
