@@ -280,12 +280,16 @@ def main():
             info.time_limit = tl
         elif len(domjudge_ini) > 0:
             domjudge_ini = domjudge_ini[0]
-            with open(domjudge_ini) as fs:
-                text = fs.read()
-                r = re.compile(r"^\s*timelimit='?(\d+)'?\s*$")
-                s = r.match(text)
-                tl = s.group(1)
-            info.time_limit = tl
+            tl = None
+            with open(domjudge_ini, "r") as fs:
+                for text in fs:
+                    s = re.match(r"^\s*timelimit\s*=\s*'?(\d+)'?\s*$", text)
+                    if s:
+                        tl = int(s.group(1)) * 1000
+                        break
+            if tl:
+                info.time_limit = tl
+                print(f"Found timelimit = {tl} in domjudge-problem.ini")
         if info.time_limit is not None:
             try:
                 if int(info.time_limit) > 15000:
