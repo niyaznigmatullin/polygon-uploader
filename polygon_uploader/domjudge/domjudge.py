@@ -224,13 +224,17 @@ def main():
                     except _ as e:
                         print("Error: " + e.comment)
 
-    def upload_resources(validator_dir):
-        output_validators = (glob.glob(os.path.join(directory, "%s/*/*" % validator_dir)) +
+    def upload_resources(validator_dir, prefix):
+        validators = (glob.glob(os.path.join(directory, "%s/*/*" % validator_dir)) +
                              glob.glob(os.path.join(directory, "%s/*" % validator_dir)))
-        if len(output_validators) > 0:
-            for file in output_validators:
+        if len(validators) > 0:
+            for file in validators:
                 if os.path.isfile(file):
-                    upload_from_file(file, FileType.RESOURCE)
+                    name = os.path.basename(file)
+                    _, extension = os.path.splitext(name)
+                    if extension in { ".py", ".java", ".cpp", ".cc", ".cxx", ".c++" } and prefix not in name:
+                        name = prefix + "val_" + name
+                    upload_from_file(file, FileType.RESOURCE, name=name)
 
     def upload_archive_file(file):
         if os.path.isfile(file):
@@ -373,8 +377,8 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
             if upload_from_file(validator, FileType.SOURCE, name=name, preprocess=preprocess):
                 prob.set_validator(name)
 
-    upload_resources("output_validators")
-    upload_resources("input_validators")
+    upload_resources("output_validators", "out")
+    upload_resources("input_validators", "in")
     upload_description_and_info(description, is_interactive)
 
     upload_archive()
