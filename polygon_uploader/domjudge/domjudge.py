@@ -193,7 +193,11 @@ def main():
             print(solutions)
             need_main = tag == SolutionTag.OK
             for file in solutions:
-                code = open(file).read()
+                try:
+                    code = open(file, "r", encoding="utf-8").read()
+                except UnicodeDecodeError:
+                    print(f"Couldn't decode UTF-8 in solution '{file}'")
+                    continue
                 fname = os.path.basename(file)
                 _, extension = os.path.splitext(fname)
                 if extension != ".java":
