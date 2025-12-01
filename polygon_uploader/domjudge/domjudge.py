@@ -208,6 +208,8 @@ def main():
                     source_types = ["python.pypy3-64", "python.pypy3", "python.3", "python.pypy2", "python.2"]
                 elif extension in [".cpp", ".cc", ".cxx", ".c++"]:
                     source_types = ["cpp.gcc14-64-msys2-g++23", "cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
+                elif extension in [".java"]:
+                    source_types = ["java21", "java8"]
                 for source_type in source_types:
                     print('problem.saveSolution name = %s, sourceType = %s' % (fname, source_type))
                     try:
