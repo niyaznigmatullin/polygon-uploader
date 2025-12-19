@@ -4,6 +4,7 @@ from polygon_api import (
     SolutionTag,
     PolygonRequestFailedException,
     FileType,
+    Statement,
 )
 import sys
 import os
@@ -13,11 +14,10 @@ import polygon_uploader
 __version__ = polygon_uploader.__version__
 __author__ = 'Niyaz Nigmatullin'
 
-if len(sys.argv) != 3:
-    print(
-        "Usage: usual <directory> <polygon problem id>")
-    # by comma>]
+if len(sys.argv) < 3:
+    print("Usage: usual <directory> <polygon problem id> [--create]")
     print("Example: usual ~/Downloads/aplusb 123123")
+    print("Example: usual ~/Downloads/aplusb my-problem --create")
     print("Version: " + __version__)
     exit(239)
 
@@ -109,6 +109,65 @@ def upload_sources(prob, directory):
         save_file(prob, path, FileType.SOURCE)
 
 
+def upload_statements(prob, directory):
+    statements_dir = os.path.join(directory, "statements", "latex")
+    if not os.path.isdir(statements_dir):
+        print(f"Statements directory not found: {statements_dir}")
+        return
+
+    def find_tex_file(keywords):
+        """Find a .tex file containing any of the keywords in its name"""
+        for keyword in keywords:
+            pattern = os.path.join(statements_dir, f"*{keyword}*.tex")
+            files = glob.glob(pattern)
+            if files:
+                return files[0]
+        return None
+
+    def read_tex_file(filepath):
+        """Read content from a .tex file"""
+        if filepath and os.path.isfile(filepath):
+            try:
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    return f.read()
+            except Exception as e:
+                print(f"Error reading {filepath}: {e}")
+        return None
+
+    # Find and read statement files
+    name_file = find_tex_file(['name'])
+    legend_file = find_tex_file(['legend'])
+    input_file = find_tex_file(['input-format', 'input'])
+    output_file = find_tex_file(['output-format', 'output'])
+    notes_file = find_tex_file(['notes', 'note'])
+
+    name_content = read_tex_file(name_file)
+    legend_content = read_tex_file(legend_file)
+    input_content = read_tex_file(input_file)
+    output_content = read_tex_file(output_file)
+    notes_content = read_tex_file(notes_file)
+
+    # Only upload if we have at least some content
+    if not any([name_content, legend_content, input_content, output_content, notes_content]):
+        print("No statement content found in statements/latex/")
+        return
+
+    try:
+        print("problem.saveStatement language = english")
+        statement = Statement(
+            encoding='UTF-8',
+            name=name_content or '',
+            legend=legend_content or '',
+            input=input_content or '',
+            output=output_content or '',
+            notes=notes_content or ''
+        )
+        prob.save_statement('english', statement)
+        print("Statement uploaded successfully")
+    except PolygonRequestFailedException as e:
+        print("API Error: " + e.comment)
+
+
 def main():
     directory = sys.argv[1]
     polygon_pid = sys.argv[2]
@@ -117,8 +176,14 @@ def main():
     print("problems.list id = %s" % polygon_pid)
     prob = list(api.problems_list(id=polygon_pid))
     if len(prob) == 0:
-        print("Problem %s not found" % polygon_pid)
-        exit(1)
+        prob = list(api.problems_list(name=polygon_pid))
+    if len(prob) == 0:
+        to_create = any(map(lambda x: x == '--create', sys.argv))
+        if to_create and not polygon_pid.isdigit():
+            prob = [api.problem_create(name=polygon_pid)]
+        else:
+            print("Problem %s not found" % polygon_pid)
+            exit(1)
     prob = prob[0]
     print("problem.enablePoints")
     prob.enable_points(True)
@@ -132,6 +197,8 @@ def main():
     # upload_solutions(prob, directory)
 
     upload_solutions(prob, os.path.join(directory, "solutions"))
+
+    upload_statements(prob, directory)
 
     # print("problem.setChecker std::wcmp.cpp")
     # prob.set_checker('std::wcmp.cpp')
