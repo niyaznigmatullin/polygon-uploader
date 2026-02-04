@@ -198,6 +198,15 @@ def main():
                 except UnicodeDecodeError:
                     print(f"Couldn't decode UTF-8 in solution '{file}'")
                     continue
+                if tag == SolutionTag.RJ and "@EXPECTED_RESULTS@" in code:
+                    for line in code.splitlines()[0]:
+                        if "@EXPECTED_RESULTS@" in line:
+                            after_colon = line.split(":")[1].strip()
+                            elements = [x.strip() for x in after_colon.split(",")]
+                            elements.sort()
+                            if elements == ["ACCEPTED", "TIME_LIMIT_EXCEEDED"]:
+                                tag = SolutionTag.TO
+
                 fname = os.path.basename(file)
                 _, extension = os.path.splitext(fname)
                 if extension != ".java":
