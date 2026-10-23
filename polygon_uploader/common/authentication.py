@@ -5,13 +5,21 @@ from polygon_api import Polygon, HTTPRequestFailedException
 
 
 class RetryingPolygon(Polygon):
-    """Retries requests rejected by Polygon with HTTP 429 (Too Many Requests) or a transient 5xx"""
+    """Sends at most one request per MIN_REQUEST_INTERVAL seconds and retries requests
+    rejected by Polygon with HTTP 429 (Too Many Requests) or a transient 5xx"""
 
     RETRIED_CODES = ('429', '502', '503', '504')
+    MIN_REQUEST_INTERVAL = 1.0
+
+    _last_request_time = 0.0
 
     def _request(self, method_name, args=None):
         delay = 5
         while True:
+            wait = self._last_request_time + self.MIN_REQUEST_INTERVAL - time.monotonic()
+            if wait > 0:
+                time.sleep(wait)
+            self._last_request_time = time.monotonic()
             try:
                 return super()._request(method_name, args)
             except HTTPRequestFailedException as e:
