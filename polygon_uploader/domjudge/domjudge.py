@@ -365,6 +365,10 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
             if "custom" in yaml_contents["validation"]:
                 is_custom_checker = True
 
+    # the interactive flag must be set before the statement: Polygon rejects
+    # the interaction section of a non-interactive problem
+    upload_description_and_info(description, is_interactive)
+
     upload_tests()
 
     upload_solutions()
@@ -389,7 +393,6 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
 
     upload_resources("output_validators", "out")
     upload_resources("input_validators", "in")
-    upload_description_and_info(description, is_interactive)
 
     upload_archive()
 
