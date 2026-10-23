@@ -1,9 +1,13 @@
+import time
 from enum import Enum
 from polygon_api import (
     PointsPolicy,
     FeedbackPolicy,
     PolygonRequestFailedException,
 )
+
+# seconds to wait after each uploaded test
+TEST_UPLOAD_DELAY = 0.5
 
 
 class GroupScoring(Enum):
@@ -84,6 +88,8 @@ def upload_groups(prob, groups):
                                verify_input_output_for_statements=t.verify)
             except PolygonRequestFailedException as exc:
                 print(exc.comment, "skipped")
+            # Polygon answers HTTP 429 to a quick series of saveTest calls
+            time.sleep(TEST_UPLOAD_DELAY)
         if g.scoring == GroupScoring.SUM:
             print("problem.saveTestGroup group %d, pointsPolicy=EACH_TEST, feedbackPolicy=COMPLETE" % gid)
             prob.save_test_group('tests', gid,
