@@ -9,7 +9,7 @@ class RetryingPolygon(Polygon):
     rejected by Polygon with HTTP 429 (Too Many Requests) or a transient 5xx"""
 
     RETRIED_CODES = ('429', '502', '503', '504')
-    MIN_REQUEST_INTERVAL = 1.0
+    MIN_REQUEST_INTERVAL = 2.0
 
     _last_request_time = 0.0
 
