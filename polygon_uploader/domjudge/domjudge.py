@@ -186,6 +186,7 @@ def main():
         tags = {"accepted": SolutionTag.OK, "wrong_answer": SolutionTag.WA, "time_limit_exceeded": SolutionTag.TL,
                 "run_time_error": SolutionTag.RJ}
         id = 1
+        used_names = set()
         for t in solution_types:
             solutions = glob.glob(os.path.join(directory, "submissions/%s/**" % t), recursive=True)
             solutions = sorted(filter(lambda x: os.path.isfile(x), solutions))
@@ -210,9 +211,11 @@ def main():
 
                 fname = os.path.basename(file)
                 _, extension = os.path.splitext(fname)
-                if extension != ".java":
+                # a Java file keeps its name unless another submission directory already used it
+                if extension != ".java" or fname in used_names:
                     fname = ("s%02d_" % id) + fname
                     id += 1
+                used_names.add(fname)
                 source_types = [None]
                 if extension == ".py":
                     source_types = ["python.pypy3-64", "python.pypy3", "python.3", "python.pypy2", "python.2"]
