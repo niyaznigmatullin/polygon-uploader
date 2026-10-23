@@ -5,7 +5,9 @@ from polygon_api import Polygon, HTTPRequestFailedException
 
 
 class RetryingPolygon(Polygon):
-    """Retries requests rejected by Polygon with HTTP 429 (Too Many Requests)"""
+    """Retries requests rejected by Polygon with HTTP 429 (Too Many Requests) or a transient 5xx"""
+
+    RETRIED_CODES = ('429', '502', '503', '504')
 
     def _request(self, method_name, args=None):
         delay = 5
@@ -13,9 +15,10 @@ class RetryingPolygon(Polygon):
             try:
                 return super()._request(method_name, args)
             except HTTPRequestFailedException as e:
-                if '429' not in e.comment or delay > 300:
+                code = next((c for c in self.RETRIED_CODES if c in e.comment), None)
+                if code is None or delay > 300:
                     raise
-                print("%s: HTTP 429, retrying in %d seconds" % (method_name, delay))
+                print("%s: HTTP %s, retrying in %d seconds" % (method_name, code, delay))
                 time.sleep(delay)
                 delay *= 2
 
