@@ -6,6 +6,10 @@ from polygon_api import Polygon
 def authenticate():
     default_polygon_url = "https://polygon.codeforces.com"
 
+    if os.getenv('POLYGON_API_KEY') and os.getenv('POLYGON_API_SECRET'):
+        polygon_url = os.getenv('POLYGON_URL', default_polygon_url)
+        return Polygon(polygon_url + '/api', os.getenv('POLYGON_API_KEY'), os.getenv('POLYGON_API_SECRET'))
+
     authentication_file = os.path.join(os.path.expanduser('~'), '.config', 'polygon_uploader', 'auth.yaml')
     api_key = None
     api_secret = None

@@ -181,25 +181,26 @@ def main():
                     upload_from_file(file, FileType.RESOURCE)
 
     def upload_solutions():
-        solution_types = [os.path.basename(x) for x in glob.glob(os.path.join(directory, "submissions/*"))]
+        solution_types = sorted(os.path.basename(x) for x in glob.glob(os.path.join(directory, "submissions/*")))
+        solution_types.sort(key=lambda x: 0 if x == "accepted" else 1)
         tags = {"accepted": SolutionTag.OK, "wrong_answer": SolutionTag.WA, "time_limit_exceeded": SolutionTag.TL,
                 "run_time_error": SolutionTag.RJ}
         id = 1
         for t in solution_types:
-            tag = tags.get(t, SolutionTag.RJ)
             solutions = glob.glob(os.path.join(directory, "submissions/%s/**" % t), recursive=True)
-            solutions = list(filter(lambda x: os.path.isfile(x), solutions))
+            solutions = sorted(filter(lambda x: os.path.isfile(x), solutions))
             solutions.sort(key=lambda x: 0 if x.endswith(".cpp") else 1)
             print(solutions)
-            need_main = tag == SolutionTag.OK
+            need_main = t == "accepted"
             for file in solutions:
+                tag = tags.get(t, SolutionTag.RJ)
                 try:
                     code = open(file, "r", encoding="utf-8").read()
                 except UnicodeDecodeError:
                     print(f"Couldn't decode UTF-8 in solution '{file}'")
                     continue
                 if tag == SolutionTag.RJ and "@EXPECTED_RESULTS@" in code:
-                    for line in code.splitlines()[0]:
+                    for line in code.splitlines():
                         if "@EXPECTED_RESULTS@" in line:
                             after_colon = line.split(":")[1].strip()
                             elements = [x.strip() for x in after_colon.split(",")]

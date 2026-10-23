@@ -21,6 +21,7 @@ setuptools.setup(
     ],
     packages=['polygon_uploader',
               'polygon_uploader.common',
+              'polygon_uploader.domjudge',
               'polygon_uploader.lojac',
               'polygon_uploader.usaco',
     ],
