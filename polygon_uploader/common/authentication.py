@@ -1,6 +1,23 @@
 import os
+import time
 import yaml
-from polygon_api import Polygon
+from polygon_api import Polygon, HTTPRequestFailedException
+
+
+class RetryingPolygon(Polygon):
+    """Retries requests rejected by Polygon with HTTP 429 (Too Many Requests)"""
+
+    def _request(self, method_name, args=None):
+        delay = 5
+        while True:
+            try:
+                return super()._request(method_name, args)
+            except HTTPRequestFailedException as e:
+                if '429' not in e.comment or delay > 300:
+                    raise
+                print("%s: HTTP 429, retrying in %d seconds" % (method_name, delay))
+                time.sleep(delay)
+                delay *= 2
 
 
 def authenticate():
@@ -8,7 +25,7 @@ def authenticate():
 
     if os.getenv('POLYGON_API_KEY') and os.getenv('POLYGON_API_SECRET'):
         polygon_url = os.getenv('POLYGON_URL', default_polygon_url)
-        return Polygon(polygon_url + '/api', os.getenv('POLYGON_API_KEY'), os.getenv('POLYGON_API_SECRET'))
+        return RetryingPolygon(polygon_url + '/api', os.getenv('POLYGON_API_KEY'), os.getenv('POLYGON_API_SECRET'))
 
     authentication_file = os.path.join(os.path.expanduser('~'), '.config', 'polygon_uploader', 'auth.yaml')
     api_key = None
@@ -36,4 +53,4 @@ def authenticate():
             yaml.dump(auth_data, fo, default_flow_style=False)
         print('Authentication data is stored in {}'.format(authentication_file))
     polygon_url += '/api'
-    return Polygon(polygon_url, api_key, api_secret)
+    return RetryingPolygon(polygon_url, api_key, api_secret)
