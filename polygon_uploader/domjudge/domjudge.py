@@ -54,9 +54,14 @@ def main():
             content = preprocess(content)
         print('problem.saveFile: ' + file + ("   with name='" + name + "'" if name else ""))
         try:
+            # Polygon guesses an old C++ standard for sources without a type (e.g. no std::string::starts_with)
+            source_type = None
+            if file_type == FileType.SOURCE and os.path.splitext(file)[1] in CPP_EXTENSIONS:
+                source_type = "cpp.gcc14-64-msys2-g++23"
             return prob.save_file(type=file_type,
                                   name=name if name else os.path.basename(file),
-                                  file=content) is None
+                                  file=content,
+                                  source_type=source_type) is None
         except PolygonRequestFailedException as e:
             api_error("saveFile %s" % file, e, fallback)
             return False
