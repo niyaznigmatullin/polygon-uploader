@@ -7,6 +7,8 @@ from polygon_api import (
     FileType,
     ProblemInfo,
     PolygonRequestFailedException,
+    ValidatorTestVerdict,
+    CheckerTestVerdict,
 )
 import sys
 import os
@@ -201,6 +203,83 @@ def main():
             if os.path.isfile(file):
                 if not upload_from_file(file, FileType.SOURCE, fallback="saving it as a resource instead"):
                     upload_from_file(file, FileType.RESOURCE)
+
+    def read_data_cases(section, extensions):
+        """Test cases data/<section>/**/*.in as (name, {extension: content}) with the files that exist."""
+        cases = []
+        section_files = glob.glob(os.path.join(directory, "data", section, "**", "*.in"), recursive=True)
+        for file in sorted(section_files):
+            base = file[:-len(".in")]
+            case = {}
+            for extension in extensions:
+                if os.path.isfile(base + "." + extension):
+                    with open(base + "." + extension) as fs:
+                        case[extension] = fs.read()
+            cases.append((os.path.relpath(base, os.path.join(directory, "data")), case))
+        return cases
+
+    def read_generators_yaml_cases(section):
+        """Test cases of data.<section> in generators/generators.yaml given inline (in:, ans:, out:)."""
+        file = os.path.join(directory, "generators/generators.yaml")
+        if not os.path.isfile(file):
+            return []
+        with open(file) as fs:
+            data = (yaml.safe_load(fs) or {}).get("data") or {}
+        cases = []
+
+        def walk(name, node):
+            if isinstance(node, list):
+                for item in node:
+                    walk(name, item)
+            elif isinstance(node, dict):
+                if "in" in node:
+                    cases.append(("generators.yaml " + name, {k: str(v) for k, v in node.items()}))
+                elif "data" in node:
+                    walk(name, node["data"])
+                elif any(key in node for key in ("generate", "copy", "ans", "out")):
+                    print("Skipping generators.yaml %s: no inline input" % name)
+                else:
+                    for key, value in node.items():
+                        walk(name + "/" + str(key), value)
+            elif node is not None:
+                print("Skipping generators.yaml %s: no inline input" % name)
+
+        walk(section, data.get(section))
+        return cases
+
+    def upload_validator_tests():
+        tests = [(name, case["in"], ValidatorTestVerdict.VALID)
+                 for name, case in read_data_cases("sample", ["in"])]
+        tests += [(name, case["in"], ValidatorTestVerdict.INVALID)
+                  for name, case in read_data_cases("invalid_input", ["in"]) + read_generators_yaml_cases("invalid_input")]
+        for index, (name, content, verdict) in enumerate(tests, 1):
+            print("problem.saveValidatorTest %d [%s] %s" % (index, name, verdict))
+            try:
+                prob.save_validator_test(index, test_input=content, test_verdict=verdict)
+            except PolygonRequestFailedException as e:
+                api_error("saveValidatorTest %s" % name, e)
+
+    def upload_checker_tests():
+        # the interactor decides the verdict of an interactive problem, a standard checker needs no tests
+        if is_interactive or not is_custom_checker:
+            return
+        # a sample answer is assumed to be a valid output
+        tests = [(name, case["in"], case["ans"], case["ans"], CheckerTestVerdict.OK)
+                 for name, case in read_data_cases("sample", ["in", "ans"]) if "ans" in case]
+        for section, verdict in [("valid_output", CheckerTestVerdict.OK),
+                                 ("invalid_output", CheckerTestVerdict.WRONG_ANSWER)]:
+            for name, case in read_data_cases(section, ["in", "ans", "out"]) + read_generators_yaml_cases(section):
+                if "ans" not in case or "out" not in case:
+                    print("Skipping checker test %s: needs both an answer and an output" % name)
+                    continue
+                tests.append((name, case["in"], case["out"], case["ans"], verdict))
+        for index, (name, test_input, output, answer, verdict) in enumerate(tests, 1):
+            print("problem.saveCheckerTest %d [%s] %s" % (index, name, verdict))
+            try:
+                prob.save_checker_test(index, test_input=test_input, test_output=output, test_answer=answer,
+                                       test_verdict=verdict)
+            except PolygonRequestFailedException as e:
+                api_error("saveCheckerTest %s" % name, e)
 
     def upload_solutions():
         solution_types = sorted(os.path.basename(x) for x in glob.glob(os.path.join(directory, "submissions/*")))
@@ -415,6 +494,9 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
             preprocess = lambda x: re.sub(r'return\s+42\s*;', 'return 0;', x)
             if upload_from_file(validator, FileType.SOURCE, name=name, preprocess=preprocess):
                 prob.set_validator(name)
+
+    upload_validator_tests()
+    upload_checker_tests()
 
     upload_resources("output_validators", "out")
     upload_resources("input_validators", "in")
