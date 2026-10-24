@@ -30,7 +30,17 @@ def main():
     directory = sys.argv[1]
     polygon_pid = sys.argv[2]
 
-    def upload_from_file(file, file_type, name=None, preprocess=None):
+    # API errors that no fallback recovered from, printed at the end
+    failures = []
+
+    def api_error(action, e, fallback=None):
+        print("API Error: " + e.comment)
+        if fallback is not None:
+            print("  -> " + fallback)
+        else:
+            failures.append("%s: %s" % (action, e.comment))
+
+    def upload_from_file(file, file_type, name=None, preprocess=None, fallback=None):
         if os.path.basename(file) == "testlib.h" and name is None:
             print("Skipping uploading 'testlib.h'")
             return False
@@ -48,7 +58,7 @@ def main():
                                   name=name if name else os.path.basename(file),
                                   file=content) is None
         except PolygonRequestFailedException as e:
-            print("API Error: " + e.comment)
+            api_error("saveFile %s" % file, e, fallback)
             return False
 
     def parse_statement(content):
@@ -117,7 +127,7 @@ def main():
             try:
                 prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
             except PolygonRequestFailedException as e:
-                print("API Error: " + e.comment)
+                api_error("saveStatement %s" % file, e)
 
         solution_file = glob.glob(os.path.join(directory, "problem_statement/sol*.tex"))
         if len(solution_file) > 0:
@@ -127,7 +137,7 @@ def main():
             try:
                 prob.save_statement(lang="english", problem_statement=Statement(tutorial=content))
             except PolygonRequestFailedException as e:
-                print("API Error: " + e.comment)
+                api_error("saveStatement tutorial %s" % solution_file, e)
 
         for file in glob.glob(os.path.join(directory, "problem_statement/**"), recursive=True):
             if os.path.isfile(file):
@@ -137,7 +147,7 @@ def main():
                     print("problem.saveStatementResource %s, size = %d bytes" % (file, len(content)))
                     prob.save_statement_resource(os.path.basename(file), content)
                 except PolygonRequestFailedException as e:
-                    print("API Error: " + e.comment)
+                    api_error("saveStatementResource %s" % file, e)
 
     def upload_tests():
         def get_tests_from_directory(test_type, use_in_statements=False):
@@ -184,7 +194,7 @@ def main():
         upload_groups(prob, groups)
         for file in (glob.glob(os.path.join(directory, "data/*"))) + glob.glob(os.path.join(directory, "generators/*")):
             if os.path.isfile(file):
-                if not upload_from_file(file, FileType.SOURCE):
+                if not upload_from_file(file, FileType.SOURCE, fallback="saving it as a resource instead"):
                     upload_from_file(file, FileType.RESOURCE)
 
     def upload_solutions():
@@ -230,8 +240,9 @@ def main():
                     source_types = ["cpp.gcc14-64-msys2-g++23", "cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
                 elif extension in [".java"]:
                     source_types = ["java21", "java8"]
-                for source_type in source_types:
+                for i, source_type in enumerate(source_types):
                     print('problem.saveSolution name = %s, sourceType = %s' % (fname, source_type))
+                    last = i + 1 == len(source_types)
                     try:
                         prob.save_solution(name=fname,
                                            file=code,
@@ -240,9 +251,8 @@ def main():
                         need_main = False
                         break
                     except PolygonRequestFailedException as e:
-                        print("API Error: " + e.comment)
-                    except _ as e:
-                        print("Error: " + e.comment)
+                        api_error("saveSolution %s" % file, e,
+                                  None if last else "trying sourceType %s" % source_types[i + 1])
 
     def upload_resources(validator_dir, prefix):
         validators = (glob.glob(os.path.join(directory, "%s/*/*" % validator_dir)) +
@@ -266,7 +276,7 @@ def main():
                                name=os.path.basename(file),
                                file=content)
             except PolygonRequestFailedException as e:
-                print("API Error: " + e.comment)
+                api_error("saveFile %s" % file, e)
 
     def upload_archive():
         def create_archive_bytes(directory):
@@ -294,7 +304,7 @@ def main():
                            name=file,
                            file=content)
         except PolygonRequestFailedException as e:
-            print("API Error: " + e.comment)
+            api_error("saveFile %s" % file, e)
 
     def upload_description_and_info(description, is_interactive):
         info = ProblemInfo()
@@ -405,6 +415,13 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
     upload_resources("input_validators", "in")
 
     upload_archive()
+
+    if failures:
+        print("domjudgeimport: %d API error(s) not recovered:" % len(failures))
+        for failure in failures:
+            print("  " + failure)
+        exit(3)
+    print("domjudgeimport: done, no unrecovered API errors")
 
 
 #     tags = ['usaco']
