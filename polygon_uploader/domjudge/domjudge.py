@@ -274,6 +274,9 @@ def main():
                     continue
                 tests.append((name, case["in"], case["out"], case["ans"], verdict))
         for index, (name, test_input, output, answer, verdict) in enumerate(tests, 1):
+            # Polygon validates checker test inputs, inline ones like `in: "1"` lack the final newline
+            if not test_input.endswith("\n"):
+                test_input += "\n"
             print("problem.saveCheckerTest %d [%s] %s" % (index, name, verdict))
             try:
                 prob.save_checker_test(index, test_input=test_input, test_output=output, test_answer=answer,
