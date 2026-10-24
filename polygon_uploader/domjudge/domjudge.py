@@ -17,6 +17,9 @@ from ..common import *
 from .. import __version__
 
 
+CPP_EXTENSIONS = [".cpp", ".cc", ".cxx", ".c++"]
+
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: domjudgeimport <problem_directory> <polygon problem id> [--create]")
@@ -31,8 +34,12 @@ def main():
         if os.path.basename(file) == "testlib.h" and name is None:
             print("Skipping uploading 'testlib.h'")
             return False
-        with open(file) as fs:
-            content = fs.read()
+        try:
+            with open(file, encoding="utf-8") as fs:
+                content = fs.read()
+        except UnicodeDecodeError:
+            print("Skipping '%s': not a UTF-8 text file" % file)
+            return False
         if preprocess is not None:
             content = preprocess(content)
         print('problem.saveFile: ' + file + ("   with name='" + name + "'" if name else ""))
@@ -190,7 +197,7 @@ def main():
         for t in solution_types:
             solutions = glob.glob(os.path.join(directory, "submissions/%s/**" % t), recursive=True)
             solutions = sorted(filter(lambda x: os.path.isfile(x), solutions))
-            solutions.sort(key=lambda x: 0 if x.endswith(".cpp") else 1)
+            solutions.sort(key=lambda x: 0 if os.path.splitext(x)[1] in CPP_EXTENSIONS else 1)
             print(solutions)
             need_main = t == "accepted"
             for file in solutions:
@@ -219,7 +226,7 @@ def main():
                 source_types = [None]
                 if extension == ".py":
                     source_types = ["python.pypy3-64", "python.pypy3", "python.3", "python.pypy2", "python.2"]
-                elif extension in [".cpp", ".cc", ".cxx", ".c++"]:
+                elif extension in CPP_EXTENSIONS:
                     source_types = ["cpp.gcc14-64-msys2-g++23", "cpp.g++17", "cpp.msys2-mingw64-9-g++17", "cpp.ms2017", "cpp.gcc11-64-winlibs-g++20"]
                 elif extension in [".java"]:
                     source_types = ["java21", "java8"]
