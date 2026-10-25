@@ -48,16 +48,20 @@ def parse_statement(content, is_interactive):
     result = Statement(encoding="UTF-8")
     legend = content
 
-    def extract_pattern(pattern):
+    # left where the Output environment was, to find the text that follows it
+    after_output_mark = "\0after Output\0"
+
+    def extract_pattern(pattern, replacement=''):
         match = pattern.search(legend)
         if match is None:
             return None, legend
         return_value = match.group(1)
-        new_legend = pattern.sub('', legend)
+        new_legend = pattern.sub(lambda _: replacement, legend)
         return return_value, new_legend
 
-    def extract_latex_tag_block(tag_name):
-        return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+    def extract_latex_tag_block(tag_name, replacement=''):
+        return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S),
+                               replacement)
 
     def extract_section(tag_name):
         return extract_pattern(re.compile(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, flags=re.S))
@@ -65,20 +69,35 @@ def parse_statement(content, is_interactive):
     def extract_latex_tag(tag_name):
         return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
 
-    def extract_input_output(tag_name):
+    def extract_input_output(tag_name, block_replacement=''):
         if re.search(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, legend) is not None:
             return extract_section(tag_name)
         else:
-            return extract_latex_tag_block(tag_name)
+            return extract_latex_tag_block(tag_name, block_replacement)
 
     legend = inline_newcommands(legend)
     legend = legend.replace('\\(', '$').replace('\\)', '$')
     result.notes, legend = extract_input_output("(?:Examples?|Notes?)")
     if is_interactive:
         result.interaction, legend = extract_input_output("Interaction")
-    result.output, legend = extract_input_output("Output")
+    result.output, legend = extract_input_output("Output", after_output_mark)
     result.input, legend = extract_input_output("Input")
     result.name, legend = extract_latex_tag("problemname")
+
+    # Kattis prints what follows the output specification after the samples (their explanation), so it
+    # belongs to the notes: the text after \end{Output} (GCPC), or further sections that the greedy Output
+    # section swallowed (NAC: \section*{Explanation of Sample Input 1}), headings kept as bold paragraphs
+    after_output = ""
+    if after_output_mark in legend:
+        legend, after_output = legend.split(after_output_mark, 1)
+    elif result.output is not None:
+        heading = re.search(r"\\(?:sub)?section\*?\{[^}]*}", result.output)
+        if heading is not None:
+            result.output, after_output = result.output[:heading.start()], result.output[heading.start():]
+    if after_output.strip():
+        after_output = re.sub(r"\\(?:sub)?section\*?\{([^}]*)}", lambda m: "\\textbf{%s}\n" % m.group(1),
+                              after_output).strip()
+        result.notes = after_output + ("\n\n" + result.notes.lstrip("\n") if result.notes else "")
     result.legend = legend
     return result
 

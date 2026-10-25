@@ -56,6 +56,31 @@ def test_interaction_and_notes():
     assert st.legend.strip() == "Legend."
 
 
+def test_text_after_output_environment_goes_to_notes():
+    # GCPC 2026: the sample explanation after \end{Output} stayed in the legend, i.e. before the input section
+    tex = ("\\problemname{P}\nLegend.\n\\begin{Input}\nIn.\n\\end{Input}\n\\begin{Output}\nOut.\n\\end{Output}\n"
+           "\\nextsample\nIn the first sample nothing happens.\n")
+    st = parse_statement(tex, is_interactive=False)
+    assert st.legend.strip() == "Legend."
+    assert st.output.strip() == "Out."
+    assert st.notes == "\\nextsample\nIn the first sample nothing happens."
+
+
+def test_sections_after_output_section_go_to_notes():
+    # NAC 2026: the greedy Output section swallowed \section*{Explanation of Sample Input 1}
+    tex = ("\\problemname{P}\nLegend.\n\\section*{Input}\nIn.\n\\section*{Output}\nOut.\n"
+           "\\section*{Explanation of Sample Input 1}\nBecause.\n\\section*{Notes}\nA note.\n")
+    st = parse_statement(tex, is_interactive=False)
+    assert st.output.strip() == "Out."
+    assert st.notes == "\\textbf{Explanation of Sample Input 1}\n\nBecause.\n\nA note.\n"
+
+
+def test_nothing_after_output():
+    st = parse_statement("Legend.\n\\begin{Output}\nOut.\n\\end{Output}\n\n", is_interactive=False)
+    assert st.notes is None
+    assert st.legend.strip() == "Legend."
+
+
 def test_interaction_kept_in_legend_when_not_interactive():
     # Polygon rejects an interaction section for a non-interactive problem
     st = parse_statement("Legend.\n\\section*{Interaction}\nAsk.\n", is_interactive=False)
