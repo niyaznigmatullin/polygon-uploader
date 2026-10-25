@@ -83,7 +83,12 @@ def upload_groups(prob, groups):
                                test_output_for_statements=t.output_for_statements,
                                verify_input_output_for_statements=t.verify)
             except PolygonRequestFailedException as exc:
-                print(exc.comment, "skipped")
+                if "coincides" in exc.comment:
+                    # Polygon keeps no two equal tests: reuse the index, or the tests get numbering gaps
+                    print(exc.comment, "not uploaded, index reused")
+                    test_index -= 1
+                else:
+                    print(exc.comment, "skipped")
         if g.scoring == GroupScoring.SUM:
             print("problem.saveTestGroup group %d, pointsPolicy=EACH_TEST, feedbackPolicy=COMPLETE" % gid)
             prob.save_test_group('tests', gid,

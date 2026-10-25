@@ -195,7 +195,9 @@ def main():
                 contents = open(test_file).readlines()
 
                 def cut_if_starts_with(ch, contents):
-                    return ''.join(map(lambda x: '\n' if x.startswith(ch) else x[1:], contents))
+                    # "< 3" -> "3": drop the direction marker and the space after it
+                    return ''.join(map(lambda x: '\n' if x.startswith(ch) else x[2:] if x[1:2] == ' ' else x[1:],
+                                       contents))
 
                 test = get_sample_test(test_file)
                 if test is None:
