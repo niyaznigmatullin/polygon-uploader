@@ -1,0 +1,33 @@
+
+
+\illustration{0.29}{bill}{
+    Bill Poucher (ICPC Executive Director, on the right).\\\textcopyright{} \href{https://www.huawei.com/en/news/2024/10/icpc-challenge-championship}{Huawei}, used with permission
+}
+
+Last week, Bill filled a champagne fountain for the first time.
+Delighted by the champagne pouring from one glass into another, he decided that he wants to organize an even bigger champagne fountain for the next World Finals.
+He already ordered $n$ glass bowls with different capacities to stack on top of each other to form a huge glass fountain.
+However, he is still unsure how to pour the champagne into the fountain.
+One bottle will not be enough and just pouring from the top might not fill every bowl.
+Bill wants to try out different ways to fill the fountain, but wasting any champagne would be such a shame.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.95\textwidth]{sample.pdf}
+	\caption{Illustration of Sample Input 2.
+		The $i$th image visualizes the $i$th query of type~`\texttt{+}'.}
+\end{figure}
+
+This is your time to shine!
+You are tasked with writing a program that simulates the process of pouring champagne into a given fountain.
+With this program, Bill can now pretend to pour certain amounts of champagne into different levels.
+If a bowl in some level is already filled up, then the champagne spills over to
+the first level below it with larger capacity.
+If the next larger level is also filled, the champagne spills over even further until eventually seeping into the ground, wasting the good champagne.
+Additionally, Bill also wants to know at some times during the simulation process how much champagne currently is in a certain level.
+%More formally, you are given the capacities of the bowls and have to process two types of queries:
+%\begin{itemize}
+%	\item[+] pour $x$ litres of champagne into level $\ell$.
+%	\item[?] print the amount of champagne in level $\ell$.
+%\end{itemize}
+

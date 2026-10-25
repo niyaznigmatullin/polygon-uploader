@@ -1,0 +1,75 @@
+\problemname{Mex Hex}
+
+\newcommand*{\mex}{\mathtt{mex}}
+
+\illustration{0.26}{bobcat}{
+	A regular (non-magic) bobcat.\\
+	\href{https://commons.wikimedia.org/wiki/File:Bobcat_at_Columbus_Zoo_Boo.jpg}{Photo by Becker1999}\vspace{-0.5cm}
+}%
+The peace and quiet of your home city is being disturbed by the loud purrs and nightly creeping of a nearby magic bobcat.
+The mayor is sending you to scare it off -- you are the city's Guardian for Collateral, Personal, and other Catastrophic Damages after all.
+You take on the challenge and prepare for scaring away the magnificent animal.
+
+To defend itself against you, the magic bobcat (as the name suggests) tries to hurt you in unconventional ways.
+When it attacks, it casts a number of magic \emph{spells}.
+Each spell is cast with a particular \emph{potential}, which can be expressed as a natural number.\footnote{For the purposes of this task, the natural numbers are defined as $\mathbb N = \{0, 1, 2, \dots\}$.}
+If you get hit with spells that have the potentials $p_1, p_2, \dots, p_n$, then the pain that you will feel from them is $\mex(\{p_1, p_2, \dots, p_n\})$, where $\mex$ denotes the Minimum Excluded Value.\footnote{Given a set $S \subseteq \mathbb N, S \ne \mathbb N$, $\mex(S)$ is the smallest number $m \in \mathbb N$ that is \emph{not contained} in $S$.}
+Note that the spells do not hurt you immediately.
+Only after all spells are cast will you feel the pain based on the $\mex$ of their potentials.
+
+To protect yourself, you bring a \emph{shield} which can, also through magic, deflect the spells.
+Your shield has an \emph{activation duration} $d$, which means that when you activate the shield, the next $d$ spells do not hit you.
+Afterwards, the shield must regenerate its magic and cannot be activated for the following $d$ spells.
+Apart from that, you can activate the shield as often as you want.
+To ensure that you give the magic bobcat a good scare, the mayor requested that you sneak up to it.
+As the bobcat would spot the glow of your activated magic shield, the earliest time you can activate the shield is when you stand before the culprit, right before it casts the first spell.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{sample}
+	\caption{
+		Illustration of Sample 3.
+		The numbers in the boxes indicate the potentials of the spells.
+		In this example, your shield's activation duration is $d = 2$.
+		By activating the shield right before the 5th, 9th, and 14th spell, you block the spells underlined in green.
+		You cannot activate your shield for the spells that are underlined with a dashed red line, because it is regenerating its magic at these times.
+	}
+	\label{fig:mexhex-illustration}
+\end{figure}
+
+You must now devise a tactic to sustain as little pain as possible.
+From studying the previous encounters with magic bobcats, you know the potentials of the spells that will be cast against you.
+What is the minimum pain you can receive from them if you activate your shield optimally?
+
+\begin{Input}
+	The input consists of:
+	\begin{itemize}
+		\item One line with two integers $n$ and $d$ ($1 \leq n \leq 10^5$, $1 \leq d \leq n$), the number of spells and the activation duration of your shield.
+		\item One line with $n$ integers $p_1, \dots, p_n$ ($0 \leq p_i < n$), the potentials of the $n$ spells.
+	\end{itemize}
+\end{Input}
+
+\begin{Output}
+	Output a single integer, the minimum pain you can receive from the spells.
+\end{Output}
+
+\nextsample
+You can activate the shield for the first spell, let it regenerate its magic for the second, activate it again for the third, regenerate for the fourth, and activate again on the fifth spell.
+This means that only the two spells of potential $1$ hit you.
+As $\mex(\{1, 1\}) = 0$, you receive $0$ pain.
+
+\nextsample
+No matter how you activate your shield, during the time it regenerates, a spell of potential $0$ and a spell of potential $1$ hit you.
+Thus, the $\mex$ of the spells that hit you is at least $2$.
+This amount of pain can be achieved by not using your shield at all.
+
+\nextsample
+Use the shield as depicted in Figure~\ref{fig:mexhex-illustration}.
+Then the spells that hit you have potentials $8$, $1$, $1$, $0$, $0$, $1$, $0$, $6$, and $4$.
+The $\mex$ of these potentials is $2$.
+It can be shown that there is no way of activating your shield so that the $\mex$ of the potentials of the remaining spells is $0$ or $1$.
+
+\nextsample
+Recall that you cannot activate your shield any earlier than right before the first spell.
+Thus, you cannot block both spells of potential $0$.
+Instead, by blocking the second and third spell, all spells that hit you have potential $0$.

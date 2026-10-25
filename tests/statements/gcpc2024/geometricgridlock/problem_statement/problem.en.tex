@@ -1,0 +1,91 @@
+\problemname{}
+
+\emph{Pentominous} is a grid logic puzzle based on the twelve pentominoes. A pentomino is a polygon formed by connecting five equal-sized squares edge to edge.
+
+\begin{figure}[!h]
+  \centering
+  \vspace{-2mm}
+  \includegraphics[width=0.6\textwidth]{pentominoes}
+  \vspace{-2mm}
+  \caption{The twelve pentominoes (up to mirroring and rotations) and their names.}
+  \label{fig:pentominoes}
+\end{figure}
+
+\vspace{-2mm}
+The goal of this puzzle is to divide a grid into regions of size $5$ (that is, pentominoes), so that no two regions that share a side have the same shape.
+You are allowed to rotate and mirror the pentominoes, but such rotations and reflections count as the same shape.
+The twelve possible shapes can be seen in Figure~\ref{fig:pentominoes}.
+
+In a normal \emph{Pentominous} puzzle, the player is given some pre-filled cells, for which the shape of their region is already predetermined.
+In this problem, you are working with a completely blank grid of dimensions $h\times w$, and your task is to create any valid arrangement of pentominoes.
+
+\vspace{-4mm}
+\begin{Input}
+  The input consists of:
+  \begin{itemize}
+    \item One line with two integers $h$ and $w$ ($1 \le h,w \le 100$), the height and width of the grid.
+  \end{itemize}
+\end{Input}
+
+\vspace{-4mm}
+\begin{Output}
+  \vspace{-2mm}
+  If there is no valid $h\times w$ \emph{Pentominous} grid, output ``\texttt{no}''.
+  Otherwise, output ``\texttt{yes}'', followed by $h$ lines of width $w$ each, a possible grid using the letters from Figure~\ref{fig:pentominoes}.
+  If there is more than one solution, any one of them will be accepted.
+\end{Output}
+
+\nextsample{}
+\nextsample{}
+\nextsample{}
+\nextsample{}
+\nextsample{}
+
+\vspace{0.2cm}
+\begin{figure}[h!]
+  \captionsetup{skip=1.5pt}
+  \centering
+  \begin{minipage}[b]{0.47\textwidth}
+      \centering
+      \includegraphics[scale=0.15]{01.png}
+      \caption*{\footnotesize Illustration of Sample Output 1.}
+      \vspace{5mm}
+      \includegraphics[scale=0.15]{02.png}
+      \caption*{\footnotesize Illustration of Sample Output 2.}
+  \end{minipage}
+  \hspace*{-1cm}
+  \begin{minipage}[b]{0.47\textwidth}
+      \centering
+      \includegraphics[scale=0.15]{03.png}
+      \caption*{\footnotesize Illustration of Sample Output 4.}
+      \vspace*{2mm}
+  \end{minipage}
+\end{figure}
+\vspace{-4mm}
+
+\begin{figure}[h!]
+  \captionsetup{skip=1.5pt}
+  \centering
+  \begin{minipage}[b]{0.47\textwidth}
+      \centering
+      \href{https://puzz.link/p?pentominous/10/10/s9967k09h77j4o4o1h157jbjbj00h87k30a8s}{%
+        \includegraphics[scale=0.64]{puzzle-1.pdf}}
+      
+      \vspace{2mm}
+      \href{https://puzz.link/p?pentominous/10/10/r44a44k4j4j7j4j44454k4o3o4o4i47r}{%
+        \includegraphics[scale=0.64]{puzzle-3.pdf}}
+  \end{minipage}
+  \hspace*{-1cm}
+  \begin{minipage}[b]{0.47\textwidth}
+      \centering
+      \href{https://puzz.link/p?pentominous/10/10/s5558k95h78j4o5o3o4o42h61k88a6s}{%
+        \includegraphics[scale=0.64]{puzzle-2.pdf}}
+     
+      \vspace{2mm}
+      \href{https://puzz.link/p?pentominous/10/10/s3327k22h71j1o7l1h1l1h2o21h11k7337s}{%
+        \includegraphics[scale=0.64]{puzzle-4.pdf}}
+  \end{minipage}
+
+  \vspace{2mm}
+  \caption*{Example \emph{Pentominous} puzzles for you to try after the contest.}
+\end{figure}

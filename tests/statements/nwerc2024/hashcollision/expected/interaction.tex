@@ -1,0 +1,27 @@
+
+This is an interactive problem. Your submission will be run against an interactor, which reads
+the standard output of your submission and writes to the standard input of your submission. This
+interaction needs to follow a specific protocol:
+
+The interactor first sends
+one line with an integer $n$ ($1 \leq n \leq 2\cdot 10^5$),
+indicating that the domain of the hidden function $f$ is $\{1,\dots,n\}$.
+
+Then, your program should make at most $1000$ queries to find the answer.
+Each query is made by printing one line of the form ``\texttt{?~$c$~$r$}'' ($1 \leq c, r \leq n$).
+The interactor will respond with an integer $h$ ($1 \leq h \leq n$), the value of $f^c(r)$.
+
+When you have determined some values of $c$ and $r$ such that $f^c(r) = c$,
+print one line of the form ``\texttt{!~$c$~$r$}'' ($1 \leq c, r \leq n$),
+after which the interaction will stop.
+Printing the answer does not count as a query.
+
+If there are multiple valid solutions, you may output any one of them.
+
+The interactor is not adaptive: the hidden function $f$ is fixed up front, and does not depend on your queries.
+
+Make sure you flush the buffer after each write.
+
+A testing tool is provided to help you develop your solution.
+
+Using more than $1000$ queries will result in a wrong answer.

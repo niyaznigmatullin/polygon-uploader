@@ -1,0 +1,73 @@
+\problemname{Hasty Haul}
+
+\illustration{0.35}{tables-small.jpg}{
+    The registration area at NWERC 2024.
+    Photo by Maarten Sijm
+}
+
+Two teams participating in NWERC have hatched a devious plan:
+% to mess with the organizers.
+they want to get in the organizers' heads and mess with them a bit, but just subtly enough
+that they will not get caught.
+
+The plan is as follows: during the contest registration, where they get
+their shirts and goodies, they will first wait for the organizer to lean down to grab
+a shirt.
+Then, they will quickly lift up one of the $k$ pieces of furniture and move it around.
+With the limited time
+frame and the need to do it silently, each team can only manage to move one piece of furniture.
+
+To make sure that they do not get caught, each piece of furniture has to be back at its original place at the end of the registration.
+From previous visits, the teams know the dimensions of the room and the amount of furniture in it
+ahead of time, but they do not know the current arrangement of the furniture.
+To keep things simple, the two teams want to use the same strategy.
+This means that both teams will make the same move when they encounter the same layout.
+After deciding on a common strategy and setting off for the contest, they will not be able to communicate.
+Thus, they plan to come up with a strategy that ensures that, regardless of the
+arrangement of the furniture,
+the team that arrives later will undo whatever the team that arrived first did.
+For some combinations of room size and amount of furniture in the room this is impossible,
+so pulling off this kind of stunt would be risky.
+
+At least they know for sure they are the only ones pulling this kind of stunt, so no furniture
+should move around between the two teams' arrivals. Help them find a strategy for their prank!
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $t$ ($1\leq t\leq 10\,000$), the number of test cases.
+        \item For each test case, the input consists of:
+        \begin{itemize}
+        	\item One line with three integers $h$, $w$, and $k$ ($1\leq h,w\leq 8$, $1 \leq k < h \cdot w$),
+                the height and width of the registration room and the number of pieces of furniture in the room.
+            \item $h$ lines with $w$ characters, each character being either `\texttt{.}' or `\texttt{\#}', the state of the room.
+                A `\texttt{.}' represents an empty area, and `\texttt{\#}'
+                represents a single movable piece of furniture.
+                It is guaranteed that the room
+                contains exactly $k$ pieces of furniture.
+        \end{itemize}
+        It is guaranteed that there is at least one piece of furniture and some empty area.
+    \end{itemize}
+    This is a multi-pass problem. Your program will be invoked multiple times,
+    possibly more than twice.
+    Your program must act consistently within each invocation, but also across
+    invocations.
+
+    For testing purposes, the number and input of subsequent passes will depend
+    on the output of your submission.
+
+    A testing tool is provided to help you develop your solution.
+\end{Input}
+
+\begin{Output}
+    For each test case, output ``\texttt{risky}'' if there is no valid strategy the teams could come up with
+    beforehand that works regardless of how the $k$ pieces of
+    furniture end up being placed.
+    %% This means there is no plan that makes sure all the requirements above are
+    %% satisfied, no matter how the furniture in this test case is arranged at the start.
+    Otherwise, specify how a piece of furniture is moved:
+    first output the position of the piece of furniture you move and then output the position where it should be moved to.
+    Both positions must first specify the row $r$ ($1\leq r \leq h$, counting
+    from the top) and then
+    the column $c$ ($1\leq c\leq w$, counting from the left).
+\end{Output}

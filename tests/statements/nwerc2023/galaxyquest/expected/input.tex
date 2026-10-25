@@ -1,0 +1,13 @@
+
+  The input consists of:
+  \begin{itemize}
+    \item One line with three integers $n$, $m$, and $q$ ($1 \le n,m,q \le 10^5$, $n \ge 2$),
+      where $n$ is the number of planets, $m$ is the number of space highways, and $q$ is the number of missions.
+    \item $n$ lines, each with three integers $x_i$, $y_i$, and $z_i$ ($\left|x_i\right|,\left|y_i\right|,\left|z_i\right| \le 10^3$, $1 \le i \le n$), the coordinates of planet $i$.
+    \item $m$ lines, each with two integers $a$ and $b$ ($1 \le a,b \le n$, $a \neq b$), describing a space highway that connects planets $a$ and $b$. It can be traversed in either direction.
+    \item $q$ lines, each with two integers $c$ and $t$ ($2 \le c \le n$, $1 \le t \le 10^3$), the target planet and time limit for each mission.
+  \end{itemize}
+  The $n$ planets are in distinct locations.
+  Their coordinates are given in metres, and the time limits of the missions are given in seconds.
+  No two highways connect the same pair of planets.
+  For each mission, both the absolute and relative differences between the given time limit and the shortest possible completion time are at least $10^{-6}$.

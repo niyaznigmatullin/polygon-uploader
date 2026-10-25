@@ -1,0 +1,18 @@
+
+	The input consists of:
+	\begin{itemize}
+		\item One line with an integer $n$ ($1\leq n \leq 2\cdot10^5$), the number of frogs.
+		\item One line with $n$ integers $x_1,\dots, x_n$ ($1\leq x_i \leq 10^6$),
+			the number of the lily pad on which the $i$th frog initially sits.
+			The lily pads are numbered consecutively, starting at $1$. 
+			It is guaranteed that the initial positions are strictly increasing, i.e.\
+			$x_1 < x_2 < \dots < x_n$.
+		\item One line with an integer $q$ ($1\leq q \leq 2\cdot10^5$), the
+			number of jumps recorded.
+		\item $q$ lines, each containing an integer $i$ ($1\leq i\leq n$), indicating
+			that the $i$th frog jumped. The jumps are given in chronological
+			order and you may assume that a jumping frog lands before the next
+			jump begins.
+			The frogs always jump to the nearest empty lily pad with a larger number,
+			and you may assume that such a lily pad always exists.
+	\end{itemize}

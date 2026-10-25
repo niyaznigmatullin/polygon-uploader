@@ -1,0 +1,21 @@
+
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $t$ ($1 \leq t \leq 20\,000$), the number of test cases.
+        \item For each test case, the input consists of:
+        \begin{itemize}
+            \item One line with an integer $n$ ($4 \leq n \leq 2 \cdot 10^5$), the number of neon light tubes.
+            \item $n$ lines, each with four integers $x_1$, $y_1$, $x_2$, and $y_2$
+                ($0 \leq x_1, x_2, y_1, y_2 \leq 10^9$, $x_1 \leq x_2$,
+    $y_1 \leq y_2$, and either $x_1=x_2$ or $y_1=y_2$, but not both),
+            where $(x_1, y_1)$ and $(x_2, y_2)$ are the endpoints of a light tube.
+        \end{itemize}
+    \end{itemize}
+
+    The total number of light tubes over all test cases is at most $2 \cdot 10^5$.
+
+    All light tubes are either vertical or horizontal.
+    For every test case, the initial configuration has no two overlapping or touching horizontal lights,
+    and also has no two overlapping or touching vertical lights.
+    Note that horizontal lights can intersect and touch vertical lights.
+

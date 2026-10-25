@@ -1,0 +1,20 @@
+\nextsample
+You can activate the shield for the first spell, let it regenerate its magic for the second, activate it again for the third, regenerate for the fourth, and activate again on the fifth spell.
+This means that only the two spells of potential $1$ hit you.
+As $\mathtt{mex}(\{1, 1\}) = 0$, you receive $0$ pain.
+
+\nextsample
+No matter how you activate your shield, during the time it regenerates, a spell of potential $0$ and a spell of potential $1$ hit you.
+Thus, the $\mathtt{mex}$ of the spells that hit you is at least $2$.
+This amount of pain can be achieved by not using your shield at all.
+
+\nextsample
+Use the shield as depicted in Figure~\ref{fig:mexhex-illustration}.
+Then the spells that hit you have potentials $8$, $1$, $1$, $0$, $0$, $1$, $0$, $6$, and $4$.
+The $\mathtt{mex}$ of these potentials is $2$.
+It can be shown that there is no way of activating your shield so that the $\mathtt{mex}$ of the potentials of the remaining spells is $0$ or $1$.
+
+\nextsample
+Recall that you cannot activate your shield any earlier than right before the first spell.
+Thus, you cannot block both spells of potential $0$.
+Instead, by blocking the second and third spell, all spells that hit you have potential $0$.

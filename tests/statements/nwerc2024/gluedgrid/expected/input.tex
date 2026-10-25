@@ -1,0 +1,18 @@
+
+  The input consists of:
+  \begin{itemize}
+    \item One line with two integers $h$ and $w$ ($1 \le h,w \le 500$), the
+      height and width of the sliding puzzle's grid.
+    \item $h$ lines with $w$ characters,
+      each character being either `\texttt{.}'\ or `\texttt{\#}'.
+      The bottom right character, at the position of the empty square,
+      is `\texttt{.}'.
+      Otherwise, `\texttt{.}'\ denotes a tile that can move,
+      and `\texttt{\#}' denotes a glued tile.
+    \item $h$ lines with $w$ integers $a_{i,j}$
+      ($1 \le i \le h$, $1 \le j \le w$, $0 \le a_{i,j} \le h \cdot w - 1$).
+      The bottom right integer is $a_{h,w} = 0$, representing the empty square.
+      Otherwise, $a_{i,j}$ is the label on the tile at position $(i,j)$.
+  \end{itemize}
+  The set of all $a_{i,j}$ ($1 \le i \le h, 1 \le j \le w$)
+  contains each of the numbers $0, 1, \dots, h \cdot w - 1$ once.

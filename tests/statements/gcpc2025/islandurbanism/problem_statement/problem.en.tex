@@ -1,0 +1,52 @@
+\problemname{Island Urbanism}
+
+%\illustration{0.3}{image.jpg}{
+%    Caption of the illustration (optional).
+%    CC BY-SA 4.0 by X on \href{https://example.com/reference-to-image}{Y}
+%}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{5000}
+\newcommand{\maxm}{20\,000}
+\newcommand{\maxt}{7}
+
+On a small volcanic island far away from any major landmass, the \emph{Grand Council for Painless Cycling} (GCPC) is facing regular complaints about the bad quality of the bike path network. Their budget is limited, but they would like to improve the situation for all the cyclists on their island. A survey helped to determine the most common destinations of the cyclists. The GCPC expects that the cyclists are satisfied with the bike path replacements if there is a way to cycle between any two destinations using only newly replaced bike paths.
+In order not to unduly favour any of the villages, the Council has decided that a maximum of $\maxt$ destinations per village should be taken into account.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{sample.pdf}
+  \caption{Illustration of the second sample.
+	Village~$1$ consists of Junctions $1$, $2$, $3$, and~$4$, Village~$2$ consists only of junction $5$, and Village~$3$ consists of the remaining junctions.
+	Junctions that are destinations are coloured red.
+  }
+  \label{fig:sample}
+\end{figure}
+
+There is one main cyclic bike path going around the volcano. On its way, it traverses every village on the island exactly once. Each village may have additional bike paths.
+How much does the GCPC have to spend at least in order to replace bike paths to connect all destinations via new paths?
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+    \item One line with four integers $n$, $m$, $v$ and $k$ ($3\leq n\leq \maxn$, $n \leq m \leq \maxm$, $3 \leq v \leq n$, $1 \leq k \leq n$), the number of junctions, the number of bike paths, the number of villages, and the number of destinations.
+    \item One line with $v$ integers $u_i$ ($1 \leq u_i$, $\sum_{i=1}^v u_i = n$), the $i$th of which describes the number of junctions in village~$i$.
+		\item $m$ lines each containing three integers $a$, $b$ and $c$ ($1 \leq a,b \leq n$, $1 \leq c \leq 10^9$), describing a bidirectional bike path between junction $a$ and junction $b$ with a replacement cost of $c$.
+		\item One line with $k$ distinct integers $t$ ($1 \leq t \leq n$), the junctions that have to be connected by the replaced bike paths.
+    \end{itemize}
+\pagebreak
+  Additionally, the following is guaranteed:
+  \begin{itemize}
+    \item Village~$1$ consists of junctions $1,\dots, u_1$, village $2$ consists of junctions $u_1 + 1, \dots, u_1 + u_2$, and so on.
+      The last village consists of junctions $1+ \sum_{i = 1}^{v-1} u_i , \dots, n$.
+      Within each village, it is possible to travel between any pair of junctions without leaving the village.
+    \item There is a bike path between junctions $\sum_{i=1}^{j} u_i$ and $1 + \sum_{i=1}^{j} u_i$ for each $1 \leq j \leq v-1$, as well as a bike path between junctions $n$ and $1$.
+      There are no other bike paths between different villages.
+    \item There is at most one bike path between each pair of junctions and no bike path connects a junction to itself.
+    \item In each village there are at most $\maxt$ junctions that need to be part of the improved cycling network.
+  \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the minimum cost which allows replacing bike paths such that every trip between any two destinations can be done using only newly replaced paths.
+\end{Output}

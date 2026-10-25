@@ -1,0 +1,14 @@
+name:
+  en: Island Urbanism
+author: Felicia Lucke, Jannik Olbrich, Paul Wild
+source: German Collegiate Programming Contest 2025
+source_url: https://gcpc.nwerc.eu
+license: cc by-sa
+rights_owner: author
+uuid: 8ee7605a-1545-8102-1be5-8ef2be275754
+
+validation: default
+
+limits:
+  time_multiplier: 2
+  time_safety_margin: 1.5

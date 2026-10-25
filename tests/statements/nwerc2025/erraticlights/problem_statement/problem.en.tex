@@ -1,0 +1,48 @@
+\problemname{Erratic Lights}
+
+\illustration{0.3}{illustration-small.jpg}{
+	Your stall, before plugging in the lights.
+	CC BY-SA 4.0 by Dietmar Rabich on \href{https://commons.wikimedia.org/wiki/File:D\%C3\%BClmen,_Arkaden_an_der_M\%C3\%BCnsterstra\%C3\%9Fe,_Weihnachtsmarkt_--_2013_--_5379.jpg}{Wikimedia Commons}
+}
+
+You have almost finished setting up your stall for the Christmas market after many days of work.
+There is only one thing left to do: plugging in the string of lights.
+As you plug in the cord, you notice that you have brought the wrong lights --
+you planned to bring a string of blue lights,
+but instead, the lights are coloured in red, green, and blue!
+While leaning against your stall in despair,
+you accidentally bump into one of the light bulbs,
+and it immediately changes colour.
+You notice that every time you touch a light bulb, it randomly takes one of the three colours,
+each with equal probability.
+
+The market starts in five hours already,
+and there is no way you have enough time to get this string of lights off the stall
+and install the one you wanted.
+At the very least, you want all the lights to have the same colour, no matter
+which colour that is.
+What is the minimal expected number of times you need to touch a light bulb
+to make all of them have the same colour?
+
+For example, consider the first sample input
+and say you touch the red light until it turns blue.
+Every time you touch it, the new colour is either red, green, or blue.
+The expected number of times you need to touch it until it becomes blue is $3$.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1 \leq n \leq 100$),
+            the number of bulbs on the string of lights.
+        \item One line with $n$ characters, each character being either `\texttt r', `\texttt g', or `\texttt b',
+            indicating the colours of the light bulbs at the start.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the expected number of times you need to touch a light bulb
+    to make all of them have the same colour,
+    assuming an optimal strategy that tries to minimize the expected number of touches.
+
+    Your answer should have an absolute or relative error of at most $10^{-6}$.
+\end{Output}

@@ -1,0 +1,47 @@
+\problemname{Last Christmas}
+
+\illustration{0.25}{illustration.jpg}{
+	Back cover of Last Christmas, modified. \\
+	Public Domain by Epic Records / CBS~Records~Inc. on~\href{https://commons.wikimedia.org/wiki/File:Last_Christmas_by_Wham_UK_gatefold_back_cover.png}{Wikimedia Commons}
+}
+
+\newcommand{\maxn}{100}
+\newcommand{\maxlen}{20}
+
+\newcommand{\nameA}{Jonathan}
+\newcommand{\nameB}{Merle}
+
+A Christmas market is incomplete without live music, and you will find everything from out-of-tune renditions of ``Jingle Bells'' on a toy xylophone to professional arrangements of Bach's Christmas Oratorio.
+This year, \nameA~and \nameB~also want to earn some money playing Christmas songs, but they cannot even agree on which artists, let alone which songs.
+\nameA~likes Mariah Carey best, while \nameB~loves the whole Christmas album by the Goo Goo Dolls.
+
+They decide to settle the discussion using statistics and the following strategy.
+They take $n$ past Christmas top-10 lists and count how often each artist appears.
+Note that an artist may appear multiple times on the same list.
+The artist with the highest number of appearances is clearly the best!
+If there is a tie, they look at the artist with the highest number of number 1 hits
+among the artists with the highest number of appearances.
+If there is still a tie, they look at highest number of number 2 hits among those, and so on.
+
+Who is the best artist for the Christmas season?
+
+% ``Queen is the best band ever.'' ``No, Taylor Swift is the best artist ever!'' Merle and Jonathan keep having discussions on which artist is the best, so they decide to once and for all settle the discussion using statistics. The decided on the following strategy.
+
+% They take take $n$ arbitrary top-10 lists from the past, and count for each artist how often they appear in these lists. The artist with the highest amount of appearances is clearly the best! If there is a tie, they look at the artist with the highest amount of number 1 hits. If there is still a tie, they look at highest amount of number 2 hits, etc. Which artist is the best?
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n \leq \maxn$), the number of top-10 lists.
+        \item $n$ lines, each with $10$ strings $s$ ($1 \leq |s| \leq \maxlen$),
+    the first names of the artists of the top-10 list from $1$ to $10$. Each
+    name only consists of English lowercase letters (\texttt{a-z}).\footnote{If Madonna does not need a last name, why would other artists need one?}
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the name of the best artist according to the rules described above, or ``\texttt{tie}'' if there is no unique best artist.
+\end{Output}
+
+\nextsample
+Madonna and Wham! both appear three times in total, but since Madonna has one more number 1 hit than Wham!, Madonna is the best artist.

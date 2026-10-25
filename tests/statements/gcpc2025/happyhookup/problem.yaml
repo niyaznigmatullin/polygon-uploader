@@ -1,0 +1,13 @@
+name:
+  en: Happy Hookup
+author: Andreas Grigorjew
+source: German Collegiate Programming Contest 2025
+source_url: https://gcpc.nwerc.eu
+license: cc by-sa
+rights_owner: author
+uuid: 8ee7605a-40ce-8c04-04c8-f183c4650863
+
+validation: custom
+
+limits:
+  time_limit: 2.0

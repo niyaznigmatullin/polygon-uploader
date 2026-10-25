@@ -1,0 +1,52 @@
+\problemname{Brickwork}
+Bob the Builder is tired of building tiny houses and paving narrow roads, and he strives for something bigger.
+The new job given to him by a very eccentric client is exactly what he needs:
+He is tasked with building a wall of a certain width that is infinitely high!
+His client assured him that he does not need to worry about the building material, and that an infinite supply of various kinds of bricks has already been ordered for him.
+Of course, building a stable wall takes very careful planning, especially if it is supposed to be infinitely high. 
+In particular, a wall is only stable if no two gaps between bricks in consecutive rows end up directly above each other, as shown in Figure~\ref{fig:bricks}.
+Bob knows from his long-time experience that if it is possible to build such a wall, then it can be done by alternating just two row configurations.
+
+% Figure~\ref{fig} depicts a finite example of an unstable and a stable wall.
+% You want to build an infinitely high wall.
+% To do that you ordered an infinite supply of various kinds of bricks but to fulfil your ambitious plan you not only need many bricks, but also a good plan to ensure that your wall will be stable.
+% You may already know that a wall is only stable if no two gaps between stones in consecutive rows end up directly above each other.
+% See figure~\ref{fig} for a finite example of an unstable and a stable wall.
+
+\begin{figure}[h]
+  \includegraphics[width=0.46\textwidth]{sample_wa}
+  \hfill
+  \includegraphics[width=0.46\textwidth]{sample}
+  \caption{On the left, we see an unstable wall using the brick types of Sample Input 1.
+    On the right, we see a stable wall using the same brick types.
+    Note that even though only two rows of the wall are shown, it is possible to build an infinitely high wall by repeating these two row configurations.}
+    \label{fig:bricks}
+\end{figure}
+
+Bob is terribly excited about the new job and quickly goes to work.
+Given the types of bricks available, is it possible to build a stable wall of
+width exactly $w$ and infinite height?
+If yes, how should Bob build it using only two alternating row configurations?
+% Given the types of bricks available, is it possible to build an infinite stable wall of width $w$?
+% And if yes, how would you build it?
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $w$ $(1\leq n,w\leq3\cdot10^5)$, the number of brick types and the width of the wall.
+        \item One line with $n$ integers $b$ ($1\leq b\leq w$), the widths of the brick types.
+    \end{itemize}
+        % Note that you have an infinite supply of all brick types.
+        Note that Bob has an infinite supply of all brick types.
+\end{Input}
+
+\begin{Output}
+If it is possible to build a wall, then output ``\texttt{possible}''.
+Otherwise, output ``\texttt{impossible}''.
+
+If a wall can be built, provide two row configurations that can be used in an alternating fashion.
+For both rows, first output the number of bricks needed for that row, followed by the lengths of the bricks in the order you want to use them.
+Your solution is considered valid if alternating the two rows infinitely would result in a stable wall.
+
+If there are multiple valid solutions, you may output any one of them.
+\end{Output}

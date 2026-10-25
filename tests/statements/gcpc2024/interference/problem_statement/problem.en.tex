@@ -1,0 +1,46 @@
+\problemname{}
+
+\begin{wrapfigure}{h!}{0.5\textwidth}
+  \centering
+  \includegraphics[width=0.4\textwidth]{sample2}
+  \caption{Interference of three waves in Sample Input 2. The black dots represent the resulting wave's height.\vspace{-0.5cm}}% < this percent is important to remove the space before the first letter
+  \label{fig:interference}
+  %\vspace{-0.25em}
+\end{wrapfigure}
+
+%\illustration{0.3}{sample2}{Interference of three waves in Sample Input 2. \\The black dots represent the resulting wave's height.\vspace{-0.5cm}}% < this percent is important to remove the space before the first letter
+Physics can be so much fun!
+Yesterday, your teacher explained how interference works: If you have two waves, their heights add up over the whole waves' length!
+So if both waves have a peak, the resulting peak will be even higher.
+Likewise, if both waves have a wave trough below the water surface, the resulting wave has a trough that will be even further below.
+Technically, a wave's height is called amplitude and the distance between two wave peaks is called wavelength.
+
+%\vspace{0.5em}
+Today, your physics teacher describes the setup of an experiment she is about to perform.
+She will create stationary waves in a one-dimensional container of water.
+Due to her superior control over physical elements, all waves will have a precisely controlled amplitude and will only be created in an interval of given length.  % travel in one direction for a given length.
+The wavelength of each wave is always~$4$ and the first positive peak will always be at the first index of the interval.
+We only measure the wave's amplitude at integer points.
+For example, a wave with amplitude $2$ and length $9$ can be described as \texttt{2 0 -2 0 2 0 -2 0 2}.
+If there is no wave at a point, the amplitude is $0$.
+Your task is to predict how high the resulting wave will be at given points in the container taking into account all the waves that were created up to that point.
+
+\begin{Input}
+  The input consists of:
+  \begin{itemize}
+    \item One line with two integers $n$ and $w$ ($1 \le n \le 4\,000$, $1 \le w \le 10^{9}$), the number of lines and the width of the container.
+    \item $n$ lines, each containing either a wave description or a prediction task:
+    \begin{itemize}
+      \item ``\texttt{!$~p~\ell~a$}'', a wave description with starting position $p$, length $\ell$ $(1 \le p, \ell \le w)$, and amplitude $a$ $(1 \le a \le 10^9)$.
+      It is guaranteed that $p+\ell - 1 \le w$.
+      %\item A wave is described by ``\texttt{!$~p~\ell~a$}'', ($1 \le p, \ell \le w$, $1 \le a \le 10^9$) the starting position, length, and amplitude of the wave.
+      %It is guaranteed that $p+\ell \le w + 1$.
+      \item ``\texttt{?$~p$}'', a prediction task for the resulting wave at position $p$ ($1 \le p \le w$).
+    \end{itemize}
+  \end{itemize}
+  See Figure \ref{fig:interference} for a partial visualization of Sample 2.
+\end{Input}
+
+\begin{Output}
+  For each prediction task, output a line with a single integer, the height of the wave resulting from all former described waves at the requested position.
+\end{Output}

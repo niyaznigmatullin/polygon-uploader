@@ -1,0 +1,53 @@
+%\section{Remove}
+\problemname{Loop Invariant}
+
+\newcommand{\bracketprotagonist}{Luna}
+\illustration{0.32}{illustration}{A circular piece of parchment.\vspace{-0.25cm}}%
+\bracketprotagonist{}, a historian, was exploring the archives of an
+old monastery when she stumbled on a mysterious scroll of parchment.
+On it were only two types of symbols: `\texttt{(}' and `\texttt{)}'.
+Soon she noticed that the sequence of symbols satisfies an interesting property:
+It can be constructed by repeatedly inserting `\texttt{()}' at some
+position into an initially empty sequence.
+Historians call such sequences \emph{balanced}.
+Figure~\ref{fig:bracket} gives an
+example of a balanced sequence.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=0.55\textwidth]{bracket}
+	\caption{Sample Input 2 derived by successively inserting
+	`\texttt{()}` into an initially empty sequence.}
+\label{fig:bracket}
+\end{figure}
+
+The chief librarian of the monastery recently told \bracketprotagonist{}
+that some of the more elitist monks in the region had a habit of writing
+on circular pieces of parchment.
+In their minds, anyone
+incapable of immediately telling where the text on such a scroll started was
+also unworthy of knowing its content.
+Consequently, \bracketprotagonist{} quickly inspected the edges of her
+parchment strip. And sure enough, the edges at the left and right
+end of the parchment strip fit together perfectly, indicating that the parchment
+once actually was circular.
+While holding the left and right edges together and looking at the now circular
+parchment, she wonders whether the balanced sequence starting at the tear is the only
+such sequence that could have resulted from tearing the parchment apart.
+After all, it makes little sense trying to decrypt a text when you do not even
+know where it starts.
+
+\begin{Input}
+	The input consists of:
+	\begin{itemize}
+		\item One line with a balanced sequence $s$ ($2\leq |s|\leq
+			10^6$),
+			the sequence on \bracketprotagonist{}'s strip of parchment.
+	\end{itemize}
+\end{Input}
+
+\begin{Output}
+	Output ``\texttt{no}'' if there is no way to obtain a different balanced
+	sequence by cutting the circular sequence,
+	otherwise give any such sequence.
+\end{Output}

@@ -1,0 +1,45 @@
+\problemname{KIT Finding}
+
+\illustration{0.3}{fox.jpg}{
+    CC BY-SA 4.0 by Uoaei1 on \href{https://commons.wikimedia.org/wiki/File:Vulpes_vulpes_Mallnitz_01.jpg}{Wikimedia Commons}%
+    \vspace{-5mm}% Make sure the first sample fits on the first page.
+}
+
+``\emph{Find the Fox}'' is a recent book that contains $200$ pages of word search puzzles comprising only the letters `\texttt{F}', `\texttt{O}' and `\texttt{X}'.
+The special feature of the book is that there is only a single occurrence of the word ``\texttt{FOX}'' throughout all of its pages.
+
+Recall that in a word search the goal is to find hidden words (only one hidden word in this case) in a grid of letters.
+The words can occur horizontally or vertically or diagonally, as well as forwards or backwards, allowing for a total of $8$ different reading directions.
+
+For this year's NWERC, we want to create a baby version of ``\emph{Find the Fox}''.
+Your goal in this problem, therefore, is to create a word search grid with given dimensions and containing each of the letters `\texttt{K}', `\texttt{I}' and `\texttt{T}' a given number of times.
+Similar to the original book, this grid should contain exactly one occurrence of the word ``\texttt{KIT}''.
+
+\begin{figure}[!h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{sample.pdf}
+  \caption{Illustration of Sample Output 1. Flip page for the solution.}
+\end{figure}
+
+\begin{Input}
+The input consists of:
+\begin{itemize}
+\item One line with five integers $h$, $w$, $k$, $i$, and $t$ ($3 \le h,w \le 100$, $k,i,t \ge 1$, $k+i+t = h\cdot w$), where $h$ and $w$ are the height and width the word search grid should have, and $k$, $i$, and $t$ specify the required number of occurrences of `\texttt{K}', `\texttt{I}' and `\texttt{T}', respectively.
+\end{itemize}
+\end{Input}
+
+\begin{Output}
+  Output a word search grid according to the given rules.
+  It can be shown that such a word search grid always exists.
+
+  If there are multiple valid solutions, you may output any one of them.
+\end{Output}
+
+\remainingsamples
+
+\vfill
+\begin{figure}[!h]
+  \centering
+  \includegraphics[angle=180,width=0.25\textwidth]{sample-solved.pdf}
+\end{figure}
+\vspace{2cm}

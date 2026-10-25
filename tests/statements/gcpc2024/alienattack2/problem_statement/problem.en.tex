@@ -1,0 +1,36 @@
+\problemname{}
+\newcommand{\maxn}{2 \cdot 10^5}
+
+
+%\illustration{0.31}{ufo}{An unidentified flying object (UFO) \href{https://pixabay.com/illustrations/ufo-space-alien-3d-blender-788746/}{MasterTux}}%
+%\illustration{0.31}{alien_area_51_ufo_1.jpg}{The local starship dealership. \href{https://pixabay.com/photos/alien-area-51-ufo-226245/}{MartinStr}}% CC0
+\illustration{0.31}{Rocket_USA_Battery_Operated_Tin_UFO_Mars_Explorer_Close_Up.jpg}{A representative of the Galactic Committee for Person Captures.\\By D J Shin on \href{https://commons.wikimedia.org/wiki/File:Rocket_USA_Battery_Operated_Tin_UFO_Mars_Explorer_Close_Up.jpg}{Wikimedia Commons} \vspace{-0.5cm}}% CC BY-SA 3.0
+Aliens are visiting Earth and, as usual, they plan to abduct humans for their experiments.
+In the past, alien abductions have caused a lot of press coverage and wild speculation on Earth.
+Luckily for them, most people do not believe these stories and think that aliens are not real.
+
+In order to keep a low profile in the future, the Galactic Committee for Person Captures (GCPC) has established rules for abductions.
+Besides a lot of boring paperwork, the aliens have to prepare the abduction carefully.
+While they can make multiple trips (in fact, alien travel is so fast in practice that this is not a limitation at all),
+they must be smart about it so that their secret is not revealed to humans. If aliens want to abduct a person,
+they are required to abduct all of their friends at the same time, so that no one notices that their friend is missing when they want to hang out.
+Of course, friendships on planet Earth are bidirectional, that is if Alice is a friend of Bob, then Bob is also a friend of Alice.
+
+In preparation for the trip, the aliens have observed their targets and started taking note of all their friendships.
+In total, they must abduct $n$ people, including their friends.
+Now, they want to book a starship at their local dealership and wonder how much space they need to abduct all $n$ people.
+A starship's storage space is measured in terms of the number of people that can be transported simultaneously.
+What is the minimum storage space required to abduct all $n$ people?
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+    \item One line with two integers $n$ and $m$ ($1\leq n\leq \maxn$, $0\leq m\leq \maxn$), the number of people and the total number of friendships between them.
+    \item $m$ lines, each with two integers $i$ and $j$ ($1\leq i < j\leq n$), denoting a friendship between persons $i$ and $j$.
+    \end{itemize}
+    The people are numbered from $1$ to $n$. It is guaranteed that no friendship is listed multiple times.
+\end{Input}
+
+\begin{Output}
+    Output the minimum storage space needed to abduct all people.
+\end{Output}

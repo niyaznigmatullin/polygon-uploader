@@ -1,0 +1,42 @@
+\problemname{}
+
+\illustration{0.3}{ctrlcv}{A Plagiarism Keyboard\vspace{-0.5cm}}%
+Your university recently established the Graduate Code Plagiarism Control (GCPC) initiative to get hold of the ever-increasing load on the graders for the computer science assignments.
+Currently, the graders need to check the code of assignments manually for plagiarism.
+The GCPC aims to simplify this part of the graders' jobs by performing the plagiarism checks automatically.
+
+Code consists of tokens separated by spaces. Tokens are strings of alphabetical letters, numerals, and brackets. If a token consists of only a single alphabetical letter (upper or lowercase), it is a variable in the code.
+
+The GCPC wants the plagiarism checker to compare query pieces of code to a reference code.
+Specifically, it should check whether each query could have been obtained by selecting a contiguous
+string of tokens from the reference and consistently renaming variables.
+% \textcolor{blue}{
+% That is, there must be a one
+% to one matching between variables in the reference and variables in the query.
+% }%
+% \textcolor{red}{
+% Variables are consistently renamed if the $i$th and $j$th token from the selected substring of the reference are the same variable if and only if the $i$th and $j$th token from the query are the same variable.
+% }
+Variables are consistently renamed if no two occurrences of the same variable are renamed to different variables,
+and if no two different variables are renamed to the same variable.
+
+The GCPC has asked you to develop the plagiarism checker.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item A description of the reference, consisting of:
+            \begin{itemize}
+                \item One line containing an integer $n$ ($1\leq n \leq 2\,000$), the number of tokens in the reference.
+                \item One line containing $n$ tokens, each consisting only of the characters `\texttt{a}'-`\texttt{z}', `\texttt{A}'-`\texttt{Z}', `\texttt{0}'-`\texttt{9}', `\texttt{(}' and `\texttt{)}'.
+            \end{itemize}
+        \item An integer $q$ ($1 \leq q \leq 2\,000$), the number of queries.
+        \item $2\cdot q$ lines, each two lines in the same format as the reference.
+    \end{itemize}
+    It is guaranteed that each query as well as the reference consist of at most $2\,000$ characters (excluding spaces).
+    Tokens are separated by single spaces.
+\end{Input}
+
+\begin{Output}
+    For each query, output ``\texttt{yes}'' if the query could have been obtained from the reference, and ``\texttt{no}'' otherwise.
+\end{Output}

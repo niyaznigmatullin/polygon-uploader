@@ -1,0 +1,14 @@
+# Specification: https://icpc.io/problem-package-format/spec/2023-07-draft.html
+name: Hasty Haul
+source: Northwestern Europe Regional Contest (NWERC) 2025
+license: cc by-sa
+rights_owner: author
+uuid: "8ee7605a-261a-87c5-3c15-2c1b7b4e4af4"
+
+limits:
+  validation_passes: 3
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom multi-pass
+author: Michael Zündorf
+source_url: https://2025.nwerc.eu

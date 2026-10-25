@@ -1,0 +1,33 @@
+\problemname{Balloon Darts}
+
+\illustration{0.32}{balloons}{Popping balloons as an amusement park attraction.
+Photo by blende12, \href{https://pixabay.com/photos/balloon-leisure-time-4525887/}{Pixabay}\vspace{-0.5cm}}%
+As you may know, you get a colourful balloon for each problem you solve in an ICPC contest.
+You were quite successful in your last contest
+and now you own a remarkable collection of $n$ balloons.
+The obvious thing to do with these balloons is to pop them all using darts.
+However, you only have three darts.
+
+The balloons are modelled as points in the plane with fixed locations.
+For each dart you choose from where and in which direction to throw it.
+The dart travels in a straight line, popping all balloons in its way.
+
+As you practised a lot during the last years,
+you can throw a dart precisely in any direction and it will fly infinitely far.
+Thus, if anyone can pop all the balloons, it is you. 
+% Thus, your are sufficient to be able to pop all ballons if it is possible at all.
+However, before the fun begins, you first need to determine
+if you can pop all balloons using at most three darts.
+
+\begin{Input}
+  The input consists of:
+  \begin{itemize}
+    \item One line containing an integer $n$ ($1 \leq n \leq 10^4$), the number of balloons.
+    \item $n$ lines, each containing two integers $x$ and $y$ ($|x|, |y| \leq 10^9$), the coordinates of a balloon.
+  \end{itemize}
+  It is guaranteed that no two balloons are at the same location.
+\end{Input}
+
+\begin{Output}
+  Output ``\texttt{possible}'' if three darts are sufficient to pop all balloons and ``\texttt{impossible}'' otherwise.
+\end{Output}

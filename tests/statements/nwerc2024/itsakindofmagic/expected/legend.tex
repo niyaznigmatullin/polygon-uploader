@@ -1,0 +1,35 @@
+
+
+\illustration{0.30}{parker.jpeg}{
+	The Parker Square.
+	\textcopyright{} \href{https://www.bradyharanblog.com/the-parker-square}{Brady Haran}, used with permission
+}
+
+%Count how many Multiplicative magic $3x3$ squares exists.
+Everyone knows that a $3\times3$ magic square must meet two criteria:
+\begin{enumerate}
+	\item All nine numbers must be positive and distinct.
+	\item The sums along all rows, columns, and diagonals are equal.
+\end{enumerate}
+Everyone, except  maybe Matt Parker\footnote{Recreational mathematician, author, comedian, YouTube personality, and science communicator.}.
+He wants to create a magic square of squares, that is, a magic square that also meets a third criterion:
+\begin{enumerate}[resume]
+	\item Each number is a square of a positive integer.
+\end{enumerate}
+His ``result'' can be seen in the picture in the corner.
+As you may notice, his square is not that magic\dots{}
+Not only do most of the values appear twice, it also has a diagonal with the wrong sum.
+To be honest, apart from containing non-square values, there is not much that could make this square worse.
+Well, at least he tried!
+
+But that is all in the past.
+After finding the \emph{Parker Square}, he decided to completely ignore property $3$ from now on and to instead give property $2$ a new twist.
+He now considers multiplicative magic squares, which are exactly like normal magic squares except that the \emph{products} along all rows, columns, and diagonals have to be equal, instead of the sums.
+Who knows, Matt might even manage to find a proper multiplicative magic square in the future!
+% Please don't find one before him.
+
+With this definition at hand, Matt wrote some terrible Python code -- his words, not ours -- to count the number of multiplicative magic $3\times 3$ squares where the product of the numbers in a single row, column, or diagonal is at most $n$.
+As you may have guessed by now, his code is way too slow.
+Therefore, we task you to do the same, just more efficiently.
+Given an integer $n$, count the number of multiplicative magic $3\times 3$ squares with product at most $n$.
+

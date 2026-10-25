@@ -1,0 +1,72 @@
+\problemname{Bustling Busride}
+
+%\illustration{0.3}{image.jpg}{
+%    Caption of the illustration (optional).
+%    CC BY-SA 4.0 by X on \href{https://example.com/reference-to-image}{Y}
+%}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{10^5}
+\newcommand{\maxv}{10^6}
+\newcommand{\cityname}{Bithampton\xspace}
+
+\illustration{0.2255}{illustration-cropped.jpg}{A crowded bus. By: \href{https://www.pexels.com/photo/people-travelling-on-a-crowded-bus-10963849/}{Pexels/Pew Nguyen}\vspace{-0.5cm}}%
+The university of \cityname is served by exactly one bus line.
+On its way to the city centre, it serves several stops at which students may exit.
+Every student has a fixed bus stop where they want to exit.
+
+It is Friday afternoon, $4$ PM, and as always, all the students want to go home, leading to quite a long queue at the bus stop.
+Fortunately, the bus line is served in regular intervals, with the first bus arriving at $4$ PM.
+
+Whenever a bus arrives at the university, everyone in the queue tries to enter the bus, which makes the buses very crowded.
+This has led to numerous complaints where people tried to exit buses but were unable to because of the sheer amount of people.
+As a consequence, the bus company decided that at every stop which someone in the bus has as destination, everyone in the bus must exit it.
+Those who want to travel further enter again.
+For every time a passenger enters or exits the bus, the bus needs to wait $w$ seconds.
+
+% There are \(n\) people in a queue at bus stop \(B\).
+% Only a single bus line operates at this stop.
+% All of the \(n\) people want to enter a bus at the bus stop \(B\) and exit at their destination $t_p$.
+% It takes the bus $d_{t}$ seconds of driving to get from B to $t$.
+% Every $r$ seconds, a bus arrives at B and due to the sheer will of the passengers can be packed with an arbitrary number of passengers.
+% However, packing the bus so extremely tightly makes exiting quite hard.
+% So, whenever a passenger wants to leave the bus, all other passengers need to get out of the bus as well.
+% Then, all passengers that need to go to a later bus stop, need to get back onto the bus.
+% For each passenger that exits the bus and each passenger that enters the bus at any stop, the bus needs to wait $w$ seconds.
+
+To offer the best service, the bus company wants to minimize the maximum time it takes anybody from 4 PM until they reach their destination.
+For each bus, the bus driver can decide how many people from the front of the queue enter the bus. The number of people that can enter a bus is unlimited.
+Help the bus drivers make the optimal decisions to achieve the company's goal.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+      \item One line with four integers $n$, $b$, $r$, and $w$ ($1\leq n, b \leq \maxn$, $1\leq r, w \leq \maxv$), the number of passengers, the number of bus stops, the time between the arrival of two buses at the university, and the delay for exiting and entering.
+      \item One line with \(b\) integers \(d_{i}\) (\(1 \le d_{i}, \sum d_{i} \leq \maxv\)), the travel time from the \((i-1)\)th bus stop to the \(i\)th bus stop (the \(0\)th bus stop is the university).
+      \item One line with \(n\) integers \(t_{i}\) (\(1 \leq t_{i} \leq b\)), indicating that the destination of the \(i\)th person in line is the $t_i$th bus stop.
+    \end{itemize}
+    All times are given in seconds.
+\end{Input}
+
+\begin{Output}
+  Output the minimum number of seconds until every person in line has exited at their destination.
+\end{Output}
+
+\vskip\baselineskip
+\emph{(Samples start on the next page)}
+
+\pagebreak
+\nextsample
+In this example, it is optimal to let everyone board the first bus.
+The first boarding takes 3 seconds.
+Then, the bus drives for 2 seconds to get to the bus stop 1.
+After 3 seconds, everybody exited and after another 2 seconds, the people continuing their journey are back on the bus.
+After 2 more seconds, they arrive at the next stop where it takes 2 seconds for everybody to exit and one second for the remaining person to get back on the bus.
+After 2 more seconds, the bus arrives at the final destination where it takes one second for the last person to exit.
+
+\nextsample
+It is optimal to use one bus per person.
+
+\nextsample
+It is optimal to assign the first two passengers to one bus.
+Everybody else gets their own bus.

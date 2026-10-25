@@ -1,0 +1,35 @@
+\problemname{}
+
+\illustration{0.3}{cat}{Klaus, 10 seconds before an event that was luckily covered by Karen's insurance.}%
+Karen has a beautiful precious glass object on the shelf in her living room.
+Unfortunately, her cat Klaus does not like it when there is stuff on his favourite shelf.
+Everything that is not bolted or glued in place, he will gradually push over the edge while looking Karen straight in the eyes.
+
+Now, Klaus' paw slowly executes his diabolical deed. 
+His cute fluffy face radiates inadvertent innocence.
+Knowing that any intervention would only delay the inevitable, Karen wonders what will happen to the string her sister Kim wrote on the precious glass object.
+After all, it took Kim a whole week to gather all the \texttt{bdpq} letters that make up the string.
+
+Can you describe to Karen what the string will look like from her point of view while it tumbles towards destruction?
+
+While falling off the shelf, Karen's precious glass object is subject to the following transformations, described as seen when looking at the object from the front.
+
+\begin{itemize}
+  \item \texttt{h}: horizontal flip, e.g. \texttt{bbq} becomes \texttt{pdd}
+  \item \texttt{v}: vertical flip, e.g. \texttt{bbq} becomes \texttt{ppd}
+  \item \texttt{r}: 180-degree rotation, e.g. \texttt{bbq} becomes \texttt{bqq}
+\end{itemize}
+
+No flips along or rotations about any other axes are possible.
+
+\begin{Input}
+  The input consists of:
+  \begin{itemize}
+    \item One line with a string $s$ consisting of the letters \texttt{bdpq} ($1 \le |s| \le 5\cdot 10^5$), the string printed on the glass object as seen at the start of the fall.
+    \item One line with a string $t$ consisting of the letters \texttt{hvr}  ($1 \le |t| \le 5\cdot 10^5$) giving the sequence of transformations in the order that they occur during the fall.
+  \end{itemize}
+\end{Input}
+
+\begin{Output}
+  Output the string that can be seen at the moment the glass object touches the ground and just before it shatters into pieces.
+\end{Output}

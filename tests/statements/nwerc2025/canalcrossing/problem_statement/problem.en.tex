@@ -1,0 +1,48 @@
+\problemname{Canal Crossing}
+
+\illustration{0.3}{illustration.jpg}{
+	Pixabay Content Licence by blaze\_rob on \href{https://pixabay.com/photos/venice-grand-canal-rialto-bridge-6619450/}{Pixabay}
+}
+
+To escape from the Christmas market hassle, you are planning a trip to Venice to see its beautiful canals and its many bridges.
+Unfortunately, you do not seem to be the only person with that plan, and Venice recently decided to charge for that pleasure.
+Therefore, you decide that crossing each bridge once is enough for you.
+Fortunately, every place can be reached from any other using only streets, without crossing any bridges.
+Interestingly, there is exactly one way to reach any other place using only streets.
+
+After you gathered all this knowledge, now all that is left is to plan a trip
+that crosses each bridge exactly once.
+To keep things interesting, you also want to use each street at most once.
+What is the length of the shortest possible trip?
+Note that your tour can start at any place you choose, but it has to end where
+it starts.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm]{sample1}
+	\caption{Illustration of Sample Input 1 with a tour of length $45$.}
+\end{figure}
+
+
+\begin{Input}
+The input consists of:
+\begin{itemize}
+\item One line with an integer $n$ ($3\leq n\leq 10^5$), the number of places in Venice.
+\item $n-1$ lines, each with three integers $a$, $b$, and $w$ ($1\leq a,b\leq n$, $a \neq b$, $1\leq w\leq10^6$), the starting and ending place of each street and its length.
+\item One line with an integer $m$ ($1\leq m\leq5\cdot10^5$), the number of bridges in Venice.
+\item $m$ lines, each with two integers $a$ and $b$ ($1\leq a,b\leq n$, $a \neq
+b$), the places where each bridge starts and ends.
+\end{itemize}
+
+Bridges are short, and thus have length zero.
+
+It is guaranteed that every place can be reached from any other place without using any bridges.
+Further, no bridge connects two places which are directly connected by a street,
+and all bridges are between distinct pairs of places.
+Lastly, it is guaranteed that at least one tour exists that crosses each bridge
+exactly once and uses every street at most once.
+\end{Input}
+
+\begin{Output}
+	Output the length of the shortest tour that crosses all bridges and uses each street at most once.
+\end{Output}

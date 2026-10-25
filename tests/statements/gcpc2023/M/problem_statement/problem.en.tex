@@ -1,0 +1,48 @@
+\problemname{Mischievous Math}
+\newcommand\namea{Max}
+\newcommand\nameb{Nina}
+
+\illustration{0.32}{sample3}{\namea{} trying to solve the third sample.\vspace{-0.5cm}}%
+\namea{} enjoys playing number games, whether it involves finding
+a combination that leads to a given
+result or discovering all possible results for some given integers.
+The problem is that \namea{} is only 10 and has limited
+mathematical knowledge, which restricts the possibilities for these games.
+Luckily, in today's maths class, \namea{} learned the concept of
+parentheses and their effects on calculations. He realises that incorporating parentheses
+into his number games could make them much more interesting.
+After getting home from school, he asked his sister \nameb{} to play a
+variant of his favourite number game with him, using parentheses.
+
+In this new game, \namea{} first tells her a number $d$.
+\nameb{} then tells him three numbers $a$, $b$ and $c$. % ($1 \le a,b,c,d \le 100$).
+Now, \namea{} needs to find an arithmetic expression
+using addition, subtraction, multiplication and division, using each of these three
+numbers ($a$, $b$ and $c$) at most once, such that the result is equal to $d$.
+The numbers $a, b, c$ and $d$ all have to be distinct, and \namea{} is allowed to
+use parentheses as well.
+
+For instance, for $a = 5$, $b = 8$, $c = 17$ and $d = 96$ a possible
+solution would be $(17 - 5) \times 8 = 96$, and for $a = 3$, $b = 7$, $c = 84$
+and $d = 12$ a possible solution would be $84 \div 7 = 12$, without using
+the $3$.
+
+\nameb{} is quickly annoyed by this game. She would rather spend the
+afternoon with her friends instead of playing games with her little
+brother. Therefore, she wants to give him a task that occupies him for as long as possible.
+Help her to find three numbers $a$, $b$ and $c$
+such that it is impossible for \namea{} to come up with a solution.
+
+\begin{Input}
+  The input consists of:
+  \begin{itemize}
+    \item One line with an integer $d$ ($1 \le d \le 100$), \namea{}'s chosen number.
+  \end{itemize}
+\end{Input}
+
+\begin{Output}
+  Output three numbers $a$, $b$ and $c$ ($1 \le a,b,c \le 100$) such that the
+  numbers $a$, $b$, $c$ and $d$ are pairwise distinct and there is no solution
+  to the number game.
+\end{Output}
+

@@ -1,0 +1,36 @@
+\problemname{}
+
+%\illustration{0.3}{image.jpg}{
+%    Caption of the illustration (optional).
+%    CC BY-SA 4.0 by X on \href{https://example.com/reference-to-image}{Y}
+%}
+
+The process of forming the Dutch government has taken more than half a year for three elections in a row. Perhaps we can streamline the initial stages of coalition building?
+
+The first step after the election results is to find a group of parties (called a \emph{coalition}) with enough seats to have a strict majority.
+Your task is to count the number of candidate coalitions that satisfy specific conditions.
+A coalition is considered a \emph{candidate coalition} if it meets these two criteria:
+
+\begin{description}
+    \item[Strict Majority:] The total number of seats held by the coalition must be strictly more than half of the total seats across all parties.
+    \item[No Superfluous Parties:] The coalition must be minimal in the sense that removing any one party from the coalition would cause it to lose its strict majority.
+\end{description}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{sample2.pdf}
+    \caption{Illustration of Sample Input 2.}
+    \label{fig:sample2}
+\end{figure}
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1 \le n \le 60$), the number of parties.
+        \item One line with $n$ integers $p$ ($1 \le p \le 10\,000$), the number of seats each party has.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+     Output the total number of candidate coalitions that satisfy the criteria above.
+\end{Output}

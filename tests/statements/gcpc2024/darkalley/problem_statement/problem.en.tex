@@ -1,0 +1,44 @@
+\problemname{}
+
+\illustration{0.3}{alley}{A foggy alley. \href{https://pixabay.com/de/photos/park-in-der-nacht-dunkle-stra\%C3\%9Fe-4270765/}{Photo by Henryk Niestr\'{o}j}\vspace{-0.5cm}}%
+One cold and foggy night, you walk down a shady alley.
+There should be a lamp every few metres but none of them seem to work, and in this night, not even the moon enlightens your path.
+Alone and in the dark, you wonder:
+``Even if there was a working lamp somewhere, how much would it lighten my way?''.
+Now, back at home, you want to calculate this.
+
+The alley can be modelled as a line with a length of $n$ metres.
+The fog has a uniform density and reduces the light of a lamp by a factor of $1-p$ every metre.
+The brightness at one point is the sum of the light that reaches this point from every lamp.
+You want to calculate this brightness at some points after placing some lamps.
+
+\begin{Input}
+	The input consists of:
+	\begin{itemize}
+		\item One line with two integers $n$ and $q$ and one real number $p$  ($1\leq n, q\leq 2\cdot10^5, 0 < p < 1$),
+		the length of the alley, the number of queries and the density of the fog.
+		The density $p$ of the fog will be given with at most $6$ digits behind the decimal point.
+		\item $q$ lines containing one of three query types:
+		\begin{enumerate}[leftmargin=4em, topsep=0pt]
+			\item[``\textbf{\texttt{+ b x}}''] given two integers $b$ and $x$ ($1\leq b \leq 10^9$ and $1\leq x \leq n$), place a lamp with brightness $b$ at position $x$.
+			\item[``\textbf{\texttt{- b x}}''] given integers $b$ and $x$ ($1\leq b \leq 10^9$ and $1\leq x \leq n$), remove a lamp with brightness $b$ at position $x$.
+			It is guaranteed that a lamp with that brightness was placed there earlier. 
+			\item[``\textbf{\texttt{?~x}}''] given one integer $x$ ($1\leq x \leq n$), calculate the brightness at position $x$.
+		\end{enumerate}
+	\end{itemize}
+\end{Input}
+\begin{Output}
+	It can be shown that the brightness can be calculated as a fraction $\frac{P}{Q}$ where $Q$ is not divisible by $10^9+7$.
+	For each query of type ``\texttt{?}'', print the brightness as $P\cdot Q^{-1} \bmod 10^9+7$ in a single line.
+\end{Output}
+
+\nextsample{}
+The brightness in the alley after placing the lamp will look like this:
+
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\begin{tabularx}{7.5cm}{|C|C|C|C|C|}
+	\hline
+	3 & 4 & 3 & 2.25 & 1.6875 \\
+	\hline
+\end{tabularx}
+

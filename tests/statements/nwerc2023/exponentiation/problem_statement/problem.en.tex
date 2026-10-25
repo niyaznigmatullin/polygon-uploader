@@ -1,0 +1,54 @@
+\problemname{Exponentiation}
+
+\illustration{0.25}{new_years_card_299_2023_a.jpg}{Image by callmetak on \href{https://www.freepik.com/free-vector/year-2023-logo-fireworks-with-text-space-vector-illustration-celebrating-new-year_29660812.htm}{Freepik}}%
+%
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{1000}%
+\newcommand{\maxm}{1000}%
+%
+In her spare time, Zoe develops an online calculator.
+Unfortunately, the calculator was targeted by a denial-of-service attack last week.
+The attacker created a lot of integer variables, exponentiated them with each other,
+and tried to do a bunch of comparisons. The huge integers were too much for the server to handle, so it
+crashed. Before Zoe fixes the issue, she decides to actually perform the calculations that the attacker
+requested.
+
+
+There are $n$ integer variables $x_1, x_2, \dots, x_n$. At the start, each variable is set to $2023$.
+You have to perform $m$ instructions of the following two types:
+\begin{itemize}
+\item \textit{Operations}, of the form ``\texttt{!~$i$~$j$}'', where $i \neq j$.
+    This means that $x_i$ gets set to $x_i^{x_j}$.
+\item \textit{Queries}, of the form ``\texttt{?~$i$~$j$}'', where $i \neq j$.
+    This means that you should print `\verb|>|' if $x_i$ is greater than $x_j$, `\verb|=|' if $x_i$ is equal to
+    $x_j$, and `\verb|<|' if $x_i$ is smaller than $x_j$.
+\end{itemize}
+
+Consider the first sample. After the $5$ operations, the values of the variables are:
+\newcommand{\x}{{2023}}
+\begin{align*}
+x_1&=\left(\x^\x\right)^{\x^\x},&
+x_2&=\left(\x^{\x^\x}\right)^\x,&
+x_3&=\x,&
+x_4&=\x^\x.
+\end{align*}
+
+% x -> x^x -> (x^x) ^ (x^x)
+% x -> x^(x^x) -> (x^(x^x)) ^ x
+% x
+% x -> x^x
+%
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $m$ ($2 \leq n \leq \maxn$, $1 \leq m \leq \maxm$),
+            the number of variables and the number of instructions.
+        \item $m$ lines, each containing a character $c$ (either `\texttt{!}'~or~`\texttt{?}')
+            and two integers $i$ and $j$ ($1 \leq i, j \leq n$, $i \neq j$), describing the instructions.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    For every query in the input, output its answer.
+\end{Output}

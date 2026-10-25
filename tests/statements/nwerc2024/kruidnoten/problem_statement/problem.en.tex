@@ -1,0 +1,57 @@
+\problemname{}
+\newcommand{\maxn}{2 \cdot 10^5}
+\newcommand{\maxm}{2 \cdot 10^5}
+\newcommand{\maxk}{2 \cdot 10^5}
+\newcommand{\maxw}{10^6}
+\newcommand{\name}{Karlijn}
+
+\illustration{0.32}{kruidnoten.jpg}{
+    Kruidnoten, a typical Dutch snack.\\
+    CC BY 4.0 by Hanno Lans on \href{https://commons.wikimedia.org/w/index.php?curid=64873895}{Wikimedia Commons}
+}
+
+Every week, \name{} and her teammates join the competitive programming training at their university.
+Thinking and coding for such a long time is quite exhausting, and they need a ton of snacks to get through training.
+They have divided the chore of bringing snacks neatly: while the other two bring stroopwafels and salt sticks, \name's duty is to provide kruidnoten.
+
+She usually gets them on the way from home to university just before training.
+The bicycle network in her home town consists of intersections which are connected by cycleways of different lengths.
+The intersections are numbered from $1$ to $n$.
+\name's house is at intersection $1$, and her university is at intersection $n$.
+
+There are multiple stores that sell kruidnoten, but some of them are often out of stock.
+\name{} wants to get to university as quickly as possible, so she has a habit of looking up online which stores still have kruidnoten before leaving her house.
+Using this information, she then takes the shortest path via some stocked store.
+An example is visualized in Figure~\ref{fig:sample}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{sample.pdf}
+	\caption{A possible situation from Sample Input 1, where not every store is stocked with kruidnoten.
+		In this case, \name{} buys the kruidnoten at the store at intersection $3$, and the shortest path has length $11$.}
+    \label{fig:sample}
+\end{figure}
+
+Now, she wonders how much time she should usually plan for her way to training.
+From long-time experience, \name{} knows for each store how likely it is that they have not sold out.
+In particular, she observed that the stock of kruidnoten is independent for each store.
+What is the expected length of a shortest path from \name{}'s house to university if she wants to visit some store that has kruidnoten in stock?
+
+\section*{Input}
+    The input consists of:
+    \begin{itemize}
+    \item One line with three integers $n$, $m$, and $k$ ($2\leq n\leq \maxn$, $1\leq m\leq \maxm$, $1\leq k\leq n$), the number of
+    intersections, cycleways, and stores that may sell kruidnoten.
+    \item $m$ lines, each with three integers $i$, $j$, and $\ell$ ($1\leq i, j\leq n$, $i \neq j$, $1 \leq \ell \leq \maxw$), indicating that the intersections $i$ and $j$ are connected by a cycleway of length $\ell$.
+    It is guaranteed that every pair of intersections is connected by at most one cycleway.
+    Further, it is possible to get from every intersection to every other intersection by bike.
+    \item $k$ lines, each with one integer $i$ ($1\leq i \leq n$) and one floating-point number $p$ ($0 < p \leq 1$ with at most four digits after the decimal point), indicating that there is a store located at intersection $i$, and that the probability that it still has kruidnoten is $p$.
+    It is guaranteed that there is at most one kruidnoten store at each intersection.
+    \end{itemize}
+
+\section*{Output}
+
+If the event that \name{} cannot get any kruidnoten on her way has probability $> 0$, output ``\texttt{impossible}''.
+Otherwise, output the expected length of a shortest path from her home to university if she gets kruidnoten on the way.
+
+Your answer should have an absolute or relative error of at most $10^{-6}$.

@@ -1,0 +1,40 @@
+\problemname{Engineering Excellence}
+
+\newcommand{\maxn}{10^5}
+\newcommand{\maxx}{10^5}
+
+You are the engineer in charge of designing a wheel for a new space rover.
+As you do not have enough time to reinvent the wheel, you decide to copy your predecessor's work and make only one small change.
+
+Looking at the plan, you notice that your predecessor's wheel has the shape of a convex polygon for structural reasons.
+It is well known that wheels with a larger perimeter roll farther per rotation, so surely they must be superior.
+You attempt to increase the perimeter by as much as possible by moving a single point on the outside of the wheel.
+While experimenting, you notice that wheels do not seem to work if they are non-convex or if there is an internal angle below $90$ degrees.
+
+What is the maximum possible achievable increase in the perimeter of the wheel without violating the above restrictions?
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{sample}
+	\caption{Visualization of the first sample.
+        Point $3$ is moved to $(5.5, 3.5)$, increasing the perimeter by $\approx 1.59488$.
+	}
+\end{figure}
+
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($4 \leq n \leq \maxn$), the number of points of the wheel.
+        \item $n$ lines, each with two integers $x$ and $y$ ($\left| x \right|, \left| y \right| \leq \maxx$), the coordinates of the points.
+    \end{itemize}
+
+    The points are given in counterclockwise order and form a convex polygon with no internal angle below $90$ degrees.
+    Note that the convex polygon may contain \textbf{collinear} points, but no two points are at the same position.
+\end{Input}
+
+\begin{Output}
+    Output the maximum possible absolute increase of the perimeter of the wheel.
+
+    Your answer should have an absolute or relative error of at most $10^{-6}$.
+\end{Output}

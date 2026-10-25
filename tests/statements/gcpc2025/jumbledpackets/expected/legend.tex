@@ -1,0 +1,31 @@
+
+
+
+
+\illustration{0.4}{phobos.jpg}{Mars and its two moons Phobos and Deimos, Image by NASA's Goddard Space Flight Center / JPL-Caltech / GSFC / Univ. of Arizona on \href{https://svs.gsfc.nasa.gov/11326}{NASA}}%
+Due to further and further advancements in technology and space exploration, humanity is sending probes to more planets and moons than ever before.
+One of these probes is currently residing on Phobos, one of the two Martian moons.
+This probe transmits binary data back to Earth but it can only do so in short time frames every few hours.
+Its fast orbit combined with its small size and close proximity to Mars means that Mars blocks radio waves most of the time by physically being in between the probe and Earth.
+During one time frame of data transmission, one large packet of $n$ binary bits is transmitted, exactly the amount possible within the time frame.
+
+The probe has already been deployed for a few years, so mechanical problems have started to pile up.
+A recent and very problematic change has been the unreliability of the onboard clock, likely caused by the large and frequent temperature fluctuations ranging from about $-112^\circ$ to $-4^\circ$ Celsius.
+As a result, the probe has been transmitting data packets at incorrect times, when radio waves cannot reach Earth.
+To mitigate this, the probe is now sending its data packets multiple times in succession.
+
+Even though this has led to Earth receiving $n$ bits of data, researchers are not able to determine the start and end of the data packet, making the data useless.
+The received data consists of a possibly empty suffix, followed by a prefix of the sent data, totalling to exactly $n$ bits.
+For example, if the original packet was ``\textcolor{red}{\texttt{00101}}\textcolor{blue}{\texttt{001}}'', the received data might be ``\textcolor{blue}{\texttt{001}}\textcolor{red}{\texttt{00101}}'' (the colours are only for visual reasons).
+
+You are to write software to encode the data before transmission into a message of the same length, such that you can decode it after receiving the mangled packet.
+Luckily, the engineering department has managed to improve the design of the receiving antenna, increasing the signal-to-noise ratio so you are now able to use an alphabet of three distinguishable symbols for radio transmission instead of only two.
+
+Your program will be run twice for each test case.
+In the first pass, your program will be given a binary string to encode.
+In the second pass, your program will be given your encoded string from the first pass, which may have been modified as explained above.
+Decode this string to restore the input from the first pass.
+
+A testing tool is provided to help develop your solution.
+
+

@@ -1,0 +1,47 @@
+\problemname{}
+
+\newcommand{\name}{Frida}
+
+\name{}'s birthday is just coming up, and as her best friend, you obviously baked a cake for her.
+Since you know that \name{} loves rotational symmetry, you thought to bake a cake that
+looks the same from above when rotated by $180^\circ$.
+Of course, you could have simply baked a boring round cake, but without a perfectly round cake tin, this sounds easier than done.
+Therefore, you decided to bake a cake whose shape can be described by straight line segments.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=0.4\textwidth]{sample}
+	\caption{Visualization of Sample Input 2. The swirly cake looking like an \emph{S} can be cut into the red and blue part with a single cut.}
+\end{figure}
+
+However, after you are done with your cake, you notice that you also want to cut the cake into two equal pieces, one for \name{} and one for yourself.
+More precisely, you wonder if it is possible to cut the cake along an infinite line such that it splits into exactly two
+parts of equal weight.
+You can assume that the cake has uniform density and height.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line containing an \emph{even} integer $n$ ($4 \leq n\leq 10^5$), the number of points needed to describe the cake's shape.
+        \item $n$ lines, each containing two integers $x$, $y$ ($0\leq x,y \leq 10^6$), the $x$ and $y$ coordinates of a point on the border of the cake's shape.
+    \end{itemize}
+    The following additional guarantees are given for the shape of the cake:
+    \begin{itemize}
+    	\item The cake has a $180^\circ$ rotational symmetry.
+    	\item The points are given in counterclockwise order.
+    	\item No three consecutive points are collinear.
+    	\item The shape is simple (no segments intersect and only consecutive segments touch at their ends).
+    \end{itemize}
+\end{Input}
+
+\newpage
+\begin{Output}
+    Output two different points on the desired line as \texttt{$x_1$/$c_1$ $y_1$/$d_1$ $x_2$/$c_2$ $y_2$/$d_2$},
+	where $|x_i|$, $|y_i|$, $|c_i|$ and $|d_i|$ are integers and at most $10^9$,
+	and \texttt{$x_i$/$c_i$} is the first coordinate of point $i$ and \texttt{$y_i$/$d_i$} is the second ($1\leq i\leq2$).
+    If the denominator of a fraction is $1$ you may output only the numerator. Fractions do not have to be reduced.
+    If there is no such line, output ``\texttt{impossible}'' instead.
+
+	It can be shown that if there is a line as desired, it is possible to represent it in the given format.
+\end{Output}
+\vspace{-6mm}

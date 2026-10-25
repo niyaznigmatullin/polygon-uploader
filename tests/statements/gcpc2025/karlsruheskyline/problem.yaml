@@ -1,0 +1,13 @@
+name:
+  en: Karlsruhe Skyline
+author: Paul Wild
+source: German Collegiate Programming Contest 2025
+source_url: https://gcpc.nwerc.eu
+license: cc by-sa
+rights_owner: author
+uuid: 8ee7605a-b81b-8fb7-27fc-e31d81dc4dfb
+
+validation: custom
+limits:
+  time_multiplier: 2
+  time_safety_margin: 1.5

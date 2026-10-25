@@ -1,0 +1,56 @@
+\problemname{Fair Share}
+
+% \illustration{0.35}{vietaroma-small.jpeg}{
+%     The VietAroma restaurant, close to the NWERC venue.
+%     \textcopyright{}~\href{www.vietaroma.de}{VietAroma Restaurant}, used with permission% TODO: Actually obtain permission
+% }
+\illustration{0.3}{restaurant.jpg}{
+    KIT teams having a celebration dinner after NWERC.\\
+    Photo by Christopher Weyand
+}
+
+\newcommand{\maxn}{10^5}
+\newcommand{\maxx}{1000}
+
+Your university's teams are celebrating an outstanding performance at this year's NWERC in Karlsruhe.
+After a delicious dinner at a local restaurant, you call it a day.
+The trip home tomorrow will be a long one.
+
+While trying to pay the bill, your group realizes that the restaurant takes no cash.
+Furthermore, it is too late to split the bill.
+Caught off-guard, everybody starts to open their wallets and puts some cash on the table.
+Someone has to pay the bill with their credit card and take the cash.
+% You just need to choose who.
+
+Each person $i$ spent €$b_i$ during the evening but has €$a_i$ in cash to contribute to the group payment (if someone else pays).
+To keep it fair, the group does not want the person who pays the final bill (and takes the money from the cash pool) to end up paying more than their individual share.
+Thus, if person $i$ is the one paying, then the remainder of the bill, after
+accounting for the cash contributions of the others, should not be more than their own share €$b_i$ of the bill.
+
+Help the group determine who should pay the final bill.
+
+
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($2 \leq n \leq \maxn$), the size of your dinner group.
+        \item $n$ lines, the $i$th of which contains two integers $a_i$ and $b_i$ ($1 \leq a_i, b_i \leq \maxx$), the amount of cash person $i$ would contribute if someone else pays and their share of the bill, respectively.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    If there is no suitable person to settle the bill, output ``\texttt{impossible}''.
+    Otherwise, output one integer $i$ ($1 \leq i \leq n$), the index of the person settling the bill.
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}
+
+\nextsample
+
+\nextsample
+The total bill is €$20$.
+If the first person settles the bill, they get €$15$ in cash from the
+others, paying €$5$ by themselves, which is more than their individual share of $4$.
+A similar reasoning for each of the other people shows that they would also pay
+more than their individual share, and thus, there is no suitable person to settle the bill.

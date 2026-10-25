@@ -1,0 +1,18 @@
+
+The input consists of:
+\begin{itemize}
+    \item One line with the number of universities $n$, rivalries $m$, and articles $k$. \\
+    ($1\leq n,m,k\leq 10^5$)
+    \item $n$ lines containing the name of a university $p_i$.
+    \item $m$ lines containing two integers $u,v$, meaning that universities $u$ and $v$ are rivals. \\
+    ($1\leq u,v \leq n, u\neq v$)
+    \item $k$ lines containing a news article $t_i$.
+\end{itemize}
+
+If a university $u$ is a rival of university $v$, then $v$ is also a rival of $u$. Moreover, there are no duplicate rivalries.
+
+Names and articles are strings of lowercase Latin letters and spaces.
+The first and last character of a name or article are never a space.
+Names can overlap and be contained in other names.
+
+The summed length of all names and articles is at most $10^6$, i.e. $\sum_{i=1}^{n} |p_i| + \sum_{i=1}^{k} |t_i| \leq 10^6$.

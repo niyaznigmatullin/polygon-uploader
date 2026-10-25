@@ -1,0 +1,30 @@
+\problemname{Labour Laws}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxt}{1440}
+
+\illustration{0.3}{arbeitszeiterfassung.jpg}{
+   Some workplaces use dedicated machines to record work time. In Germany, these are called ``Stempeluhren''.
+   CC BY-SA 4.0 by u\_h0yvbj97 on \href{https://pixabay.com/photos/arbeitszeiterfassung-zeiterfassung-4312250/}{Pixabay}%
+   \vspace{-0.5cm}%
+}%
+%
+The ``Arbeitszeitgesetz'' (ArbZG) regulates the work and break times of employees in Germany. According to this law, if an employee works more than 6 hours on a given day, the employee \textbf{must} take a break of at least half an hour during their shift. If they work for more than 9 hours, their break must be at least 45 minutes. Additionally, working for more than 10 hours on a day is strictly forbidden.
+
+Alexander works at his company's HR department. As the working hours at his company are very flexible, the employees are allowed to work as many hours or as few as they want (within the legal constraints of course). The monthly salary for each employee thus depends on the time spent working. Therefore, one of Alexander's monthly tasks is to collect the times each employee has worked on any given day, so that he can calculate and pay out the employees salaries every month.
+
+Unfortunately, today one of his colleagues forgot to record her lunch break and cannot remember how much time she spent on her break. As Alexander does not want to put his colleague at a disadvantage, he wants to use the legally required minimum break time for his calculations.
+
+While calculating the total time his coworker spent at work is easy, correctly calculating the legally required minimum break time can be tricky. Can you help Alexander determine the minimum time his coworker must have spent at lunch today?
+Note that the time spent at work is the time spent working plus the time spent in break.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $t$ ($0\leq t\leq \maxt$), the number of minutes spent at work today.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output a single non-negative integer, the minimum number of minutes spent in break to make the work time legal.
+\end{Output}

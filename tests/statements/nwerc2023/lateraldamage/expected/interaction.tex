@@ -1,0 +1,32 @@
+
+    This is an interactive problem.
+    Your submission will be run against an \emph{interactor},
+    which reads from the standard output of your submission
+    and writes to the standard input of your submission.
+    This interaction needs to follow a specific protocol:
+
+    The interactor first sends
+    one line with two integers $n$ and $k$ ($5 \le n \le 100$, $1 \le k \le 10$),
+    the size of the grid and the number of ships.
+    It is guaranteed that it is possible to place $k$ aircraft carriers in the grid without overlap.
+
+    Then, your program needs to start firing shots.
+    Each shot is fired by printing one line of the form ``\texttt{$x$~$y$}'' ($1 \le x,y \le n$),
+    indicating you shoot at position $(x, y)$.
+    The interactor will respond with ``\texttt{hit}'' if the shot was a hit,
+    ``\texttt{sunk}'' if the shot caused an aircraft carrier to sink, and ``\texttt{miss}'' otherwise.
+    If you have shot the same location before,
+    the response will be ``\texttt{miss}''.
+
+    Once you sink the last aircraft carrier,
+    the interaction will stop and your program must exit.
+
+    The interactor is adaptive:
+    the positions of the ships may be determined during the interaction,
+    and may depend on where you decide to shoot.
+
+    Make sure you flush the buffer after each write.
+
+    A testing tool is provided to help you develop your solution.
+
+    Firing more than $2500$ shots will result in a wrong answer.

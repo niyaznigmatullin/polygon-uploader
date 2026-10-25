@@ -1,0 +1,13 @@
+# Specification: https://icpc.io/problem-package-format/spec/2023-07-draft.html
+name: Arcade Crane
+source: Northwestern Europe Regional Contest (NWERC) 2025
+license: cc by-sa
+rights_owner: author
+uuid: "8ee7605a-9af0-8d9a-2748-578458ff127f"
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom
+author: Vitaly Aksenov
+source_url: https://2025.nwerc.eu

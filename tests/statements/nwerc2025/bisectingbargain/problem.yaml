@@ -1,0 +1,13 @@
+# Specification: https://icpc.io/problem-package-format/spec/2023-07-draft.html
+name: Bisecting Bargain
+source: Northwestern Europe Regional Contest (NWERC) 2025
+license: cc by-sa
+rights_owner: author
+uuid: "8ee7605a-8c6e-8de5-27b0-609bf2214493"
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom
+author: Wendy Yi, Michael Zündorf
+source_url: https://2025.nwerc.eu

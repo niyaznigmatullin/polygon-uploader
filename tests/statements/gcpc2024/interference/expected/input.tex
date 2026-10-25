@@ -1,0 +1,14 @@
+
+  The input consists of:
+  \begin{itemize}
+    \item One line with two integers $n$ and $w$ ($1 \le n \le 4\,000$, $1 \le w \le 10^{9}$), the number of lines and the width of the container.
+    \item $n$ lines, each containing either a wave description or a prediction task:
+    \begin{itemize}
+      \item ``\texttt{!$~p~\ell~a$}'', a wave description with starting position $p$, length $\ell$ $(1 \le p, \ell \le w)$, and amplitude $a$ $(1 \le a \le 10^9)$.
+      It is guaranteed that $p+\ell - 1 \le w$.
+      %\item A wave is described by ``\texttt{!$~p~\ell~a$}'', ($1 \le p, \ell \le w$, $1 \le a \le 10^9$) the starting position, length, and amplitude of the wave.
+      %It is guaranteed that $p+\ell \le w + 1$.
+      \item ``\texttt{?$~p$}'', a prediction task for the resulting wave at position $p$ ($1 \le p \le w$).
+    \end{itemize}
+  \end{itemize}
+  See Figure \ref{fig:interference} for a partial visualization of Sample 2.
