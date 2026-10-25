@@ -22,34 +22,68 @@ from .. import __version__
 CPP_EXTENSIONS = [".cpp", ".cc", ".cxx", ".c++"]
 
 
+def group_end(tex, start):
+    """Index after the brace group opened by the "{" at tex[start]: braces counted by depth, escapes
+    (\\{, \\}, \\%) and % comments skipped; len(tex) if it is never closed."""
+    depth, i = 0, start
+    while i < len(tex):
+        if tex[i] == '\\':
+            i += 2
+            continue
+        if tex[i] == '%':
+            newline = tex.find('\n', i)
+            i = len(tex) if newline < 0 else newline
+            continue
+        depth += {'{': 1, '}': -1}.get(tex[i], 0)
+        i += 1
+        if depth == 0:
+            return i
+    return len(tex)
+
+
 def inline_newcommands(tex):
-    """Replace every \newcommand{\name}{body} by deleting the definition and inlining body at each use."""
-    # the body may contain braces (\newcommand{\maxn}{10^{5}}), so find its closing brace by depth
-    head = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]*)\s*}?\s*\{")
+    """Replace every \\newcommand{\\name}[n]{body} by deleting the definition and inlining body at each use,
+    #1..#n replaced by the brace arguments of the use."""
+    head = re.compile(r"\\newcommand\*?\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]*)\s*}?\s*(?:\[(\d)\])?\s*\{")
     macros = {}
     while (match := head.search(tex)) is not None:
-        depth, end = 1, match.end()
-        while end < len(tex) and depth > 0:
-            if tex[end] == '\\':
-                end += 2
-                continue
-            depth += {'{': 1, '}': -1}.get(tex[end], 0)
-            end += 1
-        macros[match.group(1)] = tex[match.end():end - 1]
+        # the body may contain braces (\newcommand{\maxn}{10^{5}}), so find its closing brace by depth
+        end = group_end(tex, match.end() - 1)
+        macros[match.group(1)] = (int(match.group(2) or 0), tex[match.end():end - 1])
         tex = tex[:match.start()] + tex[end:]
     # longest names first and whole names only, so \maxn doesn't eat the start of \maxnm
     for name in sorted(macros, key=len, reverse=True):
-        tex = re.sub(re.escape(name) + r"(?![a-zA-Z0-9])(\{\})?", lambda _: macros[name], tex)
+        arity, body = macros[name]
+        use, position = re.compile(re.escape(name) + r"(?![a-zA-Z0-9])"), 0
+        while (match := use.search(tex, position)) is not None:
+            end, args = match.end(), []
+            if arity == 0 and tex.startswith("{}", end):
+                end += 2
+            while len(args) < arity:
+                while end < len(tex) and tex[end] in " \t\n":
+                    end += 1
+                if not tex.startswith("{", end):
+                    break
+                args.append(tex[end + 1:group_end(tex, end) - 1])
+                end = group_end(tex, end)
+            if len(args) < arity:  # not a use with all its arguments: leave it
+                position = match.end()
+                continue
+            replacement = re.sub(r"#([1-9])", lambda m: args[int(m.group(1)) - 1]
+                                 if int(m.group(1)) <= arity else m.group(0), body)
+            tex = tex[:match.start()] + replacement + tex[end:]
+            position = match.start() + len(replacement)
     return tex
 
 
-def parse_statement(content, is_interactive):
-    """Split a Kattis problem.<lang>.tex into Polygon statement sections (still Kattis LaTeX inside)."""
+def parse_statement(content, is_interactive, name=None):
+    """Split a Kattis problem.<lang>.tex into Polygon statement sections (still Kattis LaTeX inside).
+    name is used when there is no (or an empty) \\problemname (newer packages keep it in problem.yaml)."""
     result = Statement(encoding="UTF-8")
     legend = content
 
-    # left where the Output environment was, to find the text that follows it
-    after_output_mark = "\0after Output\0"
+    # left where the Input / Output environments were, to find the text between and after them
+    after_input_mark, after_output_mark = "\0after Input\0", "\0after Output\0"
 
     def extract_pattern(pattern, replacement=''):
         match = pattern.search(legend)
@@ -66,8 +100,13 @@ def parse_statement(content, is_interactive):
     def extract_section(tag_name):
         return extract_pattern(re.compile(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, flags=re.S))
 
-    def extract_latex_tag(tag_name):
-        return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
+    def extract_problemname():
+        # the name may contain braces: \problemname{\texttt{apt upgrade}}
+        match = re.search(r"\\problemname\s*\{", legend)
+        if match is None:
+            return None, legend
+        end = group_end(legend, match.end() - 1)
+        return legend[match.end():end - 1], legend[:match.start()] + legend[end:]
 
     def extract_input_output(tag_name, block_replacement=''):
         if re.search(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, legend) is not None:
@@ -81,8 +120,10 @@ def parse_statement(content, is_interactive):
     if is_interactive:
         result.interaction, legend = extract_input_output("Interaction")
     result.output, legend = extract_input_output("Output", after_output_mark)
-    result.input, legend = extract_input_output("Input")
-    result.name, legend = extract_latex_tag("problemname")
+    result.input, legend = extract_input_output("Input", after_input_mark)
+    result.name, legend = extract_problemname()
+    if not (result.name or "").strip() and name:
+        result.name = name
 
     # Kattis prints what follows the output specification after the samples (their explanation), so it
     # belongs to the notes: the text after \end{Output} (GCPC), or further sections that the greedy Output
@@ -90,16 +131,31 @@ def parse_statement(content, is_interactive):
     after_output = ""
     if after_output_mark in legend:
         legend, after_output = legend.split(after_output_mark, 1)
+        # what stands between \end{Input} and \begin{Output} (a figure, BAPC 2024) stays after the input
+        if after_input_mark in legend:
+            legend, between = legend.split(after_input_mark, 1)
+            if between.strip():
+                result.input += between
+        after_output = after_output.replace(after_input_mark, "")
     elif result.output is not None:
         heading = re.search(r"\\(?:sub)?section\*?\{[^}]*}", result.output)
         if heading is not None:
             result.output, after_output = result.output[:heading.start()], result.output[heading.start():]
+    legend = legend.replace(after_input_mark, "")
     if after_output.strip():
         after_output = re.sub(r"\\(?:sub)?section\*?\{([^}]*)}", lambda m: "\\textbf{%s}\n" % m.group(1),
                               after_output).strip()
         result.notes = after_output + ("\n\n" + result.notes.lstrip("\n") if result.notes else "")
     result.legend = legend
     return result
+
+
+def problem_yaml_name(yaml_contents, lang):
+    """The problem name from problem.yaml: `name: {<lang>: ...}` (newer format) or `name: ...`; None if absent."""
+    name = (yaml_contents or {}).get("name")
+    if isinstance(name, dict):
+        name = name.get(lang)
+    return str(name) if name else None
 
 
 def find_statement_file(directory, lang):
@@ -237,7 +293,7 @@ def main():
             with open(file) as statement_file:
                 content = statement_file.read()
             print("problem.saveStatement language = " + lang_polygon)
-            polygon_statement = parse_statement(content, is_interactive)
+            polygon_statement = parse_statement(content, is_interactive, problem_yaml_name(yaml_contents, lang))
             try:
                 prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
             except PolygonRequestFailedException as e:
@@ -522,6 +578,7 @@ The checker is set to wcmp by default, if not set custom checker/validator shoul
     problem_yaml = read_problem_yaml()
     is_interactive = False
     is_custom_checker = False
+    yaml_contents = {}
     if problem_yaml is not None:
         description += "\n\n" + problem_yaml.strip()
         yaml_contents = yaml.safe_load(problem_yaml)

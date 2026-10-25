@@ -1,5 +1,5 @@
 """Statement parsing of domjudgeimport: \\newcommand inlining and the split into Polygon sections."""
-from polygon_uploader.domjudge.domjudge import inline_newcommands, parse_statement
+from polygon_uploader.domjudge.domjudge import inline_newcommands, parse_statement, problem_yaml_name
 
 
 def test_newcommand_body_with_braces():
@@ -25,6 +25,46 @@ def test_newcommand_empty_braces_use():
 
 def test_newcommand_unbraced_name():
     assert inline_newcommands("\\newcommand\\maxq{1\\,000}up to \\maxq") == "up to 1\\,000"
+
+
+def test_newcommand_star_with_arguments():
+    # BAPC 2025 accidentalarithmetic: \newcommand*\keystroke[1]{...} stayed in the legend, uses not inlined
+    tex = "\\newcommand*\\keystroke[1]{\\fbox{#1}}\\newcommand{\\pair}[2]{(#1, #2)}\n\\keystroke{+} \\pair{a}{\\keystroke{b}}"
+    assert inline_newcommands(tex) == "\n\\fbox{+} (a, \\fbox{b})"
+
+
+def test_newcommand_body_with_comment():
+    # a brace inside a % comment must not count
+    tex = "\\newcommand{\\x}{% see {this\n  X}\n\\x"
+    assert inline_newcommands(tex) == "\n% see {this\n  X"
+
+
+def test_problemname_with_braces():
+    # BAPC 2023 aptupgrade: \problemname{\texttt{apt upgrade}} lost its last "}" to the legend
+    st = parse_statement("\\problemname{\\texttt{apt upgrade}}\nLegend.\n", is_interactive=False)
+    assert st.name == "\\texttt{apt upgrade}"
+    assert st.legend.strip() == "Legend."
+
+
+def test_name_from_problem_yaml():
+    # BAPC 2024: \problemname{} is empty, the name is in problem.yaml (name: {en: ...})
+    st = parse_statement("\\problemname{}\nLegend.\n", is_interactive=False, name="Buggy Blinkers")
+    assert st.name == "Buggy Blinkers"
+    st = parse_statement("\\problemname{Own}\nLegend.\n", is_interactive=False, name="Buggy Blinkers")
+    assert st.name == "Own"
+    assert problem_yaml_name({"name": {"en": "Buggy Blinkers", "nl": "Kapotte knipperlichten"}}, "en") == "Buggy Blinkers"
+    assert problem_yaml_name({"name": "Old Format"}, "en") == "Old Format"
+    assert problem_yaml_name({"author": "x"}, "en") is None
+
+
+def test_text_between_input_and_output_stays_after_input():
+    # BAPC 2024 buggyblinkers: a figure between \end{Input} and \begin{Output} went to the legend
+    tex = ("\\problemname{P}\nLegend.\n\\begin{Input}\nIn.\n\\end{Input}\n"
+           "\\begin{figure}Fig.\\end{figure}\n\\begin{Output}\nOut.\n\\end{Output}\n")
+    st = parse_statement(tex, is_interactive=False)
+    assert st.legend.strip() == "Legend."
+    assert st.input == "\nIn.\n\n\\begin{figure}Fig.\\end{figure}\n"
+    assert st.output.strip() == "Out."
 
 
 def test_sections():
