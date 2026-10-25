@@ -180,11 +180,15 @@ def main():
             Group(100, main_tests, GroupScoring.SUM),
         ]
 
-        all_tests = sample_tests + main_tests
-
-        def get_test_by_prefix(file_path):
-            file_name = os.path.basename(file_path)
-            return all_tests[int(file_name[:file_name.find('.')]) - 1]
+        def get_sample_test(file_path):
+            """The sample test with the same base name (sample/1.interaction -> sample/1.in), or None."""
+            base = os.path.splitext(os.path.basename(file_path))[0]
+            for test in sample_tests:
+                if test.description == "domjudgeimport: sample/%s.in" % base:
+                    return test
+            failures.append("sample/%s: there is no sample/%s.in, so it is in no test "
+                            "(the sample input may be among attachments/)" % (os.path.basename(file_path), base))
+            return None
 
         if is_interactive:
             for test_file in sorted(glob.glob(os.path.join(directory, "data/sample/*.interaction"))):
@@ -193,7 +197,9 @@ def main():
                 def cut_if_starts_with(ch, contents):
                     return ''.join(map(lambda x: '\n' if x.startswith(ch) else x[1:], contents))
 
-                test = get_test_by_prefix(test_file)
+                test = get_sample_test(test_file)
+                if test is None:
+                    continue
                 test.use_in_statements = True
                 test.input_for_statements = cut_if_starts_with('>', contents)
                 test.output_for_statements = cut_if_starts_with('<', contents)
@@ -201,7 +207,9 @@ def main():
                 test.description += ", non-verified custom input/output from sample/%s" % os.path.basename(test_file)
         elif is_custom_checker:
             for test_file in sorted(glob.glob(os.path.join(directory, "data/sample/*.ans"))):
-                test = get_test_by_prefix(test_file)
+                test = get_sample_test(test_file)
+                if test is None:
+                    continue
                 test.use_in_statements = True
                 test.output_for_statements = open(test_file).read()
                 test.verify = True
