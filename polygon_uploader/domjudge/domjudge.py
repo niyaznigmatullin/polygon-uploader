@@ -22,6 +22,136 @@ from .. import __version__
 CPP_EXTENSIONS = [".cpp", ".cc", ".cxx", ".c++"]
 
 
+def inline_newcommands(tex):
+    """Replace every \newcommand{\name}{body} by deleting the definition and inlining body at each use."""
+    # the body may contain braces (\newcommand{\maxn}{10^{5}}), so find its closing brace by depth
+    head = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]*)\s*}?\s*\{")
+    macros = {}
+    while (match := head.search(tex)) is not None:
+        depth, end = 1, match.end()
+        while end < len(tex) and depth > 0:
+            if tex[end] == '\\':
+                end += 2
+                continue
+            depth += {'{': 1, '}': -1}.get(tex[end], 0)
+            end += 1
+        macros[match.group(1)] = tex[match.end():end - 1]
+        tex = tex[:match.start()] + tex[end:]
+    # longest names first and whole names only, so \maxn doesn't eat the start of \maxnm
+    for name in sorted(macros, key=len, reverse=True):
+        tex = re.sub(re.escape(name) + r"(?![a-zA-Z0-9])(\{\})?", lambda _: macros[name], tex)
+    return tex
+
+
+def parse_statement(content, is_interactive):
+    """Split a Kattis problem.<lang>.tex into Polygon statement sections (still Kattis LaTeX inside)."""
+    result = Statement(encoding="UTF-8")
+    legend = content
+
+    def extract_pattern(pattern):
+        match = pattern.search(legend)
+        if match is None:
+            return None, legend
+        return_value = match.group(1)
+        new_legend = pattern.sub('', legend)
+        return return_value, new_legend
+
+    def extract_latex_tag_block(tag_name):
+        return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
+
+    def extract_section(tag_name):
+        return extract_pattern(re.compile(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, flags=re.S))
+
+    def extract_latex_tag(tag_name):
+        return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
+
+    def extract_input_output(tag_name):
+        if re.search(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, legend) is not None:
+            return extract_section(tag_name)
+        else:
+            return extract_latex_tag_block(tag_name)
+
+    legend = inline_newcommands(legend)
+    legend = legend.replace('\\(', '$').replace('\\)', '$')
+    result.notes, legend = extract_input_output("(?:Examples?|Notes?)")
+    if is_interactive:
+        result.interaction, legend = extract_input_output("Interaction")
+    result.output, legend = extract_input_output("Output")
+    result.input, legend = extract_input_output("Input")
+    result.name, legend = extract_latex_tag("problemname")
+    result.legend = legend
+    return result
+
+
+def cut_if_starts_with(ch, contents):
+    """One side of a sample .interaction: lines starting with ch become blank (keeping both sides aligned),
+    the others lose their direction marker and the space after it ("< 3" -> "3")."""
+    return ''.join(map(lambda x: '\n' if x.startswith(ch) else x[2:] if x[1:2] == ' ' else x[1:], contents))
+
+
+def tests_from_directory(directory, test_type, use_in_statements=False):
+    """Tests data/<test_type>/*.in and one subdirectory level, sorted by basename."""
+    files = (glob.glob(os.path.join(directory, "data/%s/*.in" % test_type)) +
+             glob.glob(os.path.join(directory, "data/%s/*/*.in" % test_type)))
+    files.sort(key=lambda x: os.path.basename(x))
+    return [Test(FileContents(file), "domjudgeimport: %s/%s" % (test_type, os.path.basename(file)),
+                 use_in_statements=use_in_statements) for file in files]
+
+
+def find_sample_test(file_path, sample_tests):
+    """The sample test with the same base name (sample/1.interaction -> sample/1.in), or None."""
+    base = os.path.splitext(os.path.basename(file_path))[0]
+    for test in sample_tests:
+        if test.description == "domjudgeimport: sample/%s.in" % base:
+            return test
+    return None
+
+
+def read_data_cases(directory, section, extensions):
+    """Test cases data/<section>/**/*.in as (name, {extension: content}) with the files that exist."""
+    cases = []
+    section_files = glob.glob(os.path.join(directory, "data", section, "**", "*.in"), recursive=True)
+    for file in sorted(section_files):
+        base = file[:-len(".in")]
+        case = {}
+        for extension in extensions:
+            if os.path.isfile(base + "." + extension):
+                with open(base + "." + extension) as fs:
+                    case[extension] = fs.read()
+        cases.append((os.path.relpath(base, os.path.join(directory, "data")), case))
+    return cases
+
+
+def read_generators_yaml_cases(directory, section):
+    """Test cases of data.<section> in generators/generators.yaml given inline (in:, ans:, out:)."""
+    file = os.path.join(directory, "generators/generators.yaml")
+    if not os.path.isfile(file):
+        return []
+    with open(file) as fs:
+        data = (yaml.safe_load(fs) or {}).get("data") or {}
+    cases = []
+
+    def walk(name, node):
+        if isinstance(node, list):
+            for item in node:
+                walk(name, item)
+        elif isinstance(node, dict):
+            if "in" in node:
+                cases.append(("generators.yaml " + name, {k: str(v) for k, v in node.items()}))
+            elif "data" in node:
+                walk(name, node["data"])
+            elif any(key in node for key in ("generate", "copy", "ans", "out")):
+                print("Skipping generators.yaml %s: no inline input" % name)
+            else:
+                for key, value in node.items():
+                    walk(name + "/" + str(key), value)
+        elif node is not None:
+            print("Skipping generators.yaml %s: no inline input" % name)
+
+    walk(section, data.get(section))
+    return cases
+
+
 def main():
     if len(sys.argv) < 3:
         print("Usage: domjudgeimport <problem_directory> <polygon problem id> [--create]")
@@ -68,67 +198,6 @@ def main():
             api_error("saveFile %s" % file, e, fallback)
             return False
 
-    def parse_statement(content):
-        result = Statement(encoding="UTF-8")
-        legend = content
-
-        def extract_pattern(pattern):
-            match = pattern.search(legend)
-            if match is None:
-                return None, legend
-            return_value = match.group(1)
-            new_legend = pattern.sub('', legend)
-            return return_value, new_legend
-
-        def replace_new_command():
-            # the body may contain braces (\newcommand{\maxn}{10^{5}}), so find its closing brace by depth
-            head = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}?\s*\{")
-            vars = {}
-            new_legend = legend
-            while (match := head.search(new_legend)) is not None:
-                depth, end = 1, match.end()
-                while end < len(new_legend) and depth > 0:
-                    if new_legend[end] == '\\':
-                        end += 2
-                        continue
-                    depth += {'{': 1, '}': -1}.get(new_legend[end], 0)
-                    end += 1
-                vars[match.group(1)] = new_legend[match.end():end - 1]
-                new_legend = new_legend[:match.start()] + new_legend[end:]
-            # longest names first and whole names only, so \maxn doesn't eat the start of \maxnm
-            for var in sorted(vars, key=len, reverse=True):
-                new_legend = re.sub(re.escape(var) + r"(?![a-zA-Z0-9])(\{\})?", lambda _: vars[var], new_legend)
-            return new_legend
-
-        def extract_latex_tag_block(tag_name):
-            return extract_pattern(re.compile(r"\\begin\{%s}(.*)\\end\{%s}" % (tag_name, tag_name), flags=re.S))
-
-        def extract_section(tag_name):
-            return extract_pattern(re.compile(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, flags=re.S))
-
-        def extract_latex_tag(tag_name):
-            return extract_pattern(re.compile(r"\\%s\{([^}]*)}" % tag_name, flags=re.S))
-
-        def extract_input_output(tag_name):
-            if re.search(r"\\(?:sub)?section[*]?\{%s}(.*)" % tag_name, legend) is not None:
-                return extract_section(tag_name)
-            else:
-                return extract_latex_tag_block(tag_name)
-
-        def replace_formula_brackets():
-            return legend.replace('\\(', '$').replace('\\)', '$')
-
-        legend = replace_new_command()
-        legend = replace_formula_brackets()
-        result.notes, legend = extract_input_output("(?:Examples?|Notes?)")
-        if is_interactive:
-            result.interaction, legend = extract_input_output("Interaction")
-        result.output, legend = extract_input_output("Output")
-        result.input, legend = extract_input_output("Input")
-        result.name, legend = extract_latex_tag("problemname")
-        result.legend = legend
-        return result
-
     def upload_statement():
         for lang, lang_polygon in [('en', 'english')]:
             file = glob.glob(os.path.join(directory, "problem_statement/prob*%s*.tex" % lang))
@@ -139,7 +208,7 @@ def main():
             with open(file) as statement_file:
                 content = statement_file.read()
             print("problem.saveStatement language = " + lang_polygon)
-            polygon_statement = parse_statement(content)
+            polygon_statement = parse_statement(content, is_interactive)
             try:
                 prob.save_statement(lang=lang_polygon, problem_statement=polygon_statement)
             except PolygonRequestFailedException as e:
@@ -166,39 +235,24 @@ def main():
                     api_error("saveStatementResource %s" % file, e)
 
     def upload_tests():
-        def get_tests_from_directory(test_type, use_in_statements=False):
-            files = (glob.glob(os.path.join(directory, "data/%s/*.in" % test_type)) +
-                         glob.glob(os.path.join(directory, "data/%s/*/*.in" % test_type)))
-            files.sort(key=lambda x: os.path.basename(x))
-            return [Test(FileContents(file), "domjudgeimport: %s/%s" % (test_type, os.path.basename(file)),
-                         use_in_statements=use_in_statements) for file in files]
-
-        sample_tests = get_tests_from_directory("sample", use_in_statements=True)
-        main_tests = get_tests_from_directory("secret")
+        sample_tests = tests_from_directory(directory, "sample", use_in_statements=True)
+        main_tests = tests_from_directory(directory, "secret")
         groups = [
             Group(0, sample_tests, GroupScoring.SUM),
             Group(100, main_tests, GroupScoring.SUM),
         ]
 
         def get_sample_test(file_path):
-            """The sample test with the same base name (sample/1.interaction -> sample/1.in), or None."""
-            base = os.path.splitext(os.path.basename(file_path))[0]
-            for test in sample_tests:
-                if test.description == "domjudgeimport: sample/%s.in" % base:
-                    return test
-            failures.append("sample/%s: there is no sample/%s.in, so it is in no test "
-                            "(the sample input may be among attachments/)" % (os.path.basename(file_path), base))
-            return None
+            test = find_sample_test(file_path, sample_tests)
+            if test is None:
+                base = os.path.splitext(os.path.basename(file_path))[0]
+                failures.append("sample/%s: there is no sample/%s.in, so it is in no test "
+                                "(the sample input may be among attachments/)" % (os.path.basename(file_path), base))
+            return test
 
         if is_interactive:
             for test_file in sorted(glob.glob(os.path.join(directory, "data/sample/*.interaction"))):
                 contents = open(test_file).readlines()
-
-                def cut_if_starts_with(ch, contents):
-                    # "< 3" -> "3": drop the direction marker and the space after it
-                    return ''.join(map(lambda x: '\n' if x.startswith(ch) else x[2:] if x[1:2] == ' ' else x[1:],
-                                       contents))
-
                 test = get_sample_test(test_file)
                 if test is None:
                     continue
@@ -223,54 +277,11 @@ def main():
                 if not upload_from_file(file, FileType.SOURCE, fallback="saving it as a resource instead"):
                     upload_from_file(file, FileType.RESOURCE)
 
-    def read_data_cases(section, extensions):
-        """Test cases data/<section>/**/*.in as (name, {extension: content}) with the files that exist."""
-        cases = []
-        section_files = glob.glob(os.path.join(directory, "data", section, "**", "*.in"), recursive=True)
-        for file in sorted(section_files):
-            base = file[:-len(".in")]
-            case = {}
-            for extension in extensions:
-                if os.path.isfile(base + "." + extension):
-                    with open(base + "." + extension) as fs:
-                        case[extension] = fs.read()
-            cases.append((os.path.relpath(base, os.path.join(directory, "data")), case))
-        return cases
-
-    def read_generators_yaml_cases(section):
-        """Test cases of data.<section> in generators/generators.yaml given inline (in:, ans:, out:)."""
-        file = os.path.join(directory, "generators/generators.yaml")
-        if not os.path.isfile(file):
-            return []
-        with open(file) as fs:
-            data = (yaml.safe_load(fs) or {}).get("data") or {}
-        cases = []
-
-        def walk(name, node):
-            if isinstance(node, list):
-                for item in node:
-                    walk(name, item)
-            elif isinstance(node, dict):
-                if "in" in node:
-                    cases.append(("generators.yaml " + name, {k: str(v) for k, v in node.items()}))
-                elif "data" in node:
-                    walk(name, node["data"])
-                elif any(key in node for key in ("generate", "copy", "ans", "out")):
-                    print("Skipping generators.yaml %s: no inline input" % name)
-                else:
-                    for key, value in node.items():
-                        walk(name + "/" + str(key), value)
-            elif node is not None:
-                print("Skipping generators.yaml %s: no inline input" % name)
-
-        walk(section, data.get(section))
-        return cases
-
     def upload_validator_tests():
         tests = [(name, case["in"], ValidatorTestVerdict.VALID)
-                 for name, case in read_data_cases("sample", ["in"])]
-        tests += [(name, case["in"], ValidatorTestVerdict.INVALID)
-                  for name, case in read_data_cases("invalid_input", ["in"]) + read_generators_yaml_cases("invalid_input")]
+                 for name, case in read_data_cases(directory, "sample", ["in"])]
+        invalid = read_data_cases(directory, "invalid_input", ["in"]) + read_generators_yaml_cases(directory, "invalid_input")
+        tests += [(name, case["in"], ValidatorTestVerdict.INVALID) for name, case in invalid]
         for index, (name, content, verdict) in enumerate(tests, 1):
             print("problem.saveValidatorTest %d [%s] %s" % (index, name, verdict))
             try:
@@ -284,10 +295,10 @@ def main():
             return
         # a sample answer is assumed to be a valid output
         tests = [(name, case["in"], case["ans"], case["ans"], CheckerTestVerdict.OK)
-                 for name, case in read_data_cases("sample", ["in", "ans"]) if "ans" in case]
+                 for name, case in read_data_cases(directory, "sample", ["in", "ans"]) if "ans" in case]
         for section, verdict in [("valid_output", CheckerTestVerdict.OK),
                                  ("invalid_output", CheckerTestVerdict.WRONG_ANSWER)]:
-            for name, case in read_data_cases(section, ["in", "ans", "out"]) + read_generators_yaml_cases(section):
+            for name, case in read_data_cases(directory, section, ["in", "ans", "out"]) + read_generators_yaml_cases(directory, section):
                 if "ans" not in case or "out" not in case:
                     print("Skipping checker test %s: needs both an answer and an output" % name)
                     continue
