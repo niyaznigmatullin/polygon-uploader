@@ -81,14 +81,23 @@ def main():
             return return_value, new_legend
 
         def replace_new_command():
-            pattern = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}?\s*\{([^}]+)}", flags=re.S)
+            # the body may contain braces (\newcommand{\maxn}{10^{5}}), so find its closing brace by depth
+            head = re.compile(r"\\newcommand\s*\{?\s*(\\[a-zA-Z][a-zA-Z0-9]+)\s*}?\s*\{")
             vars = {}
-            for match in pattern.finditer(legend):
-                vars[match.group(1)] = match.group(2)
-            new_legend = pattern.sub('', legend)
-            for var, value in vars.items():
-                new_legend = new_legend.replace(var + "{}", value)
-                new_legend = new_legend.replace(var, value)
+            new_legend = legend
+            while (match := head.search(new_legend)) is not None:
+                depth, end = 1, match.end()
+                while end < len(new_legend) and depth > 0:
+                    if new_legend[end] == '\\':
+                        end += 2
+                        continue
+                    depth += {'{': 1, '}': -1}.get(new_legend[end], 0)
+                    end += 1
+                vars[match.group(1)] = new_legend[match.end():end - 1]
+                new_legend = new_legend[:match.start()] + new_legend[end:]
+            # longest names first and whole names only, so \maxn doesn't eat the start of \maxnm
+            for var in sorted(vars, key=len, reverse=True):
+                new_legend = re.sub(re.escape(var) + r"(?![a-zA-Z0-9])(\{\})?", lambda _: vars[var], new_legend)
             return new_legend
 
         def extract_latex_tag_block(tag_name):
