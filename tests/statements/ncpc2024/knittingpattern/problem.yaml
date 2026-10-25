@@ -1,0 +1,7 @@
+name: Knitting Pattern
+author: Atli Fannar Franklín, Hlíf Arnbjargardóttir
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+limits:
+    time_multiplier: 2
+uuid: "38d6e24a-67b6-4ad2-9683-1d305e502ec1"

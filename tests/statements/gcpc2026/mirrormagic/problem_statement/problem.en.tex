@@ -1,0 +1,44 @@
+\problemname{Mirror Magic}
+
+Mia and Mark both own a chandelier, each of which has $n$ candleholders.
+% Recently, they installed their chandeliers at two different points in a room.
+% Being very particular, they made sure that each chandelier is perfectly balanced and thus does not tilt in any direction,
+% both without any candles and with all $n$ identical candles.
+% 
+After the installation, Mia wonders whether she can hide a part of the room behind a vertically placed mirror for a magic trick.
+Of course, the mirror should be placed such that Mark would not notice its existence.
+She believes that she can ensure that Mark will not be able to see her or himself in the mirror, and that she can use clever lighting to hide any possible weirdness resulting from mirroring the room's walls.
+What worries her most are the chandeliers.
+Mark knows the precise positions of all the candleholders and would immediately notice if the chandelier in the mirror looked different from the chandelier behind the mirror he expects to see.
+Naturally, all candleholders of one chandelier should lie on one side of the mirror, and all candleholders of the other chandelier on the other side.
+
+% After the installation they both wonder whether their room is still perfectly symmetrical.
+% Help them find a symmetry line of the room, i.e.\ when the chandeliers are mirrored along that line, they are mapped into each other, or determine that this is impossible.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{figure.pdf}
+    \caption{Illustration of the third sample.}
+    \label{fig:sample}
+\end{figure}
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n\leq 10^5$), the number of candleholders in each chandelier.
+        \item $n$ lines, each containing two integers $x_i$ and $y_i$ ($-10^6 \leq x_i, y_i \leq 10^6$), the coordinates of the $i$th candleholder of Mia's chandelier.
+        \item $n$ lines, each containing two integers $x_i$ and $y_i$ ($-10^6 \leq x_i, y_i \leq 10^6$), the coordinates of the $i$th candleholder of Mark's chandelier.
+    \end{itemize}
+    It is guaranteed that all $2 \cdot n$ points are pairwise distinct.
+\end{Input}
+
+\begin{Output}
+    Output ``\texttt{possible}'' if it is possible to place the mirror as desired, and ``\texttt{impossible}'' otherwise.
+    % If it is impossible to place the mirror as desired, output ``\texttt{impossible}''.
+    % Otherwise, output ``\texttt{possible}'', followed by two points describing the mirror.
+    % Your output should have an absolute or relative error of at most $10^{-6}$ and the two points should have a distance of at least $1$.
+    % No coordinate should have an absolute value exceeding $10^9$.
+    % If there are multiple correct answers, any one of them will be accepted.
+    % Maybe output mapping from Mia's to Mark's chandelier candleholders.
+    % The symmetry line might not have any integer coordinates, so we'd have to output fractions for exact output which I'm not a fan of
+\end{Output}

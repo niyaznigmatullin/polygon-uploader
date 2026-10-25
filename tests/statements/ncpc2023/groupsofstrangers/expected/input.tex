@@ -1,0 +1,12 @@
+
+The input consists of one line with the integers $N$ and $M$ ($2 \leq N \leq 1000, 1 \leq M \leq 100000$), 
+the number of employees and the number of pairs of employees that know each other. 
+Next follow $M$ lines each containing two integers $a$ and $b$ ($1\leq a\neq b \leq N$), indicating that 
+employee $a$ knows employee $b$.
+
+It is guaranteed that for the given test cases, there is at least one way to divide the employees into offices 
+with HR managers and a CEO, like in the description. To summarize, the CEO is an employee who knows at most 
+$15$ other people. The rest of the employees can be partitioned into at most $8$ offices, where each office
+has an employee (the HR manager) who knows all of the other employees in that office. In addition, the CEO knows all of the HR managers.
+Note that employees from different offices can know each other. 
+

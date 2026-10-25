@@ -1,0 +1,69 @@
+\problemname{Faulty Connection}
+
+\illustration{0.29}{Cooke_and_Wheatstone_electric_telegraph.jpg}{
+   The Cooke and Wheatstone electric telegraph can transmit letters with the use of $5$ needles which point to the transmitted letters.
+   CC BY-SA 4.0 by Geni on \href{https://commons.wikimedia.org/wiki/File:Cooke_and_Wheatstone_electric_telegraph.jpg}{Wikimedia Commons}
+}
+
+\newcommand{\maxx}{1000}
+\newcommand{\maxl}{30}
+\newcommand{\maxk}{600}
+
+It is the 25th of June, 1825.
+English inventer William Fothergill Cooke and you, English scientist Charles Wheatstone, are working on an early prototype of an electrical telegraph system.\footnote{
+    One may point out that Cooke and Wheatstone actually did not release a telegraph design until 1837,
+    but obviously, this is due to the problem we are trying to solve here! :)
+}
+This system consists of a transmitter and a receiver.
+The transmitter can send messages to the receiver, which we model as a sequence of positive integers.
+However, the prototype is far from flawless, so quite often, an integer that is transmitted is not actually received.
+Integers never get altered through the connection, though, so all received integers are guaranteed to have been transmitted.
+
+To remedy this flaw, Cooke and you are working on an error correction code.
+The idea is to agree on a fixed list of $\maxk$ possible messages, indexed $1$ to $\maxk$, and assign each message a list of $\maxl$ positive integers of at most $\maxx$.
+To send a message from the list, you simply send the corresponding list of integers.
+Sometimes, some integers may get lost or arrive in a different order,
+but if enough integers remain, the hope is that there is still only one possible message.
+
+When trying this out back in April, you noticed that, with some bad luck, the connection can get very faulty.
+Sometimes only two integers remained, which can easily make a message ambiguous!
+You decide to investigate whether this issue can be resolved purely by improving the error correction code.
+To each of the $\maxk$ possible messages, you need to assign a list of $\maxl$ positive integers of at most $\maxx$,
+such that receiving any two integers in any order from any one of the lists uniquely determines the corresponding message.
+
+Your program will be run multiple times for each test case.
+In the first pass, your program will be given an index of a message to send, which your program should assign a list of $\maxl$ integers.
+In subsequent passes, your program will be given two of the $\maxl$ integers from the first pass in any order,
+which it should then decode to retrieve the original message.
+
+Your submission may take up to $1$ second for each pass.
+
+A testing tool is provided to help you develop your solution.
+
+\pagebreak
+
+\begin{Input}
+    This is a \emph{multi-pass} problem.
+
+    The input consists of:
+    \begin{itemize}
+        \item One line with the action your program needs to perform:
+            \begin{itemize}
+                \item ``\texttt{send}'' if you need to send a message.
+                \item ``\texttt{receive}'' if you need to receive two integers and determine the corresponding message.
+            \end{itemize}
+        \item If the action is ``\texttt{send}'', one line with an integer $k$ ($1 \leq k \leq \maxk$), the index of the message to send.
+        \item If the action is ``\texttt{receive}'', one line with two distinct integers $a$ and $b$ ($1 \leq a, b \leq \maxx$)
+            from the output of your program in the first pass, in any order.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    If the action is ``\texttt{send}'', output $\maxl$ distinct integers $x$ ($1\leq x\leq \maxx$), assigning this list of integers to the message with index $k$.
+
+    If the action is ``\texttt{receive}'', output the index $k$ of the corresponding message.
+\end{Output}
+
+\subsection*{Note}
+    The displayed sample output of a ``\texttt{send}'' action uses line wrapping for display purposes.
+    Whitespace in the output is treated as usual.

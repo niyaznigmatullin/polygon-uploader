@@ -1,0 +1,59 @@
+\problemname{Historical Hits}
+
+\newcommand{\hitsmaxn}{3000}
+\newcommand{\hitsmaxyear}{10^9}
+
+\emph{Hitster} is a tabletop game about placing songs into an ordered \emph{timeline} by guessing their release year.
+As a longtime member of the \emph{Companionless Playing Card Games (CPCG)} association, Harper has access to a single-player variant of Hitster.
+The rules are similar to regular Hitster.
+Harper starts with an empty timeline.
+In each round of the game, she draws a card which contains only a QR code on its front.
+She scans the QR code to listen to the song and afterwards guesses the release year of the song.
+Afterwards, she turns the card to reveal the song's true release year.
+Suppose that the true year is~$a$ and she guessed~$b$.
+If Harper's timeline does not yet contain a song with a \emph{true} release year that is strictly between $a$ and $b$, she adds the card to her timeline.\footnote{Her guess $b$ never equals another card's true year, so the card's position in the timeline is uniquely determined.}
+Otherwise, she discards the card.
+
+Harper just had a lengthy playthrough of the entire deck of $n$ cards.
+Despite her thorough knowledge of music, her final timeline is shorter than she expected.
+Playing a second time now would be boring because Harper remembers the correct year of all the songs, along with her not-so-correct guesses.\footnote{She developed this incredible memory through many long nights of playing a single-player variant of \emph{Memory}.}
+Surely, she was just unlucky with the order in which she drew the cards, she thinks.
+To confirm her suspicion, Harper turns to probability theory.
+Suppose that the same cards are presented in an order drawn uniformly at random from the set of all $n!$ permutations.
+What is the expected length of Harper's final timeline if she repeats her guesses from her last playthrough for all of the $n$ songs?
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{sample3}
+    \caption{
+        Visualization of a playthrough of the game with the cards of Sample 3 presented in the order of the input.
+        Harper's timeline is shown at the bottom.
+        After the third round, her final timeline contains two cards.
+        The top right of each round shows the back of the card, which Harper cannot see before making her guess.
+    }
+\end{figure}
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1 \le n \le \hitsmaxn$), the number of cards.
+        \item $n$ lines, the $i$th of which contains two integers $a_i, b_i$ ($1 \le a_i, b_i \le \hitsmaxyear$), the correct year and Harper's guessed year for the song of the $i$th card.
+    \end{itemize}
+    It is guaranteed that $a_i \ne a_j$ and $a_i \ne b_j$ for all $i \ne j$.
+\end{Input}
+
+\begin{Output}
+    Determine the expected length of Harper's timeline if the cards are presented in an order drawn uniformly at random from the set of all $n!$ permutations.
+
+    Let $M = 998\,244\,353$.
+    The expected length can be represented as an irreducible fraction $p / q$ where $q$ is not divisible by $M$.
+    Output one integer $p \cdot q^{-1} \bmod M$ (the unique integer $x$ such that $0 \le x < M$ and $x \cdot q \equiv p \bmod M$).
+\end{Output}
+
+\nextsample
+
+There are two possible orders.
+If the cards are drawn in the order of the input, then the first card is added to the timeline and the second card is discarded.
+If the cards are drawn in reverse order, then both cards are added to the timeline.
+Thus, the expected length is $3/2$.
+One can verify that $499122178 \cdot 2 \equiv 3 \bmod M$.

@@ -1,0 +1,69 @@
+\problemname{Guessing Passwords}
+\illustration{0.5}{colours}{Image taken from \href{https://commons.wikimedia.org/wiki/File:Wordle_Emoji_Screenshot.png}{commons.wikimedia.org}.}
+
+Ingfríður is testing her new pet project website, Passwordle.
+The rules should be rather familiar for those who have played
+plenty of wordle, but let us review them here. The website picks
+a secret password that the user then has to guess. The password
+will be $N$ characters in length and the user will guess until
+they get it right, getting a higher score for fewer guesses.
+Each guess must be a string of $N$ characters. For each character
+in the guess, it will be coloured one of three colours. If that
+character matches the password character in the same position,
+the colour is green. If the character does not match, but that
+character is in the password somewhere else, the colour is
+yellow. Otherwise it is gray.
+
+Ingfríður is of course very good at her own game, so she will
+always guess a password that could be the hidden password.
+That is to say her guess will always match the previous clues.
+Furthermore she knows her program never generates passwords with
+repeated characters, since that's insecure, and will incorporate
+this knowledge into her guesses.
+
+You now receive some screenshots from her testing progress, but
+they got so terribly compressed you can only make out the colours
+and not the text itself. Furthermore it seems that she didn't 
+manage to make any progress at all. She didn't get a single green
+square in the entire game and never found any more characters than
+she did in her very first guess, and quit
+out of frustration. So the number of yellow squares is the same
+on each row. Given this info, can you reconstruct a
+sequence of guesses she could have made? Or is it impossible and
+her program must be wrong? You may assume that Ingfríður never
+makes any mistake when playing, only when programming.
+
+\section*{Input}
+
+The first line of the input contains two positive integers
+$N$ and $M$ ($1 \leq N, M \leq 100$). $N$ is the number of characters in the
+password and $M$ is the number of guesses in the screenshot.
+Next there are $N$ lines, each with $M$ characters, the $i$-th
+of which gives the colours of the $i$-th guess. \texttt{G} denotes
+gray and \texttt{Y} denotes yellow. The number of \texttt{Y}s is
+constant across all lines. The characters are
+given without spaces between them. 
+Finally there is a single line with a single
+positive integer $\Sigma$ ($1 \leq \Sigma \leq 10^6$), giving the number
+of valid characters for the passwords.
+
+\section*{Output}
+
+If there is no way to achieve the given colours print \texttt{Bugged!}.
+Otherwise print $N + 1$ lines with $M$ numbers each, separated by spaces.
+The first $N$ lines should give the colouring in the input if the number $i$ 
+denotes the $i$-th character in the alphabet. The final and $(N+1)$-st line
+should give a secret word that could have resulted in this sequence of
+guesses being valid. If there are multiple possible solutions any one of them 
+will be accepted.
+
+\section*{Explanation of sample}
+In the first sample, there is a valid sequence of guesses. In the first move, 
+Ingfríður guesses the word \verb|3 4 2 1|, which reveals that the $1$ and the $2$
+are somewhere in the hidden password but not at those positions. The next guess 
+is \verb|1 5 6 2| which is a valid second guess since it could have been the 
+password, given the information from the first guess. An example of an invalid 
+second guess would be \verb|1 3 2 5|. This is invalid because Ingfríður already
+knows that the $2$ is not on the third position, and that the $3$ shouldn't 
+occur in the word at all.
+

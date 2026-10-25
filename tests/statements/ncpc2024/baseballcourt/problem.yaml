@@ -1,0 +1,8 @@
+name: Baseball Court
+author: Atli Fannar Franklín
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+limits:
+  time_multiplier: 2
+# uuid added by BAPCtools
+uuid: "8ee7605a-fd2e-895d-201c-cd1863b26aaf"

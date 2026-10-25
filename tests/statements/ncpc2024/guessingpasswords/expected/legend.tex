@@ -1,0 +1,35 @@
+
+\illustration{0.5}{colours}{Image taken from \href{https://commons.wikimedia.org/wiki/File:Wordle_Emoji_Screenshot.png}{commons.wikimedia.org}.}
+
+Ingfríður is testing her new pet project website, Passwordle.
+The rules should be rather familiar for those who have played
+plenty of wordle, but let us review them here. The website picks
+a secret password that the user then has to guess. The password
+will be $N$ characters in length and the user will guess until
+they get it right, getting a higher score for fewer guesses.
+Each guess must be a string of $N$ characters. For each character
+in the guess, it will be coloured one of three colours. If that
+character matches the password character in the same position,
+the colour is green. If the character does not match, but that
+character is in the password somewhere else, the colour is
+yellow. Otherwise it is gray.
+
+Ingfríður is of course very good at her own game, so she will
+always guess a password that could be the hidden password.
+That is to say her guess will always match the previous clues.
+Furthermore she knows her program never generates passwords with
+repeated characters, since that's insecure, and will incorporate
+this knowledge into her guesses.
+
+You now receive some screenshots from her testing progress, but
+they got so terribly compressed you can only make out the colours
+and not the text itself. Furthermore it seems that she didn't 
+manage to make any progress at all. She didn't get a single green
+square in the entire game and never found any more characters than
+she did in her very first guess, and quit
+out of frustration. So the number of yellow squares is the same
+on each row. Given this info, can you reconstruct a
+sequence of guesses she could have made? Or is it impossible and
+her program must be wrong? You may assume that Ingfríður never
+makes any mistake when playing, only when programming.
+

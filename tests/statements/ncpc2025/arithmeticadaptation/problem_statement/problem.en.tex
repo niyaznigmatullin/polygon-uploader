@@ -1,0 +1,43 @@
+\problemname{Arithmetic Adaptation}
+
+\illustration{0.3}{regnestykke.jpg}{
+  Postcard showing a Norwegian by solving Sample~3.
+  Coloured black and white photo,
+  National Library of Norway.
+}
+
+\newcommand{\maxa}{999}
+\newcommand{\maxb}{999}
+\newcommand{\maxs}{999}
+
+Practice does make perfect!
+You have finally achieved proficiency at the task of adding two small nonzero integers~$a$ and~$b$ to compute their sum~$a+b$.
+Before you move on to studying four-digit numbers,
+you want to achieve mastery by also understanding the inverse problem: 
+given integer~$s$, determine nonzero $a$ and $b$ such that $a+b=s$.
+None of the numbers may use more than $3$~digits.
+
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $s$ such that $-\maxs\leq s\leq \maxs$.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+  Output two integers
+  $a$ (with $-\maxa\leq a\leq \maxa$ and $a\neq 0$) 
+  and 
+  $b$ (with $-\maxb\leq b\leq \maxb$ and $b\neq 0$) 
+  such that $a+b=s$.
+  If there is more than one valid solution, you may output any one of them.
+\end{Output}
+
+\subsection*{Explanation of Sample Input 1}
+
+On input ``\texttt{10}'', the output ``\texttt{3 7}'' is correct because $3+7=10$.
+Note that many other outputs would also be correct, such as ``\texttt{2 8}'', ``\texttt{11 -1}'', or even ``\texttt{-849 859}''.
+On the other hand, the answer ``\texttt{4 7}'' would be \emph{wrong} (because $4+7\neq 10$), 
+and so would ``\texttt{10 0}'' (because both $a$ and $b$ must be nonzero) 
+and ``\texttt{1000 -990}'' (because both $a$ and $b$ must have at most three digits.)

@@ -1,0 +1,19 @@
+
+
+Your colleague Cynthia likes writing asides in messages (but then again,
+    don't we all (and there's nothing strictly wrong with that anyway)). As
+some people find the text hard to read this way, we are going to try to
+extract some parts of the sentences out into equally-sized footnotes instead
+of brackets.
+
+For example, \texttt{this(complicated(nested(passage)))} could become:
+
+\indent \texttt{this[1]} \\
+\indent \texttt{[1] complicated[2]} \\
+\indent \texttt{[2] nested(passage)}
+
+Given one such message, an unbroken string of up to $10^6$ characters
+(letters and brackets, without any spaces), isolate exactly
+two-thirds of the Latin letters into footnotes, each footnote containing
+exactly the same number of Latin letters.
+

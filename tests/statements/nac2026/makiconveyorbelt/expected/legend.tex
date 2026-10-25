@@ -1,0 +1,38 @@
+
+
+
+
+
+
+
+Alice and Bob are eating at a conveyor belt maki restaurant. (Maki is a kind of sushi).
+Diners in the restaurant sit around a circular conveyor belt with
+$N$ positions numbered from $1$ to $N$ in clockwise order.
+Alice sits at position $p_A$ and Bob sits at position $p_B$.
+
+The restaurant serves $M$ different kinds of maki.
+There are $K$ different plates set out on the conveyor belt.
+The $i\textsuperscript{th}$ plate consists of
+$x_i$ pieces of a single kind of maki and each piece costs $c_i$ coins.
+The same kind of maki may appear on multiple plates, and have different costs on different plates.
+No more plates will be added beyond what is already on the conveyor belt and no other
+customers are present at the restaurant (perhaps they picked a poorly rated maki restaurant\ldots).
+
+There is at most one plate per position.
+Every second, the conveyor belt rotates clockwise.
+Formally, if there is a plate at position $N$, it moves to position $1$; and all other plates move from position $i$ to position $i+1$.
+When a plate is in front of a diner, they may immediately grab any number of pieces from it, or choose not to grab any.
+For example, if there is a plate with $5$ pieces of maki in front of Alice, she can choose to only grab $2$.
+The diners may grab maki from plates in front of them before the belt first rotates.
+
+Alice and Bob want to return home as quickly as possible to watch their favorite sushi documentary.
+They know the full layout of the restaurant, and each have a desired number of pieces of each maki type they want to eat in order to be satisfied.
+Help them determine the minimum time (in seconds) they need to spend in the restaurant and the minimum cost (in coins) for them to become satisfied within that time.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.55\textwidth]{sample1}
+  \caption*{Initial position of Alice, Bob, and the plates in Sample Input 1.}
+  \label{sushiconveyorbelt:sample1}
+\end{figure}
+

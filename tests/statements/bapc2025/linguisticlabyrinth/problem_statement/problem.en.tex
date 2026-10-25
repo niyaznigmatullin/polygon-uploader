@@ -1,0 +1,65 @@
+\problemname{Linguistic Labyrinth}
+
+\illustration{0.28}{illustration.pdf}{
+    Spoiler alert: this is one of the~secret test cases.%
+    \vspace{-2em}% Ugly negative vspace to make sure the itemize list is not line-wrapped
+}
+
+\newcommand{\maxn}{22}
+\newcommand{\threeD}{$3$-dimensional }
+
+It is the 25th of December, 2025.
+As a Christmas tradition, you gather a group of friends to solve a puzzle.
+Among your friends are \emph{wordcels} and \emph{shape rotators},
+who are respectively better at thinking with words and with mental images.
+This puzzle challenges even the smartest wordcel and the most brilliant shape rotator:
+
+% There is a grid of points in $3$ dimensions, where at each position $(x,y,z)$ with integers $1\leq x,y,z\leq n$ there is a point,
+There is a \threeD grid with points at all integer coordinates $(x,y,z)$ with $1\leq x,y,z\leq n$,
+and each point has a label associated with it, which is either `\texttt{B}', `\texttt{A}', `\texttt{P}', or `\texttt{C}'.
+In this grid, you need to find occurrences of the curly word ``\texttt{BAPC}''.
+A curly word ``\texttt{BAPC}'' is a collection of four points in the grid such that:
+
+\begin{itemize}
+    \item The labels spell out ``\texttt{BAPC}'' (in this order).
+    \item The angle that the triplet ``\texttt{BAP}'' makes is $90$ degrees: the vectors from $\texttt{B}\to \texttt{A}$ and from $\texttt{A}\to \texttt{P}$ form a $90$-degree angle.
+    \item The angle that the triplet ``\texttt{APC}'' makes is $90$ degrees: the vectors from $\texttt{A}\to \texttt{P}$ and from $\texttt{P}\to \texttt{C}$ form a $90$-degree angle.
+\end{itemize}
+
+Note that the two angles do not need to be axis-aligned.
+As an example, see the third sample case, visualized in Figure~\ref{fig:lingu}.
+
+How many occurrences of the curly word ``\texttt{BAPC}'' are in the given grid?
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n\leq \maxn$), the size of the grid.
+        \item $n$ blocks of $n+1$ lines. Each block of $n+1$ lines consists of:
+        \begin{itemize}
+            \item One line with a hyphen (\texttt{-}), to make the input more human-readable.
+            \item $n$ lines with $n$ characters, each character being either `\texttt{B}', `\texttt{A}', `\texttt{P}', or `\texttt{C}', \\
+                representing all labels of one horizontal layer of the \threeD grid.
+        \end{itemize}
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the number of curly words ``\texttt{BAPC}'' in the \threeD grid.
+\end{Output}
+
+\remainingsamples
+
+\vfill
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.5\textwidth]{sample.pdf}
+
+    \caption{
+        Visualization of the third sample input.
+        In this grid, there are two curly words ``\texttt{BAPC}'',
+        using the highlighted letters.
+    }
+    \label{fig:lingu}
+\end{figure}

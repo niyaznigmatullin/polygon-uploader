@@ -1,0 +1,52 @@
+\problemname{Dire Strait}
+
+Mickey has been enjoying sailing on the local lake, but now it's the end of
+the day and it's time to go back to dock to return the rental boat on time.
+
+% Mickey is playing his favourite real-time strategy game, Age Of War Crimes,
+% against an AI opponent. The game is very hard and Mickey is not a good
+% strategist, so he is losing.
+% 
+% The first incursion was highly successful, scoring many points. However, the
+% AI responded by threatening to close a crucial shipping channel while
+% Mickey's flagship, the \emph{Golden Comb}, is still docked at a port inside.
+
+Find the shortest path from its
+current location to the one remaining egress point over water, staying within or
+passing along the coastline of the lake.
+
+The lake is represented as a simple, potentially
+concave, polygon having vertices at integer coordinates, and with no
+$3$ consecutive vertices being collinear.
+
+A triangulation of the lake into $(n-2)$ pieces is also provided.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.3\textwidth]{sample1.pdf}
+\caption{Illustration of Sample Input 1.}
+
+\end{figure}
+
+\section*{Input}
+
+\begin{itemize}
+  \item The number of vertices in the polygon representing the lake,
+        $n$ ($3 \le n \le 100\,000$), and the indices of the two vertices between
+        which to travel, $a$ and $b$ ($1 \le a, b \le n; a \ne b$).
+  \item $n$ further lines, each giving integer coordinates $x_i$ $y_i$ of the $i$th
+        vertex of the polygon ($-10^9 \le x, y \le 10^9$) in anti-clockwise
+        order.
+  \item $(n-2)$ further lines giving a triangulation of the lake.
+        Each line specifies the $1$-based indices of three vertices $u$ $v$ $w$ (in anti-clockwise order).
+\end{itemize}
+
+The given triangles correspond to the polygon, thus cover the lake
+without any self-overlaps, holes, or other hazards.
+
+\section*{Output}
+
+Output the shortest distance from point $a$ to point $b$ without
+exiting the lake.
+
+The output must be accurate to an absolute or relative error of $10^{-6}$.

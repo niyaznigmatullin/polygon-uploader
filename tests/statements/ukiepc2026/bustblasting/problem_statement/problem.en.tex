@@ -1,0 +1,43 @@
+\problemname{Bust Blasting}
+
+Charlie the CNC miller is a cad with a capital `C'. He is going to clone a
+valuable statue of a famous voxel-based video game character, and you are going
+to help him.
+
+The voxel shape is defined by three photos Charlie took, which have been traced
+into the form of simple, axis-aligned (but potentially concave) polygons
+representing front ($xy$), side ($zy$), and top ($xz$) views of the statue
+respectively.
+
+The meaning of ``axis-aligned'' here is that every edge of every polygon is
+parallel with one of the $X$/$Y$/$Z$ axes.
+
+Any 3-dimensional point not contained by all three
+polygon projections will be \emph{blasted out of existence} leaving only the true
+form, which may consist of multiple pieces or no pieces at all.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.3\textwidth]{bust.pdf}
+\caption{Illustration of a complex statue.}
+\end{figure}
+
+Calculate the volume of the final statue.
+
+\section*{Input}
+
+The input consists of three lines of input, each giving one view as a two-dimensional, axis-aligned
+polygon in anti-clockwise order, with integer coordinates measured in centimetres.
+
+\begin{itemize}
+  \item First, the number of points, $n_i$ ($4 \le n \le 100$).
+  \item Thereafter, $n_i$ pairs of integers $u_{ij}$ and $v_{ij}$ for all $1 \le j \le n_i$
+        ($-10\,000 \le u,v \le 10\,000$).
+\end{itemize}
+
+It is guaranteed that for all adjacent vertices $a$ and $b$, $u_{ia} = u_{ib}$ or $v_{ia} = v_{ib}$.
+No three consecutive vertices are collinear.
+
+\section*{Output}
+
+Output the integer total volume of the resulting shape(s) in cubic centimetres.

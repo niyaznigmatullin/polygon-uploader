@@ -1,0 +1,50 @@
+\problemname{Attracting Attendees}
+
+\newcommand{\maxn}{2\cdot10^5}
+\newcommand{\maxsumk}{5\cdot10^5}
+
+\illustration{0.27}{Line_Up_SKy_bird_festival.jpg}{
+    Lineup of the skybird fest.
+}
+
+You are the organizer of the first \emph{Global Chart Pop Concert (GCPC)}, and you want to find a good lineup for your festival to become a hit. 
+
+You have already gathered a list of $n$~bands that are available to perform at GCPC and a list of $m$~people that consider going to the festival.
+From a quick market analysis, you know that a person will only attend the festival if at least half of their favourite bands perform.
+And even if they attend the festival they still watch the performances of only their favourite bands at the festival.
+% and that people only actually watch the performance of their favourite bands at the festival.
+Luckily, you have also gathered the favourite bands of each of the $m$ people during your analysis.
+With this information, picking a good lineup might seem trivial, but there is one last catch.
+A band refuses to perform if less than $c$ fans are watching since nobody likes a boring crowd.
+
+% each band is only willing to perform if there is a crowd of at least $c$ fans watching. 
+To avoid the GCPC becoming a \emph{flop}, you need to ensure that the crowd for each performing band is large enough.
+Obviously, a festival without any band is a complete flop.
+
+\begin{Input}
+	The input consists of:
+	\begin{itemize}
+		\item One line with three integers $n$, $m$, and $c$ ($1 \leq n, m, c \leq \maxn$), the number of bands, the number of people, and the minimum required crowd size of each performance.
+        \item $2 \cdot m$ lines, each two consecutive lines describing the favourite bands of one of the $m$ people: 
+            \begin{itemize}
+                \item One line with an integer $k$ ($1 \leq k \leq n$), the number of the person's favourite bands.
+                \item One line with $k$ distinct integers $b_1, \dots, b_k$ ($1 \leq b_i \leq n$), the person's favourite bands.
+            \end{itemize}
+	\end{itemize}
+	It is guaranteed that the sum over the number of favourite bands is at most $\maxsumk$.
+\end{Input}
+
+\begin{Output}
+	If it is impossible to avoid a flop, output ``\texttt{impossible}''.
+	Otherwise, output ``\texttt{possible}''.
+	If it is possible to avoid a flop, output in addition the number of bands in the chosen lineup, followed by the bands in that lineup in any order.
+	
+    If there are multiple lineups that avoid a flop, you may output any one of them.
+\end{Output}
+
+\nextsample
+
+In the first sample, the lineup consisting only of band $1$ will also be accepted.
+
+\remainingsamples
+

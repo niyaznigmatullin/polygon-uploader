@@ -1,0 +1,15 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Linguistic Labyrinth
+uuid: 8ee7605a-c95e-8508-0b45-0956fa70df0e
+source: BAPC 2025 Preliminaries
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: default
+author: Jeroen Op de Beek
+source_url: https://2025.bapc.eu/

@@ -1,0 +1,6 @@
+name: Fence Fee
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+author: Pål Grønås Drange
+validator_flags : float_tolerance 1e-6
+uuid: "743c8c53-9300-4a2e-b586-3189ed85e181"

@@ -1,0 +1,17 @@
+
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $m$ ($1 \leq n \leq 10^5$, $0 \leq m \leq 10^5$),
+            the number of steps and the number of dependencies between steps.
+        \item One line with $n$ floating point numbers $p$ ($0 \leq p \leq 1$),
+            the individual failure probability of each step.
+            Each probability is given in decimal form\footnotemark[1]{} with exactly three digits after the decimal point.
+        \footnotetext[1]{%
+            When a floating-point number is written in decimal form, it is not in scientific notation.
+        }
+        \item $m$ lines, each with two integers $a$ and $b$ ($1 \leq a, b \leq n$, $a \neq b$),
+            indicating that step $a$ depends on step $b$:
+            failure of step $b$ will cause failure of step $a$. \\
+            A direct dependency of one step on another occurs at most once. \\
+            Cyclic dependencies are allowed.
+    \end{itemize}

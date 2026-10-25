@@ -1,0 +1,37 @@
+\problemname{Gloucester Somersault}
+
+A piece of cheese with polygonal cross-sectional area is rolling along a flat
+surface as part of a major sporting event.
+
+The piece of cheese rotates clockwise continuously, pivoting around the vertex
+with lowest $y$-coordinate and, in case of a tie, greatest x-coordinate.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.4\textwidth]{sample1.pdf}
+\caption{Illustration of Sample Input 1.}
+\end{figure}
+
+The finish line is $m$ metres from the origin point and must be crossed at ground level,
+meaning that one of the vertices on the ground is strictly past the line.
+
+How many revolutions does the piece of cheese make in order for at least one
+part touching the ground to be strictly past the line?
+
+\section*{Input}
+
+\begin{itemize}
+  \item The first line of input contains the number of vertices of the cheese piece, $n$ ($3 \le n \le 10\,000$),
+        and the integer $x$-coordinate of the finish line in metres, $m$ ($1 \le m \le 10^6$).
+
+  \item The next $n$ lines of input contain the $x$ and $y$ coordinates of cheese vertices, in anti-clockwise order,
+        $x_i$ and $y_i$ ($0 \le x_i, y_i \le 10\,000$).
+\end{itemize}
+
+No three adjacent vertices on the shape are collinear and at least one vertex has $y = 0$.
+The cheese has not yet crossed the line.
+
+\section*{Output}
+
+Output the number of full $360$-degree rotations performed by the piece of
+cheese until it strictly crosses the line on the ground, rounded up to an integer.

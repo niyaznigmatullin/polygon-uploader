@@ -1,0 +1,8 @@
+problem_format_version: legacy
+type: pass-fail
+name: Jump
+uuid: "a8a11d2d-7005-42f1-812a-964ceef1e7b9"
+author: Nils Gustafsson
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+keywords: math number-theory

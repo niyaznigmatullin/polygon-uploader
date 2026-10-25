@@ -1,0 +1,27 @@
+
+
+
+
+
+It's Christmas time! While most workplaces are participating in Secret Santa gift exchanges, your workplace is hatching a more sinister plot: uncovering Santa's secrets.
+
+Santa has a naughty-or-nice list for every human on Earth. Because its contents are so sensitive, the list is written in North-Polish, an arcane language with $N$ letters. For further security, Santa has enciphered this list with a \emph{substitution cipher}: a permutation $H$ of the numbers $1, 2, \ldots, N$ that maps each North-Polish letter $i$ to a distinct letter $H(i)$. In such a cipher, no two letters map to the same target letter---formally, if $i\neq j$, then $H(i) \neq H(j)$---since otherwise Santa would not be able to decipher his list! (Santa can choose to map some letters to themselves, $H(i) = i$, just to be extra tricky.)
+
+Fortunately for you, Santa's server was poorly vibe-coded and is exposed to the public Internet. You and your coworkers hope to hack into Santa's server, decipher his list, and confirm that you're all naughty! (Hackers are always naughty.)
+
+The server was built so that Santa could quickly check his list on the go. After a user connects to the server, it prompts them to input the list of $N$ integers $H(1), H(2), \ldots, H(N)$ encoding the permutation $H$, verifies that this list is correct, and then deciphers Santa's secret list.
+Through months of research, you have found a side-channel timing vulnerability. Say you type in a permutation $Q$. If $H=Q$, then the server instantly grants access. Otherwise, consider a graph on $N$ vertices, and add an edge from each vertex $i$ to vertex $H(Q(i))$. You have discovered that the server's convoluted authentication algorithm will take exactly as many seconds to respond to you with an Access Denied error message as the number of connected components in the resulting graph.
+
+For example, suppose that $N=4$ and the cipher permutation $H$ is the following:
+\begin{center}
+  \begin{tabular}{l|cccc}
+    $i$ & 1 & 2 & 3 & 4\\
+    $H(i)$ & 2 & 3 & 1 & 4
+  \end{tabular}
+\end{center}
+If you try to log in to the server with input \texttt{4 3 2 1}, since this permutation does not match $H$ and since the graph described above has two connected components (one containing a cycle of edges $1 \to 4 \to 2 \to 1$ and another containing just the self-loop $3 \to 3$), the server will respond with an Access Denied error message after a delay of $2$ seconds.
+
+Note that if you try to log in to the server multiple times with different inputs $Q$, it will authenticate $Q$ each time against the \emph{same} stored $H$. It does not change $H$ in any way in response to your inputs.
+
+Santa will notice if his server is bombarded with unauthorized requests. You've estimated that you can only make $1\,510$ login attempts before drawing too much suspicion. Can you find an efficient strategy for determining the cipher permutation?
+

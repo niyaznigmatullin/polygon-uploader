@@ -1,0 +1,36 @@
+\problemname{Kindergarten Revisited}
+
+\newcommand{\fmaxn}{100}
+\newcommand{\fmaxc}{10^{9}}
+
+In kindergarten, one of the most time consuming activities was cutting out shapes from a piece of paper with safety scissors.
+Let's look at a simplified model of this task: you start with an infinitely large sheet of paper with $N$ disjoint
+axis-aligned rectangles drawn on it, and cuts are infinitely long straight lines.
+A cut must not ``nick'' any rectangle: it must not pass through any point strictly on the interior of any rectangle. (Cuts that pass \emph{exactly} along a rectangle edge or through a rectangle corner are allowed.)
+When you cut a piece of paper, the paper falls apart into two different pieces of paper that you continue cutting independently of each other (future cuts on one piece do \emph{not} affect any other pieces).
+
+Your goal is to make a sequence of cuts so that each rectangle ends up on its own piece of paper (since after that it's pretty easy to cut out each rectangle exactly).
+
+Determine the minimum number of cuts (not necessarily axis-aligned) needed to cut out the rectangles in this way. If the task is impossible, print \texttt{impossible} instead.
+
+\section*{Input}
+The first line of input contains an integer $N$ $(1 \leq N \leq \fmaxn)$, the number of rectangles.
+
+Each of the next $N$ lines describe one rectangle.
+Each line contains four space-separated integers $x_1$, $y_1$, $x_2$, and $y_2$
+$(|x_1|, |y_1|, |x_2|, |y_2| \leq \fmaxc,\ x_1 < x_2,\ y_1 < y_2)$, where $(x_1, y_1)$ is the
+bottom-left corner of the rectangle and $(x_2, y_2)$ is the top-right corner of the rectangle.
+
+The rectangles are guaranteed to be disjoint: no two rectangles intersect at any common point, including on their edges or corners.
+
+\section*{Output}
+Print the minimum number of cuts needed to separate all rectangles. (Do \emph{not} include additional cuts that would be needed to trim blank paper from around the margins of the rectangles once separated.) If this task is impossible, print \texttt{impossible} instead.
+
+\section*{Explanation of Sample Input 1}
+
+The first two cuts in one possible sequence of cuts that separate the rectangles are shown below. The first cut is drawn in red and the second in blue.
+Note that the blue cut is not valid before the red cut, as it would have nicked the rectangle on the right hand side.
+
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{sample_input}
+\end{center}

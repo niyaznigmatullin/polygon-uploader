@@ -1,0 +1,16 @@
+
+	The input consists of:
+	\begin{itemize}
+		\item One line with three integers $n$, $q$, and $m$
+			($2\leq n \leq 10^5$, $1\leq q \leq 10^5$, $0\leq m \leq 10^9$),
+			the number of countries,
+			the number of tourists, and
+			the maximum allowed difference between two $r$-values
+			when travelling to a country with a lower infection rate.
+		\item One line with $n$ integers $r_1, \dots, r_n$
+			($0 \leq r_1 \leq \dots \leq r_n \leq 10^9$), the $r$-value for each country.
+		\item One line with $n$ integers $t_1, \dots, t_n$ ($0 \leq t_i \leq 10^9$ for all $i$),
+			the required quarantine time in days when travelling to a country with a significantly lower $r$-value.
+		\item $q$ lines, each with two integers $x$ and $y$ ($1 \leq x, y \leq n$, $x \neq y$),
+			indicating a tourist departing from country $x$ with final destination $y$.
+	\end{itemize}

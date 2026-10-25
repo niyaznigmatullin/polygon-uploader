@@ -1,0 +1,23 @@
+\problemname{Evil Judges}
+\newcommand{\dmaxn}{2 \cdot 10^{5}}
+\newcommand{\dmaxm}{2 \cdot 10^{9}}
+The evil judges preparing the ICPC problem sets are tired of seeing the talented contestants AC their problems and AK (``all kill'') their problem sets. They have grown so tired of this that they've started to dislike any strings where \texttt{AC} or \texttt{AK} appear as subsequences. The judges just found a string $s$ consisting of only the characters \texttt{A}, \texttt{C}, and \texttt{K} and are determined to destroy these subsequences!
+
+In one operation, the judges are able to swap two adjacent characters in the string $s$. To be more precise,
+the judges may choose an index $i$ ($1 \le i < |s|$) and swap $s_i$ and $s_{i+1}$. The judges are very busy and don't have much time, so
+they can only do this operation up to $M$ times (independently choosing an index $i$ each time).
+
+The judges' goal is to minimize the number of subsequences (\textbf{possibly non-contiguous}) that are \texttt{AC} or \texttt{AK}.
+Help them calculate the number of \texttt{AC} and \texttt{AK} subsequences that remain within $s$ after the judges perform an optimal sequence of up to $M$ swap operations.
+
+\section*{Input}
+The first line of input contains the string $s$ $(1 \leq |s| \leq \dmaxn)$. The string consists only of the characters \texttt{A}, \texttt{C}, and \texttt{K}.
+
+The second line contains an integer $M$ $(0 \leq M \leq \dmaxm)$, the maximum number of swaps the judges can perform.
+
+\section*{Output}
+Print the minimum total number of \texttt{AC} and \texttt{AK} subsequences that remain in $s$ after an optimal sequence of at most $M$ swap operations.
+
+\section*{Explanation of Sample Input 1}
+
+In Sample Input 1, the string $s$ initially has seven different \texttt{AC} subsequences and four different \texttt{AK} subsequences. One optimal choice of five swaps yields the new string \texttt{ACCCAAKA} which only has three \texttt{AC} subsequences and three \texttt{AK} subsequences left.

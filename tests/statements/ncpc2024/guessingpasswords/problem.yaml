@@ -1,0 +1,8 @@
+name: Guessing Passwords
+author: Atli Fannar Franklín
+validation: custom
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+limits:
+    time_multiplier: 2
+uuid: "dd5321e8-875c-441b-bfdb-aa69fda04cbd"

@@ -1,0 +1,10 @@
+problem_format_version: legacy
+type: pass-fail
+name: Instagraph
+uuid: "12981c73-1e28-4976-b057-f8f8aaf1d27c"
+author: Pål Grønås Drange
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+limits:
+  time_multiplier: 4
+keywords: graph degree set

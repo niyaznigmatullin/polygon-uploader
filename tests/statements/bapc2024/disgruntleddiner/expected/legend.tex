@@ -1,0 +1,36 @@
+
+
+
+
+
+\illustration{0.3}{tickets-1200x900.jpg}{
+    Tickets allow Diana to oversee kitchen operations.
+    Unsplash Licence by Daniel~Bradley on \href{https://unsplash.com/photos/man-holding-white-menu-y_WDEY9e6mA}{Unsplash}
+}
+
+Diana is head chef at the Batavian Authentic Prestigious Cuisine.
+All orders are logged to a central computer, but to organize the kitchen, each ordered item is also printed on a separate \emph{ticket}.
+On the back of each ticket, Diana writes the corresponding table number, so servers can easily check where they need to deliver the food.
+When a ticket is completed, Diana pins it to a board.
+Of course, there could be duplicate tickets, since a table may order the same item multiple times.
+
+Halfway through service, a disgruntled diner complains:
+``We have been waiting for hours, but so far we were \emph{only} served tomato soup!
+Could you please hurry up?''
+Diana must address this immediately, since the reputation of the restaurant is at stake!
+However, in the past, some customers have been dishonest in order to demand expedited service.
+So, before Diana instructs the kitchen staff, the complaint must be verified.
+
+Since the board is always up-to-date, verification is a matter of checking the relevant tickets.
+Let $t$~and~$m$ be the table number and menu item that describe the complaint, respectively.
+Diana seeks to verify the following claim: ``All pinned-up tickets for table~$t$ correspond to menu item~$m$.''  % in logic:  \forall x \in tickets : x.table = t ==> x.item = m
+In particular, if there are no completed tickets for table~$t$, Diana considers the claim to be true --
+the customer may have misspoken, but they surely deserve extra attention!  % i.e. the statement is vacuously true
+
+Unfortunately, on the board, only one side of each ticket is visible (either the menu item or table number) and Diana does not have time to flip hundreds of tickets.
+However, by cross-referencing with the central computer, it may be possible to safely ignore certain tickets.
+Help Diana determine the minimum set of pinned-up tickets that need to be flipped.
+Or can you (dis)prove the claim without flipping any tickets?
+You must decide which tickets should be flipped before Diana starts doing so --
+she is too strained to make deductions on the fly.
+

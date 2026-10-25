@@ -1,0 +1,9 @@
+problem_format_version: legacy
+type: pass-fail
+name: Hidden Permutation
+uuid: "e90a9978-6e96-4452-83c7-c0bc6393b41b"
+author: Nils Gustafsson
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+validation: custom
+license: cc by-sa
+keywords: linear-algebra math number-theory pemutations cycles gcd

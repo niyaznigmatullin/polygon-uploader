@@ -1,0 +1,37 @@
+\problemname{Kilt Quilt}
+
+An image set to be painted onto a tartan canvas consists of $n$ rows of $m$ pixels
+with each colour represented as a lowercase letter of the alphabet.
+
+You are going to paint the image using long brush strokes that cover either a
+whole row of $m$ pixels, or a whole column of $n$ pixels. Each brush stroke
+overwrites any pixels that were previously there. You must cover the whole canvas
+with brush strokes.
+
+Is it possible to do so? If so, output a sequence of instructions of the form
+\texttt{x=[1-m] [a-z]} or \texttt{y=[1-n] [a-z]}.
+If there are multiple sequences, output any of the shortest possible lists of instructions.
+
+\begin{figure}[!h]
+\centering
+% \includegraphics[height=0.33\textwidth]{sample1.pdf}
+\includegraphics[height=0.33\textwidth]{sample2.pdf}
+\caption{Illustration of Sample Input 2.}
+\end{figure}
+
+\section*{Input}
+
+\begin{itemize}
+  \item The first line of input contains $n$ and $m$ ($1 \le n, m \le 200$)
+
+  \item The next $n$ lines of input contain a string of $m$ lowercase characters in
+  \texttt{a-z}, each representing a colour.
+\end{itemize}
+
+\section*{Output}
+
+On the first line, output the minimum number of instructions needed. If no
+sequence of instructions covers the canvas, output \texttt{impossible} and exit.
+
+On each of the next lines, output one instruction to follow in order. For
+example, ``\texttt{x=5 z}'', and ``\texttt{y=100 b}'' are both valid instructions. 

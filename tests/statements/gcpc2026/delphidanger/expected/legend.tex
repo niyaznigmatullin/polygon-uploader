@@ -1,0 +1,27 @@
+
+
+
+
+
+
+\illustration{0.27}{temple.jpg}{
+	The temple of Apollon in Delphi.
+  CC BY-SA 3.0 by Inkey on \href{https://commons.wikimedia.org/wiki/File:Temple_d'Apollon_Delphes.jpg}{Wikimedia~Commons}
+}
+
+Have you ever been walking towards someone, dodged left only to see them do the same, and then entered an awkward shuffle to pass each other?
+Recently, a paper published at the Greek Commerce and Procurement Conference suggested that this may have already been a common problem in ancient Greece.
+
+Back then, there were $n$ merchant caravans that occasionally passed through the Thermopylae.
+When two caravans met while travelling in opposite directions, both would simultaneously choose to steer either cliffside or seaside.
+If they made different choices, they could safely pass each other.
+However, if both chose the same side, they had another opportunity to choose, repeating this process until they could safely pass.
+Caravans were unable to recognize each other from a distance and would each follow a deterministic strategy to decide which way to steer.
+Since steering seaside is much more dangerous, we say that the \emph{risk} of a given strategy is defined as the total number of times it dictates to steer seaside.
+For example, a caravan may follow a strategy described by the sequence ``cliffside, seaside, seaside, cliffside, seaside'' and then only ``cliffside'' from then on.
+This strategy has a risk of $3$.
+
+The caravans convened at the oracle in Delphi to ask for advice on which strategies they should each adopt, but this went about as well as could be expected. Rather than helping, the oracle rattled off $m$ prophecies of the following form: When caravans $u$ and $v$ meet, they will awkwardly steer in the same direction exactly $t$ times before safely passing each other by steering in opposite directions on their $(t + 1)$th attempt.
+
+The real strategies were lost to history, but you wonder how risky they must have been. You think it is unwise to go against the oracle (this has ended poorly in the past) and want to minimize the \emph{overall risk}, defined as the sum of the risks of all individual strategies.
+

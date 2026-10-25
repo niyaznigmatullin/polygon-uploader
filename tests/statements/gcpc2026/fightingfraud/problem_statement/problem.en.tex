@@ -1,0 +1,40 @@
+\problemname{Fighting Fraud}
+
+\illustration{0.3}{street.jpg}{Picture of a GCPC courier. They are extremely discreet.}
+
+\newcommand{\maxn}{10^5}
+
+Got a job for you. 
+This shady business called \emph{Guaranteed Clandestine Private Couriers} is trying to hide something.
+Their public filings and tax records are spotless.
+As clean as a doctor's hands just before surgery.
+And you know what that means.
+They had dirt to scrub off, I'm sure of it.
+Got my hands on one of their drivers' delivery schedules.
+You know, a list of tasks to discreetly pick up and deliver an item.
+I bet we find something off with the schedule.
+Maybe an item that is picked up but never delivered.
+Maybe a delivery of something with no records where it came from.
+Heck, they might even list an item for some task long after the item has been delivered to keep the actual cargo off the books.
+Anyway, find out if the schedule is legit.
+If each item mentioned in the schedule is picked up and delivered exactly once, then the guy who cooks their books must be a genius.
+Guess they are paying him well.
+Speaking of, this one's double your regular fee. 
+Half upfront for your discretion and the rest when I have your report.
+Don't call unless you're done!
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$, the length of the schedule ($1\leq n\leq \maxn$).
+        \item The next $n$ lines each describe a schedule task, the $i$th of which contains:
+        \begin{itemize}
+            \item The string ``\texttt{pickup}'' or ``\texttt{dropoff}''.
+            \item A string $a_i$ consisting of English lowercase letters (\texttt a-\texttt z), the identifier of the item related to the $i$th task ($1\leq |a_i| \leq 20$, $\sum |a_i| \leq 10^6$).
+        \end{itemize}
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output ``\texttt{yes}'' if the schedule is valid and ``\texttt{no}'' otherwise.
+\end{Output}

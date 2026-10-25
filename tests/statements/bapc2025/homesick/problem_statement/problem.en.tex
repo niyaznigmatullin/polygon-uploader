@@ -1,0 +1,51 @@
+\problemname{Homesick}
+
+\illustration{0.3}{via-appia.jpg}{
+    Ancient Romans, promenading on Via Appia.
+    Public Domain by Strafforello Gustavo on \href{https://commons.wikimedia.org/wiki/File:Via_Appia_coi_suoi_monumenti_sepolcrali.jpg}{Wikimedia Commons}%
+    \vspace{-3em}  % Make sure the paragraph after the figure fills the entire page width.
+}
+
+It is the 25th of August, 225 BCE.
+You are in charge of the annual road trip of the Backtracking-Averse Promenaders Club in Rome.
+Alas, you get homesick easily and would much rather stay at home.
+Therefore, your goal is to keep the road trip as short as possible.
+Traditionally, the road trip cannot backtrack along a road it just used -- your friends would start to complain.
+Specifically, if you travel directly from site~$x$ to site~$y$, you cannot immediately go back from $y$ to $x$ along the same road.
+
+\begin{figure}[H]
+  \centerline{
+  \includegraphics[width=0.5\textwidth]{sample2illu.pdf}
+}
+  \caption{Sample Input 2.
+  The illustration shows a valid trip using six roads.
+  The road connecting sites 1 and 4 is used twice.}
+\end{figure}
+
+You are given a list of sites to possibly visit and the roads connecting them.
+Find the road trip with the shortest length that would keep your friends happy.
+
+The road trip must start at site~$1$, your home, and must visit at least one other site.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers~$n$ and $m$
+            (\(2\leq n\leq 10^{5}\),
+            \(1\leq m\leq 2\cdot 10^{5}\)),
+            the number of sites and the number of roads.
+        \item \(m\) lines, each with two integers~$u$ and $v$ (\(1\leq u < v \leq n\)),
+            indicating there is a road between sites \(u\) and \(v\).
+            Roads can be travelled in either direction.
+            Each pair of sites is connected by at most one road.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    If there is no road trip possible, output ``\texttt{impossible}''.
+    Otherwise, output a your planned road trip,
+    described by an integer~$k$, the number of sites to visit on the road trip (including your home twice),
+    followed by the~$k$ sites, in the order of visiting them.
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}

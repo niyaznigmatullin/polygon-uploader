@@ -1,0 +1,21 @@
+
+    The input consists of:
+    \vspace{-0.5em}% Ugly negative vspace to make the Input section fit on one page
+    \begin{itemize}
+        \item One line with three integers $n$, $m$, and $r$
+            ($2\leq n\leq100$, $1\leq m\leq100$, $1\leq r\leq n$),
+            the number of teams, the number of problems,
+            and the rank of your favourite team in the frozen scoreboard.
+
+        \item $n$ lines with $m$ characters,
+            each character being either `\texttt{A}', `\texttt{R}', `\texttt{P}', or `\texttt{N}',
+            indicating that a team's submission is either accepted, rejected, pending, or nothing.
+            The teams are sorted by their rank in the frozen scoreboard,
+            i.e.\ descending by number of accepted submissions in the frozen scoreboard,
+            and further tie-breaking rules guarantee that all teams have a distinct rank.
+
+        \item For each pending submission, one line with two strings,
+            containing the audience chant at the reveal of the pending submission, in chronological order.
+            The first string is ``\texttt{Ooohhh...}'' and the second string is either ``\texttt{Aaawww...}''
+            or ``\texttt{Aaayyy!!!}'', with an additional `\texttt{y}' for each team that is passed when rising in the ranking.
+    \end{itemize}

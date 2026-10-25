@@ -1,0 +1,7 @@
+source: Nordic Collegiate Programming Contest (NCPC) 2023
+author: Andreas Björklund
+license: cc by-sa
+validation: custom
+limits:
+  time_multiplier: 2.4
+  

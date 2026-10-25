@@ -1,0 +1,8 @@
+problem_format_version: legacy
+type: pass-fail
+name: km/h
+uuid: "8ee7605a-15ae-88ad-152c-49036812d082"
+author: Thore Husfeldt
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+keywords: implementation

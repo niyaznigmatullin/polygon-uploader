@@ -1,0 +1,17 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Boggle Sort
+uuid: 8ee7605a-a61d-8121-0133-22cb2f86cff4
+source: BAPC 2025
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+# limits:
+#   time_limit: 1.0
+validation: default
+author: Thore Husfeldt
+source_url: https://2025.bapc.eu/
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5

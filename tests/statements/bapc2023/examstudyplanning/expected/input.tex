@@ -1,0 +1,13 @@
+
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1 \leq n\leq 2000$), the number of exams you have to attend.
+		\item $n$ lines, the $i$th of which contains four integers describing an exam:
+		\begin{itemize}
+			\item $s_i$ ($0 \leq s_i$), the start time of the $i$th exam,
+			\item $p_i$ ($s_i < p_i$), the end time of the $i$th exam if you prepare for it,
+			\item $e_i$ ($p_i \leq e_i \leq 10^9$), the end time of the $i$th exam if you do not prepare for it,
+			\item $a_i$ ($1 \leq a_i \leq 10^9$), the time needed to prepare the $i$th exam.
+		\end{itemize}
+    \end{itemize}
+	The exams are given in ascending order of start time, and do not overlap,~i.e.~$e_i \leq s_{i+1}$ holds for $1 \leq i < n$.

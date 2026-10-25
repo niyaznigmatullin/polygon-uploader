@@ -1,0 +1,11 @@
+
+This is an interactive problem.
+Interaction begins by reading an integer $N$ $(1 \leq N \leq 500)$ from standard input, the number of dials on the safe.
+Your program may make up to $4N$ attempts to open the safe door by specifying a value to try for each safe dial. You will then be told the resistance you feel from the door handle after each attempt.
+
+To make an attempt, print a line containing $N$ space-separated integers $d_1, d_2, \ldots, d_N$ $(1 \leq d_i \leq 2N)$, the values you propose for each dial. Then read a single integer from standard input representing the resistance that you felt from the door handle, $\max_i |h_i - d_i|$, where $h_i$ is the (unknown to you) secret value of dial $i$. If the resistance is $0$, you have opened the safe and your program should terminate. Otherwise, if you have attempts remaining, you may try again.
+
+If you run out of attempts, your program should exit cleanly (though it will be judged incorrect for failing to crack the safe in time to escape the guards).
+
+The secret value of each dial was configured by Count Monte Carlo in advance of the heist and will not change in response to your cracking attempts.
+

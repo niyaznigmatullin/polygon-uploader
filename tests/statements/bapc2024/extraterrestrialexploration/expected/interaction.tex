@@ -1,0 +1,33 @@
+
+    This is an interactive problem.
+    Your submission will be run against an \emph{interactor},
+    which reads from the standard output of your submission
+    and writes to the standard input of your submission.
+    This interaction needs to follow a specific protocol:
+
+    The interactor first sends
+    one line with an integer $n$ ($3\leq n\leq 2 \cdot 10^5$),
+    the number of types of rocket fuel.
+
+    Then, your program should make at most $50$ queries to find the optimal three fuel canisters.
+    Each query is made by printing one line of the form ``\texttt{?~$i$}'' ($1\leq i\leq n$).
+    The interactor will respond with one line with an integer $o_i$ ($|o_i| \leq 10^6$),
+    the oxydilation value of the fuel in the $i$th canister.
+
+    When you have determined the optimal three \emph{distinct} canisters $x$, $y$, and $z$
+    ($1 \leq x,y,z \leq n$, $x \neq y$, $x \neq z$, $y \neq z$),
+    print one line of the form ``\texttt{!~$x$~$y$~$z$}'',
+    after which the interaction will stop.
+    Printing the answer does not count as a query.
+
+    If there are multiple valid solutions, you may output any one of them.
+
+    The interactor is not adaptive:
+    the oxydilation levels of the fuel canisters are fixed up front,
+    and do not depend on your queries.
+
+    Make sure you flush the buffer after each write.
+
+    A testing tool is provided to help you develop your solution.
+
+    Using more than $50$ queries will result in a wrong answer.

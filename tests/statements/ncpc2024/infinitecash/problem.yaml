@@ -1,0 +1,7 @@
+name: Infinite Cash
+author: Arnar Bjarni Arnarson
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+limits:
+    time_multiplier: 2
+uuid: "7ea7341a-7f8c-4a8d-a29a-d3901fe0d9af"

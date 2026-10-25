@@ -1,0 +1,9 @@
+name: Elderberry Wine
+author: Robin Lee
+source: UKIEPC 2026
+source_url: ukiepc.info/2026
+type: pass-fail
+validator_flags: "float_tolerance 1e-6"
+license: cc by-sa
+rights_owner: author
+uuid: 60e1f453-7eed-4466-8846-7952cdd65dd5

@@ -1,0 +1,8 @@
+name: Dire Strait
+author: Robin Lee
+source: UKIEPC 2026
+source_url: ukiepc.info/2026
+type: pass-fail
+license: cc by-sa
+validator_flags: "float_tolerance 1e-6"
+uuid: 0f5e31d0-ca7f-4131-bd0b-2eedfcc3385e

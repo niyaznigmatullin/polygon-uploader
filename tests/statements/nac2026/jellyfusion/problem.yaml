@@ -1,0 +1,10 @@
+name: Jelly Fusion
+author: Dilhan Salgado
+source: 2026 ICPC North America Championship
+license: cc by-sa
+
+limits:
+  time_multiplier: 1.5
+  memory: 2048
+  
+validator_flags: case_sensitive

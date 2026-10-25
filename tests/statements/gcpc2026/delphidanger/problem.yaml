@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Delphi Danger
+uuid: 8ee7605a-e271-87a2-2767-99e9ef721b26
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: default
+author: Konrad Letz
+source_url: https://gcpc.nwerc.eu

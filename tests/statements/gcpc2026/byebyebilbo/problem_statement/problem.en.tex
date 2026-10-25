@@ -1,0 +1,52 @@
+\problemname{Bye Bye Bilbo}
+
+\newcommand{\maxn}{10^5}
+
+Bilbo Baggins is finally leaving the Shire! To celebrate his departure, Gandalf 
+plans to set up a spectacular display of fireworks across the land.
+
+The Shire has $n$ hobbit holes numbered $1$ to $n$, each of which is occupied
+by exactly one hobbit. Every hole $i > 1$ is connected by a lane directly to a
+unique hole $p_i$, with $p_i < i$, so that following the lanes always leads
+towards hole $1$, the town.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{figure.pdf}
+    \caption{Illustration of the first sample.}
+    \label{fig:sample}
+\end{figure}
+
+Gandalf must place fireworks at a minimum number of hobbit holes so that every 
+hobbit can see at least one firework. The fireworks have a visibility range $k$.
+A hobbit at hole $i$ can see a firework placed at hole $j$ if it is placed at 
+their own hole, or if $j$ lies on the path from hole $i$ to the town and the
+number of lanes between $i$ and $j$ is strictly less than $k$.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($2 \leq n \leq \maxn$, $1 \le k \le n$), the number of hobbit holes and the firework range.
+        \item One line with $n-1$ integers $p_2, p_3, \ldots, p_n$ ($1 \le p_i \leq i-1$), where $p_i$ is the next hole reached when going from hole $i$ toward the town.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output one integer $m$, the minimum number of hobbit holes
+    where a firework must be placed, followed by $m$ distinct
+    integers, the indices of those holes.
+
+    If there are multiple ways to place the fireworks using the minimum number of 
+    holes, you may output any one of them.
+\end{Output}
+
+\remainingsamples
+
+In the first sample, a firework at hole $1$, i.e. the town, can only be seen by
+the hobbits at holes $1$, $2$, $3$, and $4$. A second firework at hole $5$ can
+only be seen by the hobbit at hole $5$.
+
+In the second sample, a firework at hole $1$ can only be seen by the hobbits at
+holes $1$, $2$, and $3$. A second firework at hole $3$ can only be seen by the
+hobbits at holes $3$, $4$, $5$, and $6$. So every hobbit can see at least one
+firework.

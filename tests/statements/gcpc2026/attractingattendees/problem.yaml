@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Attracting Attendees
+uuid: 8ee7605a-fec7-8e87-01a8-f6ae686a42fb
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom
+author: Leonard Weininger
+source_url: https://gcpc.nwerc.eu

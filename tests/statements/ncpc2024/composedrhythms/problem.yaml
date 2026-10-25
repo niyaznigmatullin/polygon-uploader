@@ -1,0 +1,11 @@
+name:
+  en: Composed Rhythms
+  is: Composed Rhythms
+author: Arnar Bjarni Arnarson
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+validation: custom
+limits:
+  time_multiplier: 2
+# uuid added by BAPCtools
+uuid: "8ee7605a-8881-8734-17ff-a425a2f204a8"

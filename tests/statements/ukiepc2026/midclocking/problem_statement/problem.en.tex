@@ -1,0 +1,33 @@
+\problemname{Mid Clocking}
+
+We have a number of processor slots in a row. The processors are each dedicated to a single task
+that they can complete before going into a busy-looping mode while they wait for
+the next instruction.
+
+A processor can run at 100\% speed if it has enough cooling, and that requires
+there be no adjacent processor. If a processor has 1 adjacent processor, it only
+runs at 60\% of maximum speed. If it has 2 adjacent processors it can only run at
+30\% of maximum speed.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.15\textwidth]{sample2.pdf}
+\caption{Illustration of Sample Input 2.}
+\end{figure}
+
+We know how many seconds each task will take running on a processor at full
+speed, starting from $t=0$, and need to allocate tasks to processors to ensure
+the last task finishes as soon as possible.
+
+\section*{Input}
+
+\begin{itemize}
+  \item The number of tasks to run, $n$, and the number of processor slots, $s$ ($1 \le n \le s \le 10^6$).
+  \item $n$ further integers giving the duration of each task $t_i$ in seconds if performed at 100\% speed ($1 \le t_i \le 10^9$).
+\end{itemize}
+
+\section*{Output}
+
+Output the minimum time by which all of the tasks can be finished.
+
+The output must be accurate to an absolute or relative error of $10^{-6}$.

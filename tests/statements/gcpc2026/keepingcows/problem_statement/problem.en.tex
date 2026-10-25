@@ -1,0 +1,54 @@
+\problemname{Keeping Cows}
+
+\illustration{0.3}{cow.jpeg}{
+   A cow.
+   CC BY-SA 3.0 by Kim Hansen on \href{https://commons.wikimedia.org/wiki/File:Cow_(Fleckvieh_breed)_Oeschinensee_Slaunger_2009-07-07_(cropped).jpg}{Wikimedia~Commons}
+}
+
+\newcommand{\maxa}{5000}
+\newcommand{\maxn}{100}
+\newcommand{\name}{Kiki}
+
+Farmer \name\ has $42$ cows.
+Their field can be thought of as a grid where each cell is a square with a side length of one metre.
+According to strict regulations of the German Cow Perimeter Conglomerate, the cows must graze on a fenced area that is exactly $a$ square metres large.
+
+Unfortunately, Farmer \name's supplier messed up their order of fence pieces.
+Instead of mostly straight fence pieces and just a few corner fence pieces, they only received an enormous amount of corner fence pieces.
+There are even more pieces than would fit on the field.
+One corner fence looks like this:
+
+\texttt{.... \\
+.O\#. \\
+.\#.. \\
+....}
+
+Here `\texttt{O}' denotes the center of the fence, `\texttt{\#}' denotes the sides of the fence, and `\texttt{.}' denotes empty space.
+
+Farmer \name~can rotate and move each corner fence grid-aligned.
+How may they place them such that there is a side-connected component of exactly $a$ empty cells that is surrounded by fence pieces?
+More exactly, for each interior cell of that component all four orthogonal neighbours have to either also be an interior empty cell or part of a fence piece.
+
+Farmer \name's field is $\maxn \times \maxn$ cells large and they cannot place any fence piece outside this area.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[height=4cm]{figure1}
+    \includegraphics[height=4cm]{figure2}
+    \includegraphics[height=4cm]{figure3}
+    \caption{Two valid and one invalid construction for the first sample with fenced area~$4$. The left construction represents the given sample answer. On the right, the four interior cells are not side-connected.}
+\end{figure}
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $a$ ($1\leq a \leq \maxa$), the exact number of cells the cow enclosure should contain.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output two integers $h$ and $w$ ($1 \leq h, w \leq \maxn$), the height and width of the used area.
+    Then output the fence placement represented by $h$ strings of length $w$ containing only `\texttt{\#}', `\texttt{.}', and `\texttt{O}' (the letter, not the digit `\texttt{0}').
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}

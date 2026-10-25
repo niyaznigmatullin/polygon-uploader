@@ -1,0 +1,67 @@
+\problemname{}
+
+\illustration{0.3}{audience.jpg}{
+    The audience going ``Aaawww\dots''.
+    \textcopyright{}~VIA FotoCollectief on \href{https://www.flickr.com/photos/viafotocollectief/53294901280/in/album-72177720312286426/}{Flickr}, used~with permission
+}
+
+\newcommand{\maxnm}{100}
+
+You are a hardcore supporter for one of the teams at the Benelux Algorithm Programming Contest (BAPC).
+Unfortunately, the staff found you entering the contest area and popping
+other teams' balloons. As a result, you were kicked out of the building
+and you will not be allowed back in until the contest is over. As a
+hardcore supporter, you would not want to miss the award
+ceremony and not know the final rank of your favourite team while
+everyone inside already knows! Luckily, you know a way to
+follow the award ceremony from outside the building.
+
+One hour before the end of the contest, the scoreboard freezes.
+Since you can access the frozen scoreboard online,
+you know the rank of each team and for
+which problems they have accepted, rejected or pending submissions.
+During the award ceremony, the results of all pending submissions are
+revealed, starting with the leftmost pending submission of the lowest
+ranking team with a pending submission. After every reveal, the
+scoreboard is updated and the next pending submission is chosen in the
+same way.
+
+The BAPC is known for its great audience participation during the award
+ceremony. When the result of a pending submission is about to be
+revealed, the audience chants ``Ooohhh\ldots'' in anticipation. When the
+submission is rejected, the audience utters a sad ``Aaawww\ldots''. When the
+submission is accepted, the crowd goes wild with an ``Aaayyy!!!''. If
+an accepted submission causes a team to rise in the ranking, this chant
+goes on for longer. Specifically, an extra `y' is added for each team
+they pass. For example, if they pass five teams, the audience will yell
+``Aaayyyyyyyy!!!'' (with eight `y's). While you cannot make out any words of the
+announcer, you can clearly hear the enthusiastic audience from outside.
+You want to use this to determine the final rank of your favourite team.
+
+
+\begin{Input}
+    The input consists of:
+    \vspace{-0.5em}% Ugly negative vspace to make the Input section fit on one page
+    \begin{itemize}
+        \item One line with three integers $n$, $m$, and $r$
+            ($2\leq n\leq\maxnm$, $1\leq m\leq\maxnm$, $1\leq r\leq n$),
+            the number of teams, the number of problems,
+            and the rank of your favourite team in the frozen scoreboard.
+
+        \item $n$ lines with $m$ characters,
+            each character being either `\texttt{A}', `\texttt{R}', `\texttt{P}', or `\texttt{N}',
+            indicating that a team's submission is either accepted, rejected, pending, or nothing.
+            The teams are sorted by their rank in the frozen scoreboard,
+            i.e.\ descending by number of accepted submissions in the frozen scoreboard,
+            and further tie-breaking rules guarantee that all teams have a distinct rank.
+
+        \item For each pending submission, one line with two strings,
+            containing the audience chant at the reveal of the pending submission, in chronological order.
+            The first string is ``\texttt{Ooohhh...}'' and the second string is either ``\texttt{Aaawww...}''
+            or ``\texttt{Aaayyy!!!}'', with an additional `\texttt{y}' for each team that is passed when rising in the ranking.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the final rank of your favourite team.
+\end{Output}

@@ -1,0 +1,48 @@
+
+
+Jeanne and her son Semi-Demi-John are engaged
+in the elderberry-wine making business.
+
+The recipe requires, aside from a closely-guarded secret quantity of the letter
+$r$, strict proportions of $12$ parts fresh elderberries, $12$ parts brewing
+sugar, and $40$ parts water.
+As long as one or more ingredients are lacking, the team will place an order for
+as much extra as needed to make up the weight, and start again.
+
+For instance:
+\begin{itemize}
+  \item
+        If they have $18$kg of elderberries, $9$kg of sugar, and $100$kg
+        of water, they can use $9$kg of elderberries, all $9$kg of the sugar, and $30$kg
+        of the water and then they are stuck.
+  \item
+        They must then order $9$kg more of sugar in order to proceed and use
+        $9$kg, $9$kg, and $30$kg again.
+  \item
+        After this they must order $12$kg each of elderberries and sugar in order
+        to finally use $12$kg, $12$kg, and $40$kg of elderberries, sugar, and water
+        respectively.
+\end{itemize}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Phase} & \textbf{Eb (\text{kg})} & \textbf{Su (\text{kg})} & \textbf{$H_{2}O$ (\text{kg})} \\
+\midrule
+Initial Stock & 18 & 9 & 100 \\
+First Brewing Run & -9 & -9 & -30 \\
+Remaining Stock (Stuck) & 9 & 0 & 70 \\
+\midrule
+Sugar Order & 0 & +9 & 0 \\
+Stock After First Order & 9 & 9 & 70 \\
+Second Brewing Run & -9 & -9 & -30 \\
+Remaining Stock (Stuck) & 0 & 0 & 40 \\
+\midrule
+Berry + Sugar Order & +12 & +12 & 0 \\
+Stock After Second Order & 12 & 12 & 40 \\
+Final Brewing Run & -12 & -12 & -40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+

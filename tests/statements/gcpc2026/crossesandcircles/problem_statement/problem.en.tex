@@ -1,0 +1,64 @@
+\problemname{Crosses and Circles}
+\newcommand{\maxr}{59}
+\newcommand{\maxc}{42}
+
+\illustration{0.4}{img.jpg}{
+    An unusual game of tic-tac-toe.
+}
+
+Your friend watched some video about Connect Four and memorized the winning
+strategy for the starting player. What a loser!
+Whatever they are saying sounds about as relevant to your life
+as this paragraph is to the problem statement.
+Apparently, someone found a weak solution to Connect Four which can be
+compressed to just $150\,\textrm{kB}$ and requires no game tree search.
+
+To get them off their high horse, you challenge them to a real game.
+You pull out a piece of A4 graph paper and explain:
+``We will take turns picking any unpicked cell.
+The first player to get three consecutive cells in any row, column, or diagonal wins.
+I will start.''
+Your friend is barely listening, but this is not just regular tic-tac-toe:
+you are playing on the whole paper.
+Convert your winning advantage.
+
+\begin{Interaction}
+    This is an interactive problem.
+    Your submission will be run against an \emph{interactor},
+    which reads from the standard output of your submission
+    and writes to the standard input of your submission.
+    This interaction needs to follow a specific protocol:
+
+    There is no initial input as you make the first move.
+
+    On each of your turns, print one line with two integers $r$ and $c$
+    ($1 \le r \le \maxr{}$, $1 \le c \le \maxc{}$),
+    the row and column of the cell you pick.
+    The cell must not have been picked before.
+
+    After each of your moves, the interactor will respond with one line
+    with two integers $r'$ and $c'$
+    ($0 \le r' \le \maxr{}$, $0 \le c' \le \maxc{}$).
+    \begin{itemize}
+        \item If $r' = c' = 0$, the interaction is over.
+            This happens if you won on your last move, made an illegal move,
+            or your friend can win with their next move.
+            Your program should terminate immediately.
+        \item Otherwise, $1 \le r' \le \maxr{}$ and $1 \le c' \le \maxc{}$.
+            This means that your friend picked the cell in row $r'$ and column $c'$.
+            It is guaranteed that neither player has picked this cell before.
+            It is now your turn again, and the interaction continues from there.
+    \end{itemize}
+
+    The interactor is adaptive, so
+    your friend's moves will depend on all previous moves.
+
+    Make sure you \textbf{flush} the standard output after every output.
+    For example, you can use \texttt{fflush(stdout)} in C++,
+    \texttt{System.out.flush()} in Java,
+    \texttt{sys.stdout.flush()} in Python,
+    \texttt{std::io::stdout().flush()} in Rust,
+    and \texttt{hFlush stdout} in Haskell.
+
+    A \emph{testing tool} is provided to help you develop your solution.
+\end{Interaction}

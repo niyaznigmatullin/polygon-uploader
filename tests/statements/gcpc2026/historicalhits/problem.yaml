@@ -1,0 +1,11 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Historical Hits
+uuid: 8ee7605a-c804-8f3b-1b73-3b6370a93a66
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: default
+author: Lucas Schwebler
+source_url: https://gcpc.nwerc.eu

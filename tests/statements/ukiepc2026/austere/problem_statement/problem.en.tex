@@ -1,0 +1,26 @@
+\problemname{Austere Sign}
+
+We are going to paint a sign but we can only afford stencils for $k$ letters.
+Update the text of the sign to use only $k$ unique letters without changing
+the lengths of any of the words, so that we can subtly fix the sign later.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.3\textwidth]{sample1.pdf}
+\caption{Illustration of Sample Input 1. You can do this!}
+\end{figure}
+
+\section*{Input}
+
+\begin{itemize}
+  \item The first line of input contains the number of words, $n$ ($1 \le n \le 1000$),
+        and the number of letters, $k$ ($1 \le k \le 26$).
+
+  \item The second line of input contains $n$ words. Each word consists of between
+        $1$ and $20$ lowercase latin letters.
+\end{itemize}
+
+\section*{Output}
+
+Output a phrase using at most $k$ distinct letters, substituting as few from the
+original text as possible. If there are multiple possible answers, output any.

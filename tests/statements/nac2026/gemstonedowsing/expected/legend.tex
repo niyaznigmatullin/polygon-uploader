@@ -1,0 +1,27 @@
+
+
+\emph{Rockhounding} is the hobby of searching for valuable rocks and gemstones in the natural environment.  As a national-level rockhound yourself, you're determined to find the most valuable gem possible!
+
+You've found an area of land whose cross section can be modeled by a 2D Euclidean plane with the ground at the line $y = 0$.  Everything below this line is solid stone, and everything above is air.  Buried within the stone are $N$ rare gemstones, each at a (potentially non-unique) $(x, y)$ location with $y < 0$.  
+
+Some of these gemstones have already been traced by other rockhounds, who have claimed their discovery by publishing their locations (while leaving the stones themselves in place). That still leaves some gemstones for you to find!
+
+To actually find gemstones, you plan to use an \emph{oscilloscope} to detect waveforms emitted by each gem.  Each gem has a unique frequency that can be measured from a distance; however, this specific oscilloscope has a quirk in that each time it is used, it only records the frequency emitted by the \textbf{closest gem}, using Euclidean distance.  In the case of a tie, it arbitrarily picks a frequency emitted by one of the closest gems.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{rocky.png}
+    \caption*{An illustration of Sample Input 1. Gem icons underground represent previously discovered gemstones, and points on the surface indicate your oscilloscope readings.}
+\end{figure}
+
+You've just used the oscilloscope $N$ times at various \textbf{unique} locations $(x_j, 0)$ on the surface of the Earth.  You recorded these locations along with the frequency $f_j$ detected by the oscilloscope at that location.  Interestingly enough, you've noticed that the frequency of \textbf{every gemstone appears exactly once} in your records.
+
+Of the gems that haven't yet been discovered by other rockhounds, you'd like to find the most valuable one.  And of course, the deeper the gem, the more valuable!  
+
+A \emph{plausible configuration} of the gemstones is a placement of each undiscovered gemstone on the 2D Euclidean plane that satisfies the following conditions:
+\begin{itemize}
+\item every gemstone is underground ($y < 0$);
+\item for every oscilloscope reading of frequency $f_j$ at location $(x_j,0)$, no gemstone is closer to $(x_j,0)$ in Euclidean distance than the gemstone with frequency $f_j$.
+\end{itemize}
+You wish to calculate, for each yet-undiscovered gemstone, the deepest possible (most negative) $y$-coordinate of that gem among all plausible configurations of gemstones.
+

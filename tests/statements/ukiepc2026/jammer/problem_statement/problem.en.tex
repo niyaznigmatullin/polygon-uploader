@@ -1,0 +1,33 @@
+\problemname{Jammer Jam}
+
+Swimming for exercise involves assigning swimmers to lanes suited to their
+fitness level.
+
+We know the velocity of each swimmer in metres per hour. The swimmers
+start in any order but inevitably they will eventually become stuck
+behind the slowest swimmer in the lane and start matching their pace.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.33\textwidth]{sample3.pdf}
+\caption{Illustration of Sample Input 3.}
+\end{figure}
+
+If we can assign swimmers to $l$ lanes, how can we ensure that the average
+speed of all of the swimmers in the pool (measured in metres per hour)
+is as high as possible? Output this average speed and an assignment of
+swimmers to lanes.
+
+\section*{Input}
+  \begin{itemize}
+      \item One line containing the number of swimmers $n$ and the number of lanes $l$ ($1 \le l \le n \le 3\,000$).
+      \item One line containing $n$ integers giving speeds $a_1 \ldots a_n$ of the swimmers, in metres per hour
+          ($1 \le a \le 10^6$).
+  \end{itemize}
+
+\section*{Output}
+  Output the maximum achievable average speed (mean metres per hour) on one line,
+  followed by a possible assignment of swimmers to lanes to achieve this on the next line.
+  The $i$th integer on this line is the lane number for the $i$th swimmer, $1 \le a \le l$.
+
+  The output must be accurate to an absolute or relative error of $10^{-6}$.

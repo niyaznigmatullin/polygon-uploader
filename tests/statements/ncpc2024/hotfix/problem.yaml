@@ -1,0 +1,8 @@
+name: Hotfix
+author: Atli Fannar Franklín
+source: Nordic Collegiate Programming Contest (NCPC) 2024
+license: cc by-sa
+limits:
+  time_multiplier: 2
+# uuid added by BAPCtools
+uuid: 8ee7605a-2e67-891b-1172-3665a1378c79

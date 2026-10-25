@@ -1,0 +1,65 @@
+\problemname{}
+
+\illustration{0.35}{travelday.png}{
+    Definition of a travel day
+    from \href{https://www.interrail.eu/en/support/interested-in-interrailing/what-is-a-travel-day}{interrail.eu}.
+    \textcopyright{}~Eurail B.V., used non-commercially
+}
+
+\newcommand{\imaxn}{10\,000}
+\newcommand{\imaxk}{100}
+\newcommand{\imaxc}{10^5}
+\newcommand{\imaxd}{10^6}
+
+Interrail passes are the fun and cheap way to see more of Europe,
+especially if you combine your train trip with Businesslike And Penny-saving Computation!  % Or maybe "Beneficial" for the B?
+In particular, you would like to find the cheapest way to pay for your planned travels.
+You plan to take the train on $n$~travel days, that are not necessarily consecutive.
+The individual fare is different for every day,
+and perhaps you can save money by buying some interrail passes.
+
+There are $k$~different types of interrail passes with varying costs.
+Each type of interrail pass can be obtained multiple times.
+An interrail pass is active for a period of $p$~consecutive days,
+that starts on a day of your choice.
+The interrail pass covers the first $d$~travel days during this period,
+which do not have to be consecutive.
+Note that an active interrail pass cannot be ``paused'':
+a day of travel counts towards the day count of each active pass,
+even when you pay the individual fare that day.
+
+As an example, consider the fourth sample input, visualized in Figure~\ref{fig:interrail}.
+It is definitely cheaper to buy interrail passes than to pay $4$~individual fares.
+The cheapest solution is to buy two interrail passes of the first type, rather than one interrail pass of the second type.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{interrail.png}
+    \caption{
+        Visualization of the types of interrail passes for the fourth sample input in a webshop.
+        The first one can be activated for a period of $5$ days, and can be used for $3$ days within that period.
+        The second one has a period of $30$ days, and can be used for $5$ days during that period.
+    }%
+    \label{fig:interrail}
+\end{figure}
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($1\leq n\leq \imaxn$,
+    $0\leq k\leq \imaxk$), the number of planned travel days,
+    and the number of types of interrail passes available.
+        \item $n$ lines, each with two integers $t$ and $f$ ($0\leq
+    t \leq \imaxd$, $1\leq f\leq \imaxc$), the travel day and the
+    individual fare for that day.
+    The $n$ travel days are distinct and given in increasing order.
+        \item $k$ lines, each with three integers $p$, $d$, and $c$ ($1\leq
+    p\leq \imaxd$, $1\leq d\leq p$, $1\leq c\leq \imaxc$), indicating a type of
+    interrail pass that is valid for a period of $p$~days, covers the first
+    $d$~travel days in that period, and costs~$c$.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the minimum amount you need to spend to cover all your planned travels.
+\end{Output}

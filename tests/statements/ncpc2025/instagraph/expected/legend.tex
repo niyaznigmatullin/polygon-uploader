@@ -1,0 +1,29 @@
+
+
+\illustration{0.3}{instagraphlogo.pdf}
+
+A celebrity in a social network is somebody with many followers, but who doesn't follow them back.
+More precisely, a person is a \emph{celebrity} for a group of people, if
+\begin{itemize}
+  \item every member of the group follows the person,
+  \item the person follows nobody in the group.
+\end{itemize}
+The \emph{celebrity centrality} of person~$v$, written $\mathrm{CC}(v)$, is the maximum size of such a group.
+
+\medskip
+We model the social network as a directed graph with $N$~vertices  $1$,  $\ldots$,~$N$.
+A directed edge from~$u$ to~$v$ means that person~$u$ follows person~$v$.
+For example, in
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\textwidth]{sample1.png}
+    \caption{Sample Input 1}
+\end{figure}
+we have 
+$\operatorname{CC}(1) = 0$,
+$\operatorname{CC}(2) = 1$, and
+$\operatorname{CC}(5) = 2$.
+
+Your task is to find a vertex~$v$ with the maximum celebrity centrality $\mathrm{CC}(v)$.
+In case of a tie, choose the smallest~$v$.
+

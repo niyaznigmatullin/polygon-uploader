@@ -1,0 +1,16 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Faulty Connection
+uuid: 8ee7605a-3eb0-8674-210e-d7847e78691d
+source: BAPC 2025
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+limits:
+  validation_passes: 15
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom multi-pass
+author: Mike de Vries
+source_url: https://2025.bapc.eu/

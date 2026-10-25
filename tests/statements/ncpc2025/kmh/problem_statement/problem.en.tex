@@ -1,0 +1,37 @@
+\problemname{km/h}
+
+\illustration{0.4}{signs.pdf}{
+  A speed limit sign (left) and a derestriction sign (right).
+  National variants differ, but are regulated by the \emph{Vienna Convention on Road Traffic} (1968).
+}
+
+
+Many countries have a “national speed limit”: 
+a default maximum speed that applies unless a \emph{speed limit sign} explicitly sets a lower one.
+Such a speed limit sign shows a number and overrides the default while it is in force.
+By contrast, a \emph{derestriction sign} shows no number at all; it cancels the previous restriction and restores the national speed limit, which is always strictly higher than any speed limit sign.
+
+You pride yourself on being a careful and attentive motorist.
+Whenever you encounter a speed limit sign, you smoothly and safely adjust your vehicle's speed.
+Alas, despite your otherwise impeccable memory, the derestriction sign always leaves you guessing.
+You simply cannot remember the national speed limit -- only that it was a neat multiple of ten.
+
+As you encounter each sign -- limit or derestriction -- determine the fastest you can go while abiding the law, based only on what you've seen so far.
+
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $N$ with $1\leq N\leq 100$, the number of signs.
+        \item $N$ lines, one for each sign. 
+	  Each line describes either a speed limit or a derestriction.
+	  A speed limit  is an integer $L$  with $10\leq L\leq 160$, the speed limit that applies from that sign.
+	  A derestriction is the forward slash``\texttt{/}'', reminiscent of the sign's diagonal bar.
+	  The first line contains a speed limit.
+	  There are never two consecutive derestrictions.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+  Output $N$~integers, the maximum legal speed that can be inferred when passing the $i$th sign for $1\leq i\leq N$.
+\end{Output}

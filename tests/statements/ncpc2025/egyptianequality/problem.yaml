@@ -1,0 +1,9 @@
+problem_format_version: legacy
+type: pass-fail
+name: Egyptian Equality
+uuid: "be6cc48d-8aae-4e33-b61c-9332e68de420"
+author: Nils Gustafsson
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+validation: custom
+license: cc by-sa
+keywords: ad-hoc

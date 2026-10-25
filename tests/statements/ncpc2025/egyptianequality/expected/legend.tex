@@ -1,0 +1,24 @@
+
+
+\illustration{0.3}{khafre}{Khafre's pyramid at Giza. At the top of the pyramid you can see many remaining casing stones. Image by Daaaveee, \href{https://commons.wikimedia.org/wiki/File:Chichen\_Itza\_3.jpg}{commons.wikimedia.org}}
+
+Friendly but competing archaeologists Ameena and Bilal are searching for the lost entrance to the \emph{Nomarch's Celestial Pyramid of Cauris}.
+Over the Millennia, much of the outer layer has been stripped away, so the entrance must lie behind one of the remaining ``casing'' stones -- the smooth limestone blocks that once covered the entire monument -- on the north face of the pyramid.
+
+To avoid interference between their sensor arrays, Ameena and Bilal will divide the north face into two connected regions and scan one region each. 
+For fairness, each region must contain the same number of casing stones.
+
+They model the pyramid's north face as a triangular grid.
+The grid has $N$ rows and $2N - 1$ columns, with the pyramid occupying a subset of these cells: the middle cell of the first row, the middle three cells of the second row, the middle five of the third row, and so on. 
+A nonempty subset of the cells in the pyramid are casing stones.
+
+Your task is to partition the pyramid into two regions $A$ and $B$ such that:
+\begin{itemize}
+\item Every cell in the pyramid belongs to exactly one region.
+\item Each region is connected.
+  (A region is connected if it is possible to walk between any two of its cells by moving between adjacent cells.
+    Two cells are adjacent if they share a side.)
+\item The two regions contain the same number of casing stones.
+\end{itemize}
+
+

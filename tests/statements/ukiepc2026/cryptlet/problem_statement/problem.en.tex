@@ -1,0 +1,26 @@
+\problemname{Cryptlet}
+
+The 5 Latin letters a-e have each been assigned a distinct digit between 0-9.
+Given an expression involving the sum of two numbers written as X+Y=Z
+(each number having the same number of digits, at most $1000$, including any
+leading zeroes), written using letter substitutions, print plausible values for
+the assignments of all $5$ letters in order from a-e as a string of $5$ characters.
+
+For instance, given \texttt{ab+ac=ca}, you may choose to output
+\texttt{18364}. Or, given \texttt{aaa+bbb=eee}, you may output \texttt{45789}.
+
+\section*{Input}
+
+\begin{itemize}
+    \item The only line of input contains a string of lowercase letters in \texttt{[a-e]}
+        and symbols, of the form $X+Y=Z$ and with no spaces, where
+        $1 \le (|X| = |Y| = |Z|) \le 1000$.
+\end{itemize}
+
+\section*{Output}
+
+
+If no assignment is possible, output \texttt{impossible}.
+
+Otherwise, output any string of $5$ distinct digits which gives plausible values for
+the letters $a$, $b$, $c$, $d$, and $e$ respectively.

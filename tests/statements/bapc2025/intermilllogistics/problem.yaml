@@ -1,0 +1,18 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Intermill Logistics
+uuid: 8ee7605a-558e-8d2b-00c4-33154456d692
+source: BAPC 2025
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+# limits:
+#   time_limit: 1.0
+validation: default
+author: Maarten Sijm
+source_url: https://2025.bapc.eu/
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validator_flags: float_tolerance 1e-6

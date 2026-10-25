@@ -1,0 +1,16 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Jacobi Numbers
+uuid: 8ee7605a-56ad-8770-0f4f-45295add6d08
+source: BAPC 2025
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+limits:
+  code: 256
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: custom
+author: Reinier Schmiermann
+source_url: https://2025.bapc.eu/

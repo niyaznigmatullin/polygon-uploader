@@ -1,0 +1,17 @@
+
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($1 \le n \le 5000$, $0 \le k \le 20$), the number of intersections and the number of times the blinkers can be activated.
+        \item $n$ lines, the $i$th of which contains four integers $v_i^{\textsc n}$, $v_i^{\textsc e}$, $v_i^{\textsc s}$, and $v_i^{\textsc w}$ ($0 \le v_i^{\textsc n}, v_i^{\textsc e}, v_i^{\textsc s}, v_i^{\textsc w} \le n$), the intersections that can be reached by taking the north, east, south, and west road from intersection~$i$, or~$0$ to indicate that the road does not exist.
+    \end{itemize}
+    You start at intersection~$1$, and the BAPC is located at intersection~$n$.
+    Each intersection~$i$ has at most one road to each other intersection~$j$. If this road exists, then intersection~$j$ has exactly one road to intersection~$i$ as well.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{sample.pdf}
+    \caption{Visualization of the first, second, and third sample input.}
+    \label{fig:map}
+\end{figure}
+

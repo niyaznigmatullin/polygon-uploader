@@ -1,0 +1,39 @@
+
+
+\illustration{0.3}{boggle.jpg}{
+A tray of Boggle dice, out of order.
+CC-BY-2.0 by Rich Brooks on \href{https://commons.wikimedia.org/wiki/File:Boggle\_(4039402557).jpg}{Wikimedia Commons}
+}
+
+It is the 25th of February, 2025.
+You have enjoyed another spirited evening of \emph{Boggle} with your friends.
+After everybody left, you have thoroughly cleaned the apartment.
+All that is left is to bring the Boggle tray in order.
+You start to wonder: would it be possible to bring the Boggle tray in alphabetic order,
+without swapping any dice, but only by rotating them?
+
+The Boggle tray consists of $16$ six-sided dice.
+Each die is labelled with a letter from the English alphabet on each face.
+A single die contains a face labelled ``Qu''.
+No letter appears $4$ or more times on the same die.
+By turning a die once, you can move any of the sideways-facing letters up.
+Turning a die twice moves the downwards-facing letter up.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.75\textwidth]{01.pdf}
+
+    \caption{
+        Visualization of the first sample input.
+        The $16$ Boggle dice are shown in reading order.
+        For each die, the face in the center of the cross (``I'' in the first die) is upwards-facing
+        and the face on the far right (``Y'' in the first die) is downwards-facing.
+        The shaded die faces describe an optimal solution requiring $15$~turns.
+    }
+    \label{fig:boggle}
+\end{figure}
+
+Bring the tray into alphabetically nondecreasing order, using standard reading directions (left-to-right, top-to-bottom),
+using as few turns as possible.
+Letter case plays no role and the two-letter face is treated as ``Q'' followed by ``U'', so ``QuU'' is sorted but ``QuT'' is not.
+

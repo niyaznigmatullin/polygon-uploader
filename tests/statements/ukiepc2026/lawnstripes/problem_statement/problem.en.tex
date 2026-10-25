@@ -1,0 +1,38 @@
+\problemname{Lawn Stripes}
+
+Lawn stripes are drawn using a roller to flatten grass blades in a particular
+direction and impart a sheen that, at a distance, is distinguishable from
+blades flattened in another direction. This is typically for aesthetic appeal.
+
+We are going to draw lawn stripes in our square garden using a roller in any
+of the $4$ cardinal directions. The roller must stay on the lawn throughout.
+The final direction of a piece of lawn is determined by the
+last time the roller ran over it, including starting from or finishing there.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[height=0.4\textwidth]{sample1.pdf}
+\caption{Illustration of Sample Input 1.}
+\end{figure}
+
+Given a description of the lawn and the starting point of the roller, determine
+how to draw the pattern.
+
+\section*{Input}
+
+\begin{itemize}
+  \item The first line of input contains the width and depth in metres of the lawn, $n$ ($1 \le n \le 100$)
+
+  \item The second line of input contains the row and column of the roller, $r$ and $c$ ($1 \le r, c \le n$).
+
+  \item Each of the next $n$ lines contains $n$ characters from \texttt{(l|r|u|d)} giving the desired
+        direction of a square metre of lawn.
+\end{itemize}
+
+\section*{Output}
+
+If it is not possible to draw the pattern, output \texttt{impossible}. Otherwise, demonstrate a solution in
+under $10n^2$ moves by outputting the number of moves to use on one line, followed by the moves on the remaining lines.
+
+Each move consists of a distance in metres $d$ and a direction from \texttt{(l|r|u|d)}. A roller
+following the instructions must roll over every square metre without leaving the lawn.

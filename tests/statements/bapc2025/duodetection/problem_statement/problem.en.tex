@@ -1,0 +1,55 @@
+\problemname{Duo Detection}
+
+\illustration{0.29}{Cooke_and_Wheatstone_electric_telegraph.jpg}{
+   The Cooke and Wheatstone electric telegraph can transmit letters with the use of $5$ needles which point to the transmitted letters.
+   CC BY-SA 4.0 by Geni on \href{https://commons.wikimedia.org/wiki/File:Cooke_and_Wheatstone_electric_telegraph.jpg}{Wikimedia Commons}
+}
+
+\newcommand{\maxn}{50\,000}
+\newcommand{\maxk}{10^5}
+\newcommand{\maxx}{10^9}
+
+It is the 25th of April, 1825.
+English inventer William Fothergill Cooke and English scientist Charles Wheatstone are working on an early prototype of an electrical telegraph system.\footnote{
+    One may point out that Cooke and Wheatstone actually did not release a telegraph design until 1837,
+    but obviously, this just means you were successful in this solving this problem! :)
+}
+This system consists of a transmitter and a receiver.
+The transmitter can send messages to the receiver, which we model as a sequence of positive integers.
+However, the prototype is far from flawless, so quite often, an integer that is transmitted is not actually received.
+Integers never get altered through the connection, though, so all received integers are guaranteed to have been transmitted.
+
+To remedy this flaw, Cooke and Wheatstone came up with an error correction code.
+Together, they agreed on a fixed list of $n$ possible messages, and assigned each message a list of positive integers.
+To send a message from the list, they simply send the corresponding list of integers.
+Sometimes, some integers may get lost or arrive in a different order,
+but if enough integers remain, the hope is that there is still only one possible message.
+
+You work as a postman, so you see the innovation of communication technology as a direct risk to your job security.
+You decide to mess with Cooke and Wheatstone to delay the development of their telegraph system.
+You have learned about their error correction code, and you have secretly obtained a copy of their message list with all the lists of integers.
+You have figured out a way to forcefully interrupt the transmission of an integer, so you decide to use this to ruin their system.
+To avoid suspicion, you decide that at least two integers should remain uninterrupted when a message is sent.
+Thus, your goal is to determine whether any message can be made ambiguous by interrupting all but two of its integers.
+Then, whenever such a message will be sent, you can make it ambiguous by interrupting the appropriate integers.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($2\leq n\leq \maxn$), the number of possible messages.
+        \item $n$ lines (one for each message),
+            each with an integer $k$ ($2\leq k\leq \maxk$), the number of integers assigned to the message,
+            followed by those $k$ integers $x$ ($1\leq x\leq \maxx$).
+            It is guaranteed that the $k$ integers in a message are pairwise distinct.
+    \end{itemize}
+    The total number of integers in all messages combined is at most $\maxk$.
+\end{Input}
+
+\begin{Output}
+    If a pair of distinct integers exists that are assigned to multiple messages,
+    output these two integers in any order,
+    followed by the $1$-based indices of two of the messages they are assigned to.
+    Otherwise, output ``\texttt{impossible}''.
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}

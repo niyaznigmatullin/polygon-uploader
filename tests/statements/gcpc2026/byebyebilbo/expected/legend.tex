@@ -1,0 +1,25 @@
+
+
+
+
+Bilbo Baggins is finally leaving the Shire! To celebrate his departure, Gandalf 
+plans to set up a spectacular display of fireworks across the land.
+
+The Shire has $n$ hobbit holes numbered $1$ to $n$, each of which is occupied
+by exactly one hobbit. Every hole $i > 1$ is connected by a lane directly to a
+unique hole $p_i$, with $p_i < i$, so that following the lanes always leads
+towards hole $1$, the town.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics{figure.pdf}
+    \caption{Illustration of the first sample.}
+    \label{fig:sample}
+\end{figure}
+
+Gandalf must place fireworks at a minimum number of hobbit holes so that every 
+hobbit can see at least one firework. The fireworks have a visibility range $k$.
+A hobbit at hole $i$ can see a firework placed at hole $j$ if it is placed at 
+their own hole, or if $j$ lies on the path from hole $i$ to the town and the
+number of lanes between $i$ and $j$ is strictly less than $k$.
+

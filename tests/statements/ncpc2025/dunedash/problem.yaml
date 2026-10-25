@@ -1,0 +1,9 @@
+problem_format_version: legacy
+type: pass-fail
+name: Dune Dash
+uuid: "b02a0537-e75a-4a51-bdd4-1b738294dbc1"
+author: Pål Grønås Drange and Nils Gustafsson
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+validator_flags : float_tolerance 1e-6
+keywords: geometry mst minimum-spanning-tree closest-points

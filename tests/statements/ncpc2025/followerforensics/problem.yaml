@@ -1,0 +1,13 @@
+problem_format_version: legacy
+name: Follower Forensics
+author: Arnar Bjarni Arnarson
+type: pass-fail
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+validation: custom
+keywords: constructive graph graph-theory greedy directed-graph weakly-connected digraphicality realisation realization degree degree-sequence
+validator_flags: directed weakly_connected
+uuid: "c786514c-2e63-4c28-abfd-cf9b2bb827ff"
+limits:
+    time_multiplier: 2
+    output: 24

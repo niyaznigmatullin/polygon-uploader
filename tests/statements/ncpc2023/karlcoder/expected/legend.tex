@@ -1,0 +1,28 @@
+
+
+\illustration{0.28}{img/cowsay.png}{}%
+
+Karl is an aspiring C programmer, and is excited by the risks and rewards of
+low-level manual memory management.
+In the program he currently develops, he stores a string containing $N$ non-zero
+bytes into a buffer named ``\texttt{buf}''.
+By mistake he accidentally made the buffer $2 N$ bytes in size. The last $N$
+bytes of the buffer consists of only zero-bytes.
+
+\medskip
+
+\noindent
+Now Karl needs to know the value $N$, the size of the string, in a separate part
+of the program. Traditionally you would recover the length of a string using the
+\texttt{strlen}-function, which reports the position of the first zero-byte in
+the provided buffer using a linear scan.
+However, Karl finds that this is much too slow, and that it defeats the advantage
+of using C in the first place.
+Can you help Karl efficiently recover $N$ without crashing his program?
+
+\begin{center}
+\includegraphics[width=.6\textwidth]{img/buffer.pdf}
+
+\textsl{The contents of the buffer in sample interaction 3 are shown here.}
+\end{center}
+

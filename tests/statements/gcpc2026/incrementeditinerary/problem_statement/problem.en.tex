@@ -1,0 +1,42 @@
+\problemname{Incremented Itinerary}
+
+\newcommand{\maxn}{10^5}
+\newcommand{\maxm}{2 \cdot 10^5}
+
+You recently started to go running in your free time.
+You got the shoes, you got the tracking app, and you even picked up your first injury a couple of days ago.
+Overall, you are really starting to like this new hobby of yours.
+
+So far, your training routine was to run from your office to your home along the streets of your town.
+The town consists of $n$ intersections, numbered from $1$ to $n$, which are connected by $m$ bidirectional streets of equal length.
+Your office is located at intersection $1$, and your home is at intersection $n$.
+
+As the computer scientist you are, you were of course following a shortest path.
+However, studies indicate that you should not just train to complete the same route in a faster time, but also to complete longer routes.
+Given that the last time you experimented with new training methods did not go so well, you want to take this new approach slowly.
+Therefore, you are looking for a route from your office to your home that is exactly one street longer than your current route.
+To keep the run interesting, you also want to avoid visiting any intersection more than once.
+Determine whether such a new training route exists.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{sample1}
+	\caption{Visualization of a possible new training route in the first sample.}
+\end{figure}
+
+\begin{Input}
+	The input consists of:
+	\begin{itemize}
+		\item One line with two integers $n$ and $m$ ($2 \le n \le \maxn$, $1 \le m \le \maxm$),
+			the number of intersections and the number of streets.
+		\item $m$ lines, each with two integers $a$ and $b$ ($1 \le a, b \le n$, $a \ne b$),
+			representing a bidirectional street between intersections $a$ and $b$.
+	\end{itemize}
+	It is guaranteed that each pair of intersections is connected by at most one street.
+	Further, it is guaranteed that there is at least one route from intersection $1$ to intersection $n$.
+\end{Input}
+
+\begin{Output}
+	If there is a route that can serve as your new training route, output ``\texttt{possible}''.
+	Otherwise, output ``\texttt{impossible}''.
+\end{Output}

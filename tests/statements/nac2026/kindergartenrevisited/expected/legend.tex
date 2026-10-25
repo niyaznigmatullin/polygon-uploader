@@ -1,0 +1,15 @@
+
+
+
+
+
+In kindergarten, one of the most time consuming activities was cutting out shapes from a piece of paper with safety scissors.
+Let's look at a simplified model of this task: you start with an infinitely large sheet of paper with $N$ disjoint
+axis-aligned rectangles drawn on it, and cuts are infinitely long straight lines.
+A cut must not ``nick'' any rectangle: it must not pass through any point strictly on the interior of any rectangle. (Cuts that pass \emph{exactly} along a rectangle edge or through a rectangle corner are allowed.)
+When you cut a piece of paper, the paper falls apart into two different pieces of paper that you continue cutting independently of each other (future cuts on one piece do \emph{not} affect any other pieces).
+
+Your goal is to make a sequence of cuts so that each rectangle ends up on its own piece of paper (since after that it's pretty easy to cut out each rectangle exactly).
+
+Determine the minimum number of cuts (not necessarily axis-aligned) needed to cut out the rectangles in this way. If the task is impossible, print \texttt{impossible} instead.
+

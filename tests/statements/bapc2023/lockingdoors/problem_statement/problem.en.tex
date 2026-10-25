@@ -1,0 +1,43 @@
+\problemname{Locking Doors}
+
+\illustration{0.3}{lock.jpg}{
+    Locking the door, \\ possible from one side only. \\
+    CC BY 2.0 by Marco Verch on \href{https://www.flickr.com/photos/30478819@N08/48245774431}{Flickr}
+}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{10^5}
+\newcommand{\maxm}{10^6}
+
+You just started a new job at a shopping mall, and as it goes, you got the
+shittiest task of all: closing down at night.
+The mall consists of many rooms (which can be shops, hallways, or other public spaces)
+with open doors between them that must be closed.
+You can walk through a door both ways if it is open, but annoyingly, each door
+can only be locked from one of the two rooms it connects.
+
+Your supervisor already locked the main entrance of the shopping mall,
+and left you inside with the task to lock all the doors.
+In order to do so, you may request additional exits to be installed in some of the rooms.
+If a room has an exit, then you are able to enter or leave the shopping mall through that room.
+
+What is the minimal number of exits you need to request in order for it to be possible to lock all the doors and then leave the building?
+
+%There are at least two rooms in this shopping mall (it would not be much of a
+%mall otherwise), and during the day when all doors are open, you can walk from any room to any other room.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $m$ ($2\leq n \leq \maxn$, $1\leq m \leq \maxm$), the number of rooms and doors, respectively.
+        \item Then follow $m$ lines, each containing two distinct integers $a$ and $b$ ($1 \leq a,b \leq n$, $a \neq b$),
+            indicating a door connecting rooms $a$ and $b$ which can only be locked from room
+            $a$.
+    \end{itemize}
+    You may assume that all ordered pairs $(a,b)$ are distinct and that you can
+    walk from any room in the mall to any other room if all the doors are open.
+\end{Input}
+
+\begin{Output}
+    Output the minimal number of exits that need to be installed.
+\end{Output}

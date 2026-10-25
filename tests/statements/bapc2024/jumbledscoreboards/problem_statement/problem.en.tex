@@ -1,0 +1,41 @@
+\problemname{}
+
+\illustration{0.3}{scoreboard.jpg}{
+    One of the pictures that you received for the first sample input.
+    CC BY 2.0 by Adam Baker on \href{https://www.flickr.com/photos/atbaker/288807033/}{Flickr}, modified
+}
+
+\newcommand{\maxn}{100}
+\newcommand{\maxab}{100}
+
+You were so hyped to attend the final game of the Ball And Paddle Competition,
+where the two best teams in the world compete to paddle as many balls into the opponent's goal as possible.
+But alas, you fell ill, and cannot join your friends.
+Luckily, your friends took lots of pictures during the match,
+and after the match concluded, they sent you all the pictures that they have.
+Because the messaging app uploads and downloads the pictures in parallel,
+you are wondering whether you received them in chronological order.
+It looks like the scoreboards in each picture are unique,
+and knowing that the score of a team can only increase over time,
+you should be able to figure this out.
+Feeling too sick to check the order of the pictures manually,
+you decide to write a program that checks temporal consistency based on the scoreboards that are in the picture.
+
+Given a list of intermediate scores from the match,
+determine whether the scores are in chronological order.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n\leq \maxn$), the number of pictures you received.
+        \item $n$ lines, each with two integers $a$ and $b$ ($0 \leq a,b \leq \maxab$),
+            the scores of the two teams in one of the pictures.
+    \end{itemize}
+    Every pair of scores $(a, b)$ in the input is unique.
+
+    The order of the scores in the input is the order in which you received the pictures.
+\end{Input}
+
+\begin{Output}
+    Output ``\texttt{yes}'' if the scores are in chronological order, or ``\texttt{no}'' if they are not.
+\end{Output}

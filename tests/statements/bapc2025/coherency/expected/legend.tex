@@ -1,0 +1,26 @@
+
+
+\illustration{0.3}{warhammer.jpg}{
+    The miniatures are typically hand-painted by the players.
+}
+% Picture by Maarten Sijm, figurines painted by Alicia van Meer.
+
+It is the 25th of March, 40025 CE
+in the world of \emph{Battle Axe Player Clash 40,000} (BAPC40K).  % This is a name, not a number, so no math mode and no $\,$ as thousands-separator.
+This futuristic table-top miniatures wargame
+is played with endearing figurines called \emph{models}, each of which is placed on a circular \emph{base}.
+The models are placed on a $100\,\text{km} \times 100\,\text{km}$ gaming board.
+A collection of such models forms a \emph{coherent unit} if between any pair of models there is an unbroken chain of models
+that have a Euclidean distance of at most two inches\footnote{%
+    Recall that an inch equals $25.4\,\text{mm}$.
+} between the edges of their bases.
+Moreover,
+if the unit contains seven models or more,
+each model must be within two inches of at least \emph{two} other models.
+Given the positions of a collection of models with varying base diameters,
+determine whether they form a single coherent unit.
+
+One can prove that for any valid input for this problem,
+if the diameters of the circular bases differ from the given diameter by at most $10^{-5}\,\text{mm}$,
+the coherency of a unit of models does not change.
+

@@ -1,0 +1,43 @@
+\problemname{I Don't Miss Pennies}
+
+\newcommand{\hmaxn}{3 \cdot 10^{5}}
+\newcommand{\hmaxp}{3\,000}
+
+In November 2025, the United States minted its last pennies (one-cent
+coins).  Canada has not minted pennies since 2012.
+
+Billions of pennies remain in circulation, but pennies are
+expected to fade from circulation over time.  Stores are expected to
+continue to price items to the cent, as credit card transactions are
+processed to the cent.  However, for cash transactions, stores are
+expected to round to the nearest nickel (five cents).  Specifically, if
+the final digit of a total purchase ends in $3$, $4$, $8$ or $9$ cents, the
+total will be rounded up; if it ends in $1$, $2$, $6$ or $7$ cents, it will be
+rounded down. Transactions ending in $0$ or $5$ cents are not rounded.
+
+You realize that this provides an opportunity.  If you pay cash and
+rearrange and group your purchases appropriately, you may be able to pay slightly
+less for everything you buy!  Given the prices of the individual
+items you wish to buy in cents, determine the maximum amount you could save by paying
+solely in cash and rearranging and grouping your purchases optimally, compared to the
+non-rounded total price you would pay if you bought all of the items 
+with a credit card.
+
+\section*{Input}
+The first line of input contains a single integer $N$ ($1 \le N \le \hmaxn$), the number of items you intend to purchase.
+
+The next line contains $N$ space-separated integers $p_i$ ($1\le p_i\le \hmaxp$), the prices of the items in cents.
+
+\section*{Output}
+Print a single integer: the difference between the total credit card price without
+rounding and the lowest total cost that can be obtained by paying cash
+and grouping purchases optimally.
+
+\section*{Explanation of Sample Input 1}
+
+For the first sample, one optimal grouping of items is
+\[\{78, 999, 350\}, \{59, 173, 2995, 350\}, \{882, 298\}, \{1096\}, \{497\}.\]
+The prices of each group are, respectively, $1427, 3577, 1180, 1096, 497$ and thus the total difference is
+\[(1427 + 3577 + 1180 + 1096 + 497) - (1425 + 3575 + 1180 + 1095 + 495) = 7.\] 
+You save $7$ cents by optimally grouping the items into several cash transactions instead of paying for everything with a credit card.
+

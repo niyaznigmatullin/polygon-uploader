@@ -1,0 +1,55 @@
+\problemname{}
+
+\newcommand{\maxn}{500}
+\newcommand{\protagonist}{Diana}
+
+\illustration{0.3}{tickets-1200x900.jpg}{
+    Tickets allow \protagonist{} to oversee kitchen operations.
+    Unsplash Licence by Daniel~Bradley on \href{https://unsplash.com/photos/man-holding-white-menu-y_WDEY9e6mA}{Unsplash}
+}
+
+\protagonist{} is head chef at the Batavian Authentic Prestigious Cuisine.
+All orders are logged to a central computer, but to organize the kitchen, each ordered item is also printed on a separate \emph{ticket}.
+On the back of each ticket, \protagonist{} writes the corresponding table number, so servers can easily check where they need to deliver the food.
+When a ticket is completed, \protagonist{} pins it to a board.
+Of course, there could be duplicate tickets, since a table may order the same item multiple times.
+
+Halfway through service, a disgruntled diner complains:
+``We have been waiting for hours, but so far we were \emph{only} served tomato soup!
+Could you please hurry up?''
+\protagonist{} must address this immediately, since the reputation of the restaurant is at stake!
+However, in the past, some customers have been dishonest in order to demand expedited service.
+So, before \protagonist{} instructs the kitchen staff, the complaint must be verified.
+
+Since the board is always up-to-date, verification is a matter of checking the relevant tickets.
+Let $t$~and~$m$ be the table number and menu item that describe the complaint, respectively.
+\protagonist{} seeks to verify the following claim: ``All pinned-up tickets for table~$t$ correspond to menu item~$m$.''  % in logic:  \forall x \in tickets : x.table = t ==> x.item = m
+In particular, if there are no completed tickets for table~$t$, \protagonist{} considers the claim to be true --
+the customer may have misspoken, but they surely deserve extra attention!  % i.e. the statement is vacuously true
+
+Unfortunately, on the board, only one side of each ticket is visible (either the menu item or table number) and \protagonist{} does not have time to flip hundreds of tickets.
+However, by cross-referencing with the central computer, it may be possible to safely ignore certain tickets.
+Help \protagonist{} determine the minimum set of pinned-up tickets that need to be flipped.
+Or can you (dis)prove the claim without flipping any tickets?
+You must decide which tickets should be flipped before \protagonist{} starts doing so --
+she is too strained to make deductions on the fly.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($1 \le k \le n \le \maxn$), the number of orders in the computer and the number of pinned-up tickets.
+        \item One line with $n$ strings representing the orders in the computer,
+            each string consisting~of one English uppercase letter (the menu item, \texttt{A-Z}) % Using no-break-spaces to force this bullet-point onto two lines
+            and one digit (the table number,~\texttt{0-9}).
+        \item One line with $k$ characters representing the pinned-up tickets, each character being either an English uppercase letter or a digit.
+        \item One line with a digit $t$ (\texttt{0-9}) and an English uppercase letter $m$ (\texttt{A-Z}), specifying the claim:
+            ``All pinned-up tickets for table~$t$ correspond to menu item~$m$.''
+    \end{itemize}
+
+    The pinned-up tickets are guaranteed to correspond to (a subset of) the orders in the computer.
+\end{Input}
+
+\begin{Output}
+    If, without flipping any tickets, the claim is provably true or false, output ``\texttt{true}'' or ``\texttt{false}'', respectively.
+    Otherwise, output the minimum number of pinned-up tickets that need to be flipped, followed by their $1$-based indices, in any order.
+\end{Output}

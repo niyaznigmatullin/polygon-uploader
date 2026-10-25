@@ -1,0 +1,39 @@
+
+    This is an interactive problem.
+    Your submission will be run against an \emph{interactor},
+    which reads from the standard output of your submission
+    and writes to the standard input of your submission.
+    This interaction needs to follow a specific protocol:
+
+    There is no initial input as you make the first move.
+
+    On each of your turns, print one line with two integers $r$ and $c$
+    ($1 \le r \le 59$, $1 \le c \le 42$),
+    the row and column of the cell you pick.
+    The cell must not have been picked before.
+
+    After each of your moves, the interactor will respond with one line
+    with two integers $r'$ and $c'$
+    ($0 \le r' \le 59$, $0 \le c' \le 42$).
+    \begin{itemize}
+        \item If $r' = c' = 0$, the interaction is over.
+            This happens if you won on your last move, made an illegal move,
+            or your friend can win with their next move.
+            Your program should terminate immediately.
+        \item Otherwise, $1 \le r' \le 59$ and $1 \le c' \le 42$.
+            This means that your friend picked the cell in row $r'$ and column $c'$.
+            It is guaranteed that neither player has picked this cell before.
+            It is now your turn again, and the interaction continues from there.
+    \end{itemize}
+
+    The interactor is adaptive, so
+    your friend's moves will depend on all previous moves.
+
+    Make sure you \textbf{flush} the standard output after every output.
+    For example, you can use \texttt{fflush(stdout)} in C++,
+    \texttt{System.out.flush()} in Java,
+    \texttt{sys.stdout.flush()} in Python,
+    \texttt{std::io::stdout().flush()} in Rust,
+    and \texttt{hFlush stdout} in Haskell.
+
+    A \emph{testing tool} is provided to help you develop your solution.

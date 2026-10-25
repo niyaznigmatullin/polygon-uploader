@@ -1,0 +1,21 @@
+
+The first line of input contains five space-separated integers $N$, $M$, $K$, $p_A$, and $p_B$, where
+$N$ $(2 \leq N \leq 10^{9})$ is the number of conveyor belt positions,
+$M$ $(1 \leq M \leq 10^{5})$ is the number of maki types,
+$K$ $(1 \leq K \leq \min(2 \cdot 10^{5}, N))$ is the number of plates, and
+$p_A$ and $p_B$ $(1 \leq p_A, p_B \leq N, p_A \not= p_B)$ are Alice's and Bob's positions respectively.
+
+The second line contains $M$ space-separated integers $a_i$ $(0 \leq a_i \leq 10^6)$, where
+$a_i$ is the number of pieces of maki of type $i$ that Alice wants to eat.
+
+The third line contains $M$ space-separated integers $b_i$ $(0 \leq b_i \leq 10^6)$, where
+$b_i$ is the number of pieces of maki of type $i$ that Bob wants to eat.
+
+Each of the next $K$ lines describe a plate. The $j\textsuperscript{th}$ line
+contains four space-separated integers $s_j$, $t_j$, $x_j$, and $c_j$, where
+$s_j$ $(1 \leq s_j \leq N)$ is the starting position of the plate,
+$t_j$ $(1 \leq t_j \leq M)$ is the type of maki on the plate,
+$x_j$ $(1 \leq x_j \leq 10^6)$ is the number of pieces on the plate, and
+$c_j$ $(1 \leq c_j \leq 10^6)$ is the cost per piece.
+All plates have different starting positions (all $s_j$ are distinct).
+

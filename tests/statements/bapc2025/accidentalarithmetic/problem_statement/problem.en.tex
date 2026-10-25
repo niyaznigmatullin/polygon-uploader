@@ -1,0 +1,60 @@
+\problemname{Accidental Arithmetic}
+
+\illustration{0.3}{calculator.jpeg}{
+    Your trusted Brittle Arithmetic Portable Calculator.
+    Drawing~by~Freek~Henstra
+}
+
+\newcommand{\maxn}{10^{1000}}
+
+\usetikzlibrary{shadows}
+
+\newcommand*\keystroke[1]{% Based on https://tex.stackexchange.com/a/5227
+    \raisebox{0.25ex}{%
+        \tikz[baseline=(key.base)]
+        \node[
+          draw,
+          fill=black!10,
+          drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+          rectangle,
+          rounded corners=2pt,
+          inner sep=1pt,
+          line width=0.5pt,
+          font=\scriptsize
+        ](key) {\,$#1$\strut\,};%
+    }%
+}
+
+It is the 25th of January, 2025.
+You are working on your final report for the statistics class.
+However, when you enter the calculations into your trusted Brittle Arithmetic Portable Calculator, you notice that the \keystroke{+} and \keystroke{-} buttons have malfunctioned.
+Whenever you press a numeric button (a button from \keystroke{0} through \keystroke{9}\,),
+an additional button press may be registered immediately after:
+either the \keystroke{+} button, or the \keystroke{-} button, or neither (but never both).
+``Ugh,'' you think to yourself, ``why did I not buy a Backup Arithmetic Portable Calculator...''
+But then you get an idea to save yourself from getting a low grade.
+
+After some experimentation, you statistically determined that pressing a numeric button results in an additional \keystroke{+} input $45\%$ of the time, and the same holds for the \keystroke{-} button
+(and never both at the same time).
+You decide that you should write your report about your findings.
+In addition to statistical analysis, the teacher requires you to perform some probabilistic predictions based on a statistical model.
+You decide to investigate what your calculator does when you try to simply input a natural number.
+
+Given a natural number $n$, you consider entering the number into the calculator by pressing the numeric buttons corresponding to the standard base $10$ representation of $n$.
+The calculator may register a \keystroke{+} or \keystroke{-} button press in between the digits of $n$, which results in an arithmetic expression.
+You wonder what happens if you press \keystroke{=} to evaluate the expression.
+Luckily, if your expression ends with a \keystroke{+} or \keystroke{-}\,, the calculator ignores this, such that this evaluation always results in an integer.
+To finish your report, you decide to write a program that determines the expected value of this result for any given value of $n$.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($0 \leq n < \maxn$), the number that you will enter into the calculator.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the expected value of the result.
+
+    Your answer should have an absolute or relative error of at most $10^{-6}$.
+\end{Output}

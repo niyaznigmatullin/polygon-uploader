@@ -1,0 +1,14 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Fighting Fraud
+uuid: 8ee7605a-e95e-830f-3c6b-6d48ee1c8545
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+# limits:
+#   time_limit: 1.0
+validation: default
+author: Christopher Weyand
+source_url: https://gcpc.nwerc.eu
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5

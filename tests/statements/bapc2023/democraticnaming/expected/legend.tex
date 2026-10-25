@@ -1,0 +1,33 @@
+
+
+\illustration{0.32}{peninsula.jpg}{
+    Artist's impression of \\ the newly built peninsula. \\
+    CC BY 2.0 by Werner Bayer on \href{https://www.flickr.com/photos/76319087@N08/10095845934}{Flickr}
+}
+
+% optionally define variables/limits for this problem
+
+
+
+% We are in a country with $n \leq 1000$ cities. Each city has a name of length exactly $m \leq 1000$ letters.
+% Your objective is to pick a name for the country. It should also consist of $m$ lettters and letter $i$ must be the most common letter in $i$th position across all cities. In case of a tie the letter between multiple letters the one occuring earliest in the latin alphabet should be picked.
+% We are in a country with $n \leq 1000$ cities.
+% Each city has a name of length exactly $m \leq 1000$ letters.
+
+A new county has been created on artificially created land out from the coast,
+with code name ``Built Anew Peninsula County'',
+but the final name still needs to be chosen.
+To establish a new name, the cities within the county get to vote on the individual letters of the name.
+
+As it happens, all cities in the county have a name with exactly $m$ letters,
+and so they decide the name of the county will also have exactly $m$ letters.
+Naturally, each city prefers their own name, and thus votes that the $i$th letter of the county name should match theirs.
+For each of the $m$ positions, the letter that received the most votes across all cities gets picked.
+In case of a tie between multiple letters, the one occurring earliest in the English alphabet gets picked.
+
+Given the list of the city names, determine the result of the vote for
+the new county's name.
+
+% Optional: include weight per city
+% To make it more intersting we can also add a population to each city and make people vote for each letter. Of course everybody votes for their own city.
+

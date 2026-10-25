@@ -1,0 +1,71 @@
+\problemname{}
+
+\illustration{0.3}{factory.jpg}{
+    All steps in your gigafactory working together in harmony (until something fails, of course).
+    CC BY 2.0 by Steve~Jurvetson on \href{https://www.flickr.com/photos/44124348109@N01/6858583426}{Flickr}
+}
+
+\newcommand{\maxn}{10^5}
+
+The gigafactory for your new range of Battery-Assisted Postal Cars is finally up and running.
+This manufacturing plant is a highly complex facility, consisting of many individual steps,
+where the parts of each car are
+milled, stamped, welded, soldered, screwed, glued, assembled, tested, detailed, layered, painted, and cleaned.
+Every step is optimized to the tiniest detail, making them very complicated.
+
+As you are preparing for a visit from your main investor,
+alarm bells start going off.
+One of the steps failed, causing a cascade of failures across the factory!
+After hurriedly resolving the failures, panic creeps up to you:
+what if a failure happens during the visit of the investor?
+
+%% You decide to show only a single processing step of your factory,
+%% and specifically, the one with \emph{minimal risk}:
+%% the step that is most likely to \emph{not} fail,
+%% taking into account any potential cascaded failures.
+%% After making sure that every processing step is working correctly again,
+%% your engineers quickly estimate for each step individually
+%% the probability that it will fail before the investor shows up.
+%% They also collect information about which steps depends on which,
+%% because the failure of one step will quickly halt all dependent steps as well.
+%% Using this information, calculate which step has the minimal risk of failure during the demonstration.
+
+Currently, all processes in the factory are working, but your engineers determined that each
+of them has some independent probability of failing before the visit.
+As the visit is soon, there will be no time for any repairs, and
+as soon as a step fails, this will quickly halt all dependent steps as well.
+
+Thus, you decide to show only a single processing step of your factory,
+and specifically, the one with the smallest probability of failing.
+As an example, consider the second sample case.
+The probability that step $1$ fails is $0.72$,
+but step $2$ is slightly more stable with a failure probability of $0.6$.
+Thus, you show step $2$ to your investor, with a probability of $0.4$ that it will \emph{not} fail.
+
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $m$ ($1 \leq n \leq \maxn$, $0 \leq m \leq \maxn$),
+            the number of steps and the number of dependencies between steps.
+        \item One line with $n$ floating point numbers $p$ ($0 \leq p \leq 1$),
+            the individual failure probability of each step.
+            Each probability is given in decimal form\footnotemark[1]{} with exactly three digits after the decimal point.
+        \footnotetext[1]{%
+            When a floating-point number is written in decimal form, it is not in scientific notation.
+        }
+        \item $m$ lines, each with two integers $a$ and $b$ ($1 \leq a, b \leq n$, $a \neq b$),
+            indicating that step $a$ depends on step $b$:
+            failure of step $b$ will cause failure of step $a$. \\
+            A direct dependency of one step on another occurs at most once. \\
+            Cyclic dependencies are allowed.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    For the step with the smallest probability of failing,
+    output the probability that it will \emph{not} fail.
+
+    Your answer should have an \emph{absolute} error of at most $10^{-200}$
+    or a \emph{relative} error of at most~$10^{-6}$.
+\end{Output}

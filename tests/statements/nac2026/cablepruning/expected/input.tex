@@ -1,0 +1,8 @@
+
+
+The first line of input contains two space-separated integers $N$ $(3 \le N \le 10^5)$ and $K$ $(1 \le K \le 10^5)$, the number of servers in the data center and number of coupled pairs of servers that you've discovered.
+
+The next $N$ lines describe the network cables originally in the data center. Each line contains three space-separated integers $u_i$, $v_i$ $(1 \le u_i, v_i \le N, u_i \ne v_i)$, and $w_i$ $(1 \le w_i \le 10^9)$, specifying that a cable connects server $u_i$ to server $v_i$ and has length $w_i$ feet. There is at most one network cable connecting a pair of servers and the graph of servers and cables is connected.
+
+Each of the next $K$ lines contains two space-separated integers $a_j$ and $b_j$ ($1 \le a_j, b_j \le N$, $a_j \ne b_j$) and describe a coupled pair of servers. Each coupled pair must remain connected by a path after you are done removing cable. All coupled pairs are distinct; $(a,b)$ and $(b,a)$ are considered the same and won't both be listed as coupled pairs.
+

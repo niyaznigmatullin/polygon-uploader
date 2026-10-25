@@ -1,0 +1,21 @@
+
+
+When a fixed shuffle is applied to a deck of cards repeatedly, the deck will eventually return to its original order. 
+The number of times the shuffle must be applied before this happens is called the \textit{period} of the deck for that shuffle.
+In the present task, we consider the inverse question: rather than starting with a shuffle and finding its period, 
+you are told, for each possible period, how many decks of cards have that period. Your task is to construct any 
+shuffle consistent with this information.
+
+Formally, there is a hidden permutation $f = (f_1, f_2, \dots, f_N)$, where $N$ is a given positive integer. A permutation is a list of numbers where
+each number from $1$ to $N$ occurs exactly once. Let $x = x_1x_2 \dots x_N$ be a binary string. We say that $f(x)$ ($f$ applied to $x$) is the new
+binary string $x_{f_1}x_{f_2} \dots x_{f_N}$, and the \textit{period} of $x$ is the smallest positive integer $p$ such that 
+
+$$\underbrace{f(f(\cdots f(x)\cdots))}_{p\ \text{times}} =  x.$$
+
+It can be proven that for any permutation $f$ and any binary string $x$ of the same length, the period of $x$ exists. In other words, 
+if you apply $f$ to $x$ enough times, you eventually get back $x$.
+
+You are given the number $N$, and for each possible period $p$ you are given the number of binary strings 
+ (out of all $2^N$ possible binary strings) that have period $p$. Your task is to find any permutation $f$ that corresponds to the given information, 
+ or conclude that there is no such permutation.
+

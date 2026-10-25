@@ -1,0 +1,43 @@
+\problemname{Jacobi Numbers}
+
+\illustration{0.3}{CarlJacobi.jpg}{
+    Carl Gustav Jacob Jacobi (1804--1851), famous brother of Wahnfried Imaginus.
+    Public domain on \href{https://commons.wikimedia.org/wiki/File:Carl\_Jacobi.jpg}{Wikimedia Commons}
+}
+
+\newcommand{\maxn}{9241}
+\newcommand{\maxo}{10\,000}
+\newcommand{\maxx}{10\,000}
+
+Today, a new paper has been published
+in the \emph{Bulletin of Apocryphal Pioneers in Computation}.
+According to this paper, the forgotten German number theorist Wahnfried Imaginus Jacobi (1806--1853), while still a secondary student in Potsdam, investigated the decomposition of integers into sums of cubes.
+Among the examples noted in the surviving fragments of his notebooks are \[
+    2025 = 1^3 + 2^3 + 3^3 + 4^3 + 5^3 + 6^3 + 7^3 + 8^3 + 9^3
+\] and the more curious expression \[ 3 = 1^3 + 1^3 + 1^3 = 4^3 + 4^3 + (-5)^3\,,\]
+which shows that a solution need not be unique.
+Jacobi restricted his attention to small integers and probably did not know the decomposition {\small \[
+    3 = 569\,936\,821\,221\,962\,380\,720^3 + (-569\,936\,821\,113\,563\,493\,509)^3 + (-472\,715\,493\,453\,327\,032)^3
+\,,\]}%
+which was discovered only recently.\footnote{Booker, Andrew R.; Sutherland, Andrew V. (2021), ``On a question of Mordell'', \emph{Proceedings of the National Academy of Sciences}, \textbf{118} (11)}
+However, Jacobi did manage to prove that a decomposition into cubes always exists for all positive integers up to $9241$, the $28$th~cuban prime of the first kind.
+Although his work was never published, references to the method appear in a marginal annotation in an 1823 letter to his famous brother Carl Gustav Jacob.
+
+\medskip
+Given a positive integer~$n$, output a list of at most $\maxo$ integers between $-\maxx$ and $\maxx$
+such that the sum of their cubes equals $n$.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n\leq \maxn$), the number to decompose into cubes.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output an integer $k$ ($1 \leq k \leq 10\,000$), the number of terms in your solution,
+    followed by $k$~integers $a_1,\ldots, a_k$ ($-\maxx\leq a_i\leq\maxx$ for each $i$),
+    such that $a_1^3 + \dots + a_k^3 = n$.
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}

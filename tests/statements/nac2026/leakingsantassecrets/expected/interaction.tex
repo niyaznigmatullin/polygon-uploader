@@ -1,0 +1,9 @@
+
+This is an interactive problem. Interaction begins by reading an integer $N$ $(1 \leq N \leq 220)$ from standard input, the number of letters in North-Polish. The judge is not adaptive: the hidden permutation $H$ is chosen at this time and will not change throughout the rest of the interaction.
+
+To attempt to log in to the server, print a line with $N$ space-separated integers $Q(1), \ldots, Q(N)$, where $Q$ is a permutation of $\{1, 2, \ldots, N\}$. Then read a single integer from standard input, the amount of time in seconds it takes for the server to respond to your input.
+
+If this delay is $0$, you have successfully found the cipher permutation $H$ and your program should terminate. If not, this delay is the number of connected components in the graph built according to the procedure described above.
+
+You may attempt to log in at most $1\,510$ times. If you run out of attempts, your program should exit cleanly (though it will be judged incorrect for failing to decipher Santa's naughty-or-nice list).
+

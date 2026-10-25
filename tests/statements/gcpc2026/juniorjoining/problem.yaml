@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Junior Joining
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+uuid: '8ee7605a-3628-8d48-3009-29f9877664f0'
+validation: default
+author: Yidi Zang
+source_url: https://gcpc.nwerc.eu

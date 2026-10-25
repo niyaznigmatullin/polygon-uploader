@@ -1,0 +1,57 @@
+\problemname{}
+
+\newcommand{\maxn}{5000}
+\newcommand{\maxk}{20}
+
+\illustration{0.25}{blinkers.jpg}{
+    A car indicating to turn left.\\
+    CC BY-SA 3.0 by Scheinwerfermann on \href{https://commons.wikimedia.org/wiki/File:Turnsignals_On.jpg}{Wikimedia Commons}
+}
+
+Recently, your car underwent a software update. Now, if you use the blinkers too much, the car shuts down, reporting a ``buffer overflow''\!, whatever that means!
+On the bright side, you are now welcome at the Broken-down Automobile Preservation Convention (BAPC).
+
+You found out late, so you have to drive there as quickly as possible!
+Still, of course, you have to obey all traffic rules.
+At each intersection, you should follow these rules, regardless of whether an intersection has roads in all directions or not: \vspace{-\parskip}
+\begin{itemize}
+    \itemsep0em
+    \item When turning left (or right) at an intersection, the left (or right) blinker must be on.
+    \item When driving straight ahead, the blinkers must be off.
+    \item U-turns are not allowed, i.e.\ you are not allowed to turn back the way you came.
+\end{itemize}
+
+To play it safe with your blinkers, you decide you are going to activate them at most $k$~times. Luckily, you can still deactivate them at any time.
+This seems rather limiting, but you make one shrewd observation: as long as you keep your blinkers on (they do not turn off automatically), you can keep turning in the same direction. % Perhaps you could use this to your advantage.
+
+The road network consists of intersections with roads between them.
+Roads always start and end in one of the four cardinal directions: north, east, south, or west. Furthermore, they never start and end at the same intersection.
+As an example, consider sample cases 1~through~3, visualized in \autoref{fig:map} (next page). These samples only differ in their value of $k$.
+
+To simplify navigation, you assume that each road can be traversed in the same amount of time, i.e.\ each road is considered to be of length~$1$. % "with the same speed limit"
+% The majority of your travel time is spent waiting at traffic lights, anyway.
+Find the shortest route from your current location to the BAPC, ensuring that you do not activate the blinkers more than $k$~times.
+From your current location, you can drive in any direction without using your blinkers.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($1 \le n \le \maxn$, $0 \le k \le \maxk$), the number of intersections and the number of times the blinkers can be activated.
+        \item $n$ lines, the $i$th of which contains four integers $v_i^{\textsc n}$, $v_i^{\textsc e}$, $v_i^{\textsc s}$, and $v_i^{\textsc w}$ ($0 \le v_i^{\textsc n}, v_i^{\textsc e}, v_i^{\textsc s}, v_i^{\textsc w} \le n$), the intersections that can be reached by taking the north, east, south, and west road from intersection~$i$, or~$0$ to indicate that the road does not exist.
+    \end{itemize}
+    You start at intersection~$1$, and the BAPC is located at intersection~$n$.
+    Each intersection~$i$ has at most one road to each other intersection~$j$. If this road exists, then intersection~$j$ has exactly one road to intersection~$i$ as well.
+\end{Input}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{sample.pdf}
+    \caption{Visualization of the first, second, and third sample input.}
+    \label{fig:map}
+\end{figure}
+
+\begin{Output}
+    If it is possible to drive from intersection~$1$ to~$n$ using the blinkers at most $k$~times,
+    output the length of the shortest such route.
+    Otherwise, output ``\texttt{impossible}''.
+\end{Output}

@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Incremented Itinerary
+uuid: 8ee7605a-6670-8230-3fef-7a6aeb63dde4
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: default
+author: Niklas Mohrin
+source_url: https://gcpc.nwerc.eu

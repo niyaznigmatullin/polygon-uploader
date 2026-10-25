@@ -1,0 +1,10 @@
+# Specification: https://icpc.io/problem-package-format/spec/2023-07-draft.html
+problem_format_version: legacy
+name: Gotta Trade Some of ’Em
+author: Arnar Bjarni Arnarson, Hannes Kristján Hannesson
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+type: pass-fail
+license: cc by-sa
+validation: custom
+uuid: "9ce87540-7788-4099-8ccc-e640b2178e1c"
+keywords: graph components greedy constructive

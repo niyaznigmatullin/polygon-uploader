@@ -1,0 +1,22 @@
+
+
+The input consists of:
+\begin{itemize}
+\item
+One line with an integer~$n$, the number of accounts, where $1 \leq n \leq 100\,000$.
+\item
+ One line with $n$ integers $a_1,\ldots, a_n$ satisfying $0 \leq a_i \leq n$ for each $i$,
+ where $a_i$ is the number of accounts followed by the $i$th account.
+\item
+ One line with $n$ integers $b_1,\ldots, b_n$ satisfying $0 \leq b_i \leq n$ for each  $i$,
+ where $b_i$ is the number of accounts following the $i$th account.
+\end{itemize}
+
+Additionally, it is guaranteed that 
+\[
+    \sum_{i=1}^n a_i + \sum_{i=1}^n b_i \leq 2\,000\,000.
+\]
+
+Note that the input is not guaranteed to allow for any reconstruction, fully viral or not.
+For those familiar with that terminology, full virality is equivalent to weak connectivity.
+

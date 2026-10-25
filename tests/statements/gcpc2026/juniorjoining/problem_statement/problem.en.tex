@@ -1,0 +1,53 @@
+\problemname{Junior Joining}
+
+\illustration{0.3}{pairpatrol.pdf}{
+    Patrol pair with shield and spear.
+    Public Domain on \href{https://publicdomainvectors.org/en/free-clipart/Roman-soldier/42306.html}{publicdomainvectors} (edited).
+}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{10^5}
+\newcommand{\maxa}{10^6}
+\newcommand{\name}{Arya}
+
+\name, the Commander of Gil'ead, has received $2 \cdot n$ new recruits.
+Since the Gil'ead City Protectorate Council has mandated more patrols,
+she intends to pair them into $n$ pairs to patrol the area.
+To maximize the effectiveness of a patrol pair in the modern era, it should consist of one shield bearer and one spear carrier.
+
+Each recruit $i$ has shield-defense skill $d_i$, and spear-attack skill~$a_i$.
+While skilled usage of their respective tool is important, one should never neglect the effectiveness of strong synergy.
+Because of long-standing rivalries between cities, strong bonds have formed within each city.
+With enough discipline, \name\ is sure that there will not be any bad blood within a pair,
+but if both are from the same city, they will synergize exceptionally well.
+
+The total fighting strength of a pair is the sum of the shield-defense skill of one,
+the spear-attack skill of the other, and if both recruits are from the same city $c$, also a synergy bonus of $c$.
+
+Determine the maximum sum of fighting strength over all pairs that \name\ can achieve with optimal pairing.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with an integer $n$ ($1\leq n \leq \maxn$), half the number of new recruits.
+        \item $2 \cdot n$ lines, the $i$th of which contains three integers $d_i$, $a_i$, and $c_i$ ($1 \leq d_i, a_i, c_i \leq \maxa$), the shield-defense skill, spear-attack skill, and the home city of the $i$th recruit.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output the maximum achievable sum of fighting strength over all pairs.
+\end{Output}
+
+\nextsample
+There are only two recruits so they are paired together.
+Recruit $1$ is assigned the shield, recruit $2$ the spear.
+As they are not from the same city, only their skill is counted $4 + 2 = 6$.
+
+\nextsample
+Recruit $3$ (shield) is paired with recruit $1$ (spear).
+As they are both from city $5$, they have $5$ bonus strength from synergy ($5 + 2 + 5 = 12$ total).
+Recruit $2$ (shield) and recruit $4$ (spear) are paired, resulting in a fighting strength of $6$.
+
+\nextsample
+One possible pairing is the following:
+recruit $3$ (shield) with $1$ (spear), and recruit $4$ (shield) with $2$ (spear).

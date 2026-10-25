@@ -1,0 +1,6 @@
+source: Nordic Collegiate Programming Contest (NCPC) 2023
+license: cc by-sa
+author: Nils Gustafsson
+validation: custom interactive
+limits:
+  time_multiplier: 4

@@ -1,0 +1,18 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name:
+  #lang: name
+  en: Accidental Arithmetic
+uuid: 8ee7605a-534d-81d8-1ecc-2d3442537090
+source: BAPC 2025 Preliminaries
+license: cc by-sa
+rights_owner: The BAPC 2025 Jury
+
+# limits:
+#   time_limit: 1.0
+validation: default
+author: Freek Henstra
+source_url: https://2025.bapc.eu/
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validator_flags: float_tolerance 1e-6

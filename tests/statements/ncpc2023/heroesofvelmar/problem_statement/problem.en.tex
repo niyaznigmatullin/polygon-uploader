@@ -1,0 +1,133 @@
+\problemname{Heroes of Velmar}
+
+Welcome to the world of \emph{Heroes of Velmar}, the critically acclaimed trading card game developed by \emph{Sidney Games}!
+After the tremendous success of the physical card game, Sidney Games has decided to take it to the next level and transform it into an immersive video game experience.
+
+As Sidney Games embarks on this ambitious video game project, they seek the expertise of talented developers like you to bring this digital version to life.
+The challenge lies in coding the algorithm that determines the winner in the virtual battles that unfold between players.
+The video game will need to retain the same core mechanics as the original card game, where players compete on three distinct locations over six turns, with abilities and power levels shaping the outcomes.
+
+The full rules of the game are listed below.
+You are given the state of the locations after \emph{Setup} and \emph{Gameplay} have finished and the \emph{End of the Game} has been reached.
+Sidney Games has tasked you with implementing the \emph{Location Resolution} part of the game rules, including the application of \emph{Special Abilities}, to determine the winner.
+
+The game designers have provided you with images of the cards as well as a JSON file with their specifications.
+
+\section*{Heroes of Velmar - Game Rules}
+
+\subsection*{Objective}
+The objective of the two-player card game \emph{Heroes of Velmar} is to win more locations than the opponent over six turns. If there is a tie, the total power level across all locations acts as a tiebreaker.
+
+\subsection*{Setup}
+\begin{enumerate}
+  \item Each player selects a deck of cards containing heroes with different abilities and power levels.
+  \item The players shuffle their decks and draw a starting hand of 7 cards each.
+  \item Designate three distinct locations for the battle. Each location will have its own separate battlefield.
+\end{enumerate}
+
+\subsection*{Gameplay}
+\begin{enumerate}
+  \item Each player draws 1 card from the deck, to their hand, if possible. Maximum cards per hand is 7.
+  \item Players take turns playing cards from their hand on any of the three locations.
+  \item On each turn, players have energy equal to the turn number, for example, on Turn 3, they have 3 energy to spend.
+  \item Each card has a cost that must be paid using energy to play it on a location.
+  \item Players can play as many cards as they want as long as the following conditions are met:
+  \begin{enumerate}
+    \item They have sufficient energy to spend on the card.
+    \item The location has an empty spot. Each player has 4 available spots per location.
+  \end{enumerate}
+  \item The power level of each card represents its strength in the game.
+  \item When the turn ends, the energy not used is lost.
+\end{enumerate}
+
+\subsection*{End of the Game}
+\begin{enumerate}
+  \item The game ends after six turns, at which point locations are resolved, with each location having a winner or a tie.
+  \item The player who wins the most locations is the overall winner.
+  \item If the players win an equal number of locations, the total power level across all locations is used as a tiebreaker to determine the winner.
+  \item If the total power level across all locations is also tied, then the game results in a tie.
+\end{enumerate}
+
+\subsection*{Location Resolution}
+\begin{enumerate}
+  \item Locations are resolved separately at the end of the game.
+  \item Compare the total power levels of all cards played by each player at the location after applying special abilities.
+  \item The player with the higher total power level wins the location.
+  \item If there is a tie, no one wins the location.
+\end{enumerate}
+
+\subsection*{Special Abilities}
+\begin{enumerate}
+  \item Some cards have special abilities that can affect the game. These abilities trigger at the end of the game, before location resolution.
+  \item Abilities can buff the card's power level, interact with other cards, or manipulate the game state.
+  \item Two cards that portray the same character are considered to portray distinct characters for the sake of abilities.
+\end{enumerate}
+
+The game \emph{Heroes of Velmar} offers a mix of strategic card play, resource management, and tactical decision-making.
+Players must choose their heroes wisely, coordinate their plays, and employ their unique abilities to outwit their opponents and emerge victorious in the epic battle for control over Velmar!
+
+\subsection*{Card design}
+
+%\noindent\includegraphics[width=0.6\textwidth]{imgs/vexia.png}
+%\captionof{figure}{Card Template for "Heroes of Velmar"}
+%\label{fig:card_template}
+
+\textbf{Card Explanation:}
+
+\begin{itemize}
+    \item \textbf{Top Left Corner:} The energy cost required to play the card on the battlefield.
+    \item \textbf{Top Right Corner:} The power level of the card, representing its strength.
+    \item \textbf{Text on the Bottom:} The name of the card, identifying its character.
+    \item \textbf{Text Underneath:} The card's ability, describing its unique effect during gameplay.
+\end{itemize}
+
+\ifplastex
+% HTML version
+\else
+The cards are shown on the next page.
+\fi
+
+\begin{figure}[hp]
+    \centering
+    \includegraphics[width=0.29\textwidth]{imgs/shadow.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/gale.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/ranger.png}
+    
+    \vspace{0.5cm}
+    
+    \includegraphics[width=0.29\textwidth]{imgs/anvil.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/vexia.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/guardian.png}
+
+    \vspace{0.5cm}
+    
+    \includegraphics[width=0.29\textwidth]{imgs/thunderheart.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/frostwhisper.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/voidclaw.png}
+
+    \vspace{0.5cm}
+
+    \includegraphics[width=0.29\textwidth]{imgs/ironwood.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/zenith.png} \hfill
+    \includegraphics[width=0.29\textwidth]{imgs/seraphina.png}
+    
+    \label{fig:picture_grid}
+\end{figure}
+
+\section*{Input}
+Input consists of six lines representing the state of the three locations after six turns of play.
+This means that there will be at most 24 cards total listed in the input.
+
+First the left location is described, then the center location is described, and finally the right location is described.
+Each location is described by two lines, the first of which represents player 1's cards and the second of which represents player 2's cards.
+Each line lists the number of cards in the line and then the names of the cards played by the player, separated by spaces.
+There will be at most four cards in each line.
+
+Note that a player may leave a location empty.
+Each input is guaranteed to be a valid reachable final game state according to the game rules.
+
+% Maybe add integers for each line specifying the card count?
+
+\section*{Output}
+Output \texttt{"Player 1"} if player 1 won, \texttt{"Player 2"} if player 2 won, or \texttt{"Tie"} if there was no victor.
+

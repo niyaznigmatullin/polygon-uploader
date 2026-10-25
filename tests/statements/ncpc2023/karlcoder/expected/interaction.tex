@@ -1,0 +1,32 @@
+
+
+This is an interactive problem where interaction proceeds in rounds.
+In each round your program can attempt to read a byte from the buffer or report
+the answer (the value of $N$):
+
+\begin{description}
+\item[read:]
+  Write a line containing ``\texttt{buf[$i$]}'' if you want to try to read byte
+  $i$ of the buffer. If $0 \leq i < 2N$, then you will get the value of the byte
+  stored in the buffer at index $i$. If $i < N$ then this will be an integer
+  between $1$ and $255$, otherwise it will be $0$. If $i \geq 2 N$ or $i < 0$,
+  you will get the response ``\texttt{Segmentation fault (core dumped)}'' and
+  your program should exit.
+\item[answer:]
+  Write a line containing ``\texttt{strlen(buf) = $M$}'' if you want to report
+  that you think that $N = M$. Afterwards your program should exit.
+  Your submission will be accepted if you answered correctly, if you did not
+  trigger a segmentation fault, and if you did not attempt to read entries from
+  the buffer too many times.
+\end{description}
+
+\noindent
+A maximum of $2 \lceil{\log_2 N\rceil}$ reads can be made.
+If your program attempts to read from the buffer after reaching the limit, it
+will get the response ``\texttt{Too many reads}'' and your program should then
+exit.
+
+\medskip
+
+\noindent
+It is guaranteed that $2 \leq N \leq 10^{18}$.

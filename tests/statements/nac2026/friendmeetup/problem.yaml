@@ -1,0 +1,10 @@
+name: Friend Meetup
+author: Mark Wen
+source: 2026 ICPC North America Championship
+license: cc by-sa
+
+limits:
+  time_multiplier: 1.5
+  memory: 2048
+  
+validator_flags: float_tolerance 1e-6

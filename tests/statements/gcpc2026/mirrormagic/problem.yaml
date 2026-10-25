@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Mirror Magic
+uuid: 8ee7605a-dac0-8d89-3bcd-1372dbaaec92
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+validation: default
+author: Erik Sünderhauf
+source_url: https://gcpc.nwerc.eu

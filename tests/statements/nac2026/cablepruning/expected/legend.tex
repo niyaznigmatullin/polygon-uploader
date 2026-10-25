@@ -1,0 +1,16 @@
+
+
+You are helping to remodel a data center to make room for more GPUs. Over the years, the data center has become cluttered with superfluous network cable, and you have been asked to clean up the mess and reclaim as much unused cable as possible.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{sample1fig.png}
+    \caption*{An illustration of Sample Input 1. Servers in the same coupled pair are the same color. Cables to remove are indicated with a dashed line.}
+\end{figure}
+
+The data center has $N$ servers and $N$ network cables that link one server to another. Each cable has a length in feet. Traffic flows through network cables in both directions and the data center is initially connected: for every pair of servers $(u,v)$ there exists a path of network cables from $u$ to $v$ (possibly passing through intermediate servers). You've audited the data center network traffic to discover that only $K$ \emph{coupled pairs} of servers need to communicate with each other. (Note that some servers might not be part of any coupled pair, or might be part of two or more coupled pairs.)
+
+You now need to remove as much total length of cable as possible from the data center while keeping all coupled pairs connected to each other: for each such pair of servers $(a,b)$ there must exist a path from $a$ to $b$ passing through original network cables that you've kept in place.
+
+Find the minimum total length of cable that must be kept in place to satisfy this constraint.
+

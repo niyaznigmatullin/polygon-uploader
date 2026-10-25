@@ -1,0 +1,12 @@
+# Specification: https://icpc.io/problem-package-format/spec/2025-09.html
+name: Egocentric Expedition
+source: German Collegiate Programming Contest 2026
+license: cc by-sa
+
+limits:
+  time_multiplier: 2.0
+  time_safety_margin: 1.5
+uuid: '8ee7605a-66ab-867c-2e15-aa0a6bf99522'
+validation: custom interactive
+author: Michael Zündorf
+source_url: https://gcpc.nwerc.eu

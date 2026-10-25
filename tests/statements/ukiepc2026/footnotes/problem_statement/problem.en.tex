@@ -1,0 +1,37 @@
+\problemname{Footnotes}
+
+Your colleague Cynthia likes writing asides in messages (but then again,
+    don't we all (and there's nothing strictly wrong with that anyway)). As
+some people find the text hard to read this way, we are going to try to
+extract some parts of the sentences out into equally-sized footnotes instead
+of brackets.
+
+For example, \texttt{this(complicated(nested(passage)))} could become:
+
+\indent \texttt{this[1]} \\
+\indent \texttt{[1] complicated[2]} \\
+\indent \texttt{[2] nested(passage)}
+
+Given one such message, an unbroken string of up to $10^6$ characters
+(letters and brackets, without any spaces), isolate exactly
+two-thirds of the Latin letters into footnotes, each footnote containing
+exactly the same number of Latin letters.
+
+\section*{Input}
+
+\begin{itemize}
+  \item One line containing a string $s$ ($1 \le |s| \le 10^6$), each character
+        in $s$ being a lowercase letter or an opening/closing round bracket.
+\end{itemize}
+
+It is guaranteed that the brackets in $s$ are properly matched and that the
+content of a pair of brackets is always non-empty.
+
+\section*{Output}
+
+Output three lines in the form shown above, using exactly two footnotes in
+square brackets to indicate where passages were relocated. If there is no way of
+doing this, output \texttt{impossible} instead.
+
+Your answer will be tested by substituting the footnotes back (inside brackets)
+and comparing character-by-character with the original text.

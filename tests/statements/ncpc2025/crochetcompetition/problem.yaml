@@ -1,0 +1,9 @@
+# Specification: https://icpc.io/problem-package-format/spec/2023-07-draft.html
+problem_format_version: legacy
+type: pass-fail
+name: Crochet Competition
+uuid: "8ee7605a-87d9-8378-20e5-2b240afcb9c6"
+author: Rudy Matela, Thore Husfeldt
+source: Nordic Collegiate Programming Contest (NCPC) 2025
+license: cc by-sa
+keywords: implementation formatting

@@ -1,0 +1,48 @@
+\problemname{Lyrical Leisure}
+
+\illustration{0.3}{limage.png}{
+    Ornament from a 1923 magazine.
+    Public domain on \href{https://commons.wikimedia.org/wiki/File:Books_and_Scroll_Ornament_with_Open_Book.png}{Wikimedia Commons} by an anonymous author.
+}
+
+% optionally define variables/limits for this problem
+\newcommand{\maxn}{5000}
+\newcommand{\person}{Hannah}
+
+\person's favourite leisure activity is to write poems. She particularly likes
+to write about the small things in everyday life and about neat patterns. For
+example, she enjoys to write poems utilizing palindromes, since her name is also
+one! A palindrome is a string which is equal to its reverse, ignoring the letter
+cases.
+
+However, she would like to introduce a small twist. In the grocery store, she
+was in the fruit section. When she was about to take a banana, she realized the
+word consists of the letter `\texttt{b}', followed by the palindrome
+`\texttt{anana}' of length 5. Her whole life, she has played around with
+palindromes, but never with words containing them. 
+
+At home, she immediately started to think of interesting words containing
+palindromes. Given two lengths $n$ and $k$, she would like to find a method that
+constructs a string of length $n$, whose longest palindromic substring is of
+length $k$. A substring of a string $s$ is a sequence of consecutive characters
+of $s$.
+
+For now, she does not care about whether the string this method provides is an
+actual word in the dictionary, and any string will suffice.
+
+\begin{Input}
+    The input consists of:
+    \begin{itemize}
+        \item One line with two integers $n$ and $k$ ($1\leq k\leq n\leq \maxn$), the
+            length of the string and the length of the longest palindromic
+            substring.
+    \end{itemize}
+\end{Input}
+
+\begin{Output}
+    Output a string of length $n$ consisting of English letters
+    (\texttt{a}-\texttt{z} and \texttt{A}-\texttt{Z}) whose longest palindromic
+    substring is of length $k$.
+
+    If there are multiple valid solutions, you may output any one of them.
+\end{Output}

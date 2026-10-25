@@ -1,0 +1,24 @@
+
+
+\illustration{0.3}{SailorsrunthroughdesertDVIDS233050.jpg}{A runner during a 15-kilometer run through the Grand Bara Desert in Djibouti. Public domain photo by Joshua Bruns.}
+
+You signed up for the \emph{Dune Dash}, a running race across the desert. 
+Everything went well — except that in the excitement, you forgot to start \emph{StrideTrack}, the app that records how far you’ve run.
+All you have now are the official checkpoint locations, but not the order in which you passed through them.
+
+Formally, the race consisted of $N$ checkpoints, each given by its coordinates in the Euclidean plane.
+The sequence in which they were visited is unknown to you, but the organizers designed the course to prevent anyone from straying off route. 
+In particular, if $q_1, q_2, \dots, q_N$ is the correctly ordered list of the checkpoints along the race, then for every triple $i < j < k$ it holds that
+ 
+$$\text{dist}(q_i, q_k) > \max(\text{dist}(q_i, q_j), \text{dist}(q_j, q_k) )$$
+
+where $\text{dist}(p,q)$ denotes the Euclidean distance between points $p$ and $q$.
+Your task is to determine the total length of the race.
+
+\begin{figure*}[h]
+\centerline{
+ \includegraphics[width=3cm]{sample2.png}
+}
+\caption{Illustration of sample 2. The dashed line shows where the race went.}
+\end{figure*}
+
