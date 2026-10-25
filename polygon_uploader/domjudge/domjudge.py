@@ -102,6 +102,17 @@ def parse_statement(content, is_interactive):
     return result
 
 
+def find_statement_file(directory, lang):
+    """problem_statement/problem.<lang>.tex (not problem-slide.<lang>.tex), or the legacy language-less
+    problem.tex for English; None if there is neither."""
+    names = ["problem.%s.tex" % lang] + (["problem.tex"] if lang == "en" else [])
+    for name in names:
+        path = os.path.join(directory, "problem_statement", name)
+        if os.path.isfile(path):
+            return path
+    return None
+
+
 def cut_if_starts_with(ch, contents):
     """One side of a sample .interaction: lines starting with ch become blank (keeping both sides aligned),
     the others lose their direction marker and the space after it ("< 3" -> "3")."""
@@ -219,11 +230,10 @@ def main():
 
     def upload_statement():
         for lang, lang_polygon in [('en', 'english')]:
-            file = glob.glob(os.path.join(directory, "problem_statement/prob*%s*.tex" % lang))
+            file = find_statement_file(directory, lang)
             print(file)
-            if len(file) == 0:
+            if file is None:
                 continue
-            file = file[0]
             with open(file) as statement_file:
                 content = statement_file.read()
             print("problem.saveStatement language = " + lang_polygon)
